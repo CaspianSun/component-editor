@@ -1,0 +1,10 @@
+dist
+node_modules
+src/assets
+!.eslintrc.cjs
+!.prettier.config.cjs
+!.prettierignore
+!.editorconfig
+!.gitignore
+vite.config.ts
+yarn.lock
