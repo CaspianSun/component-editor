@@ -4,5 +4,14 @@ module.exports = {
   semi: false,
   singleQuote: true,
   htmlWhitespaceSensitivity: 'ignore',
-  trailingComma: 'none'
+  trailingComma: 'none',
+  overrides: [
+    {
+      files: 'options.ts',
+      options: {
+        printWidth: 1000,
+        bracketSpacing: false
+      }
+    }
+  ]
 }

@@ -1,6 +1,7 @@
 export default {
   base: '/',
-  baseUrl: '/api/',
+  port: 3000,
+  baseUrl: 'http://localhost:3000',
   outDir: 'dist',
   outAssetsDir: 'assets',
   statusName: 'status',

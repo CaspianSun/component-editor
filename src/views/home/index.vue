@@ -7,14 +7,14 @@ import Config from './components/config.vue'
 
 const id = ref(null)
 const { dataStore } = useStore()
-const { pageComponents, pageSetup } = storeToRefs(dataStore)
+const { components, pageSetup } = storeToRefs(dataStore)
 
 const exportJSON = () => {
   const data = JSON.stringify({
     id: id,
     name: pageSetup.value.title,
     templateJson: JSON.stringify(pageSetup),
-    component: JSON.stringify(pageComponents)
+    component: JSON.stringify(components)
   })
   const blob = new Blob([data], { type: '' })
   FileSaver.saveAs(blob, `${pageSetup.value.title}.json`)

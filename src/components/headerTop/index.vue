@@ -46,6 +46,5 @@ const { pageSetup } = toRefs(props)
       font-weight: 700;
     }
   }
-  /* 左边 */
 }
 </style>

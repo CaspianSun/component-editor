@@ -1,52 +1,64 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: ComponentType<NavigationType>
+  data: NavigationType
 }>()
-const { setStyle } = toRefs(props.data)
+const { data } = toRefs(props)
 </script>
 
 <template>
   <div class="navigation">
     <div
       :style="{
-        background: setStyle.bgColor,
-        marginTop: setStyle.marginT + 'px',
-        marginBottom: setStyle.marginB + 'px',
-        marginLeft: setStyle.marginLR + 'px',
-        marginRight: setStyle.marginLR + 'px',
-        borderRadius: `${setStyle.radiusT}px ${setStyle.radiusT}px ${setStyle.radiusB}px ${setStyle.radiusB}px`
+        background: data.bgColor,
+        marginTop: data.marginT + 'px',
+        marginBottom: data.marginB + 'px',
+        marginLeft: data.marginLR + 'px',
+        marginRight: data.marginLR + 'px',
+        borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`
       }"
     >
-      <h3 v-if="setStyle.isShowTitle" class="title">
-        {{ setStyle.title }}
-      </h3>
+      <div
+        v-if="data.isShowTitle"
+        class="title"
+        :style="{ fontSize: data.titleSize + 'px', color: data.titleColor }"
+      >
+        {{ data.title }}
+      </div>
 
       <section class="container">
-        <div v-if="setStyle.type == 2" class="column">
-          <template v-for="(item, index) in setStyle.imageList" :key="index">
-            <div class="list">
+        <div v-if="data.type == 2" class="column">
+          <template v-for="(item, index) in data.imgList" :key="index">
+            <div
+              class="list"
+              :style="{
+                borderBottom: data.isShowBorderBottom ? '1px solid #f5f7fa' : 'none'
+              }"
+            >
               <div class="left">
-                <VanImage
-                  :height="setStyle.iconSize"
-                  :round="setStyle.shape == 1"
-                  :show-error="false"
-                  :show-loading="false"
-                  :src="item.src"
+                <template v-if="data.isShowIcon">
+                  <VanImage
+                    :height="data.iconSize"
+                    :show-error="false"
+                    :show-loading="false"
+                    :src="item.src"
+                    :style="{
+                      backgroundColor: '#f5f7fa',
+                      marginRight: '10px',
+                      borderRadius: data.iconRadius + 'px',
+                      overflow: 'hidden'
+                    }"
+                    :width="data.iconSize"
+                  />
+                </template>
+                <span
                   :style="{
-                    backgroundColor: '#f5f7fa',
-                    marginRight: '10px'
-                  }"
-                  :width="setStyle.iconSize"
-                />
-                <p
-                  :style="{
-                    color: setStyle.fontColor,
-                    'font-size': setStyle.fontSize + 'px',
-                    fontWeight: setStyle.isFontBold ? '600' : 'normal'
+                    color: data.fontColor,
+                    'font-size': data.fontSize + 'px',
+                    fontWeight: data.isFontBold ? '600' : 'normal'
                   }"
                 >
                   {{ item.name }}
-                </p>
+                </span>
               </div>
               <div class="right">
                 <i class="iconfont iconright1"></i>
@@ -55,33 +67,34 @@ const { setStyle } = toRefs(props.data)
           </template>
         </div>
         <div v-else class="row">
-          <template v-for="(item, index) in setStyle.imageList" :key="index">
+          <template v-for="(item, index) in data.imgList" :key="index">
             <div
               class="list"
               :style="{
-                width: (setStyle.colNum == 3 ? '33.33' : setStyle.colNum == 4 ? '25' : '20') + '%'
+                width: (data.colNum == 3 ? '33.33' : data.colNum == 4 ? '25' : '20') + '%'
               }"
             >
               <VanImage
-                :height="setStyle.iconSize"
-                :round="setStyle.shape == 1"
+                :height="data.iconSize"
                 :show-error="false"
                 :show-loading="false"
                 :src="item.src"
                 :style="{
-                  backgroundColor: '#f5f7fa'
+                  backgroundColor: '#f5f7fa',
+                  borderRadius: data.iconRadius + 'px',
+                  overflow: 'hidden'
                 }"
-                :width="setStyle.iconSize"
+                :width="data.iconSize"
               />
-              <p
+              <span
                 :style="{
-                  color: setStyle.fontColor,
-                  'font-size': setStyle.fontSize + 'px',
-                  fontWeight: setStyle.isFontBold ? '600' : 'normal'
+                  color: data.fontColor,
+                  'font-size': data.fontSize + 'px',
+                  fontWeight: data.isFontBold ? '600' : 'normal'
                 }"
               >
                 {{ item.name }}
-              </p>
+              </span>
             </div>
           </template>
         </div>
@@ -95,7 +108,7 @@ const { setStyle } = toRefs(props.data)
   position: relative;
   z-index: 20;
   .title {
-    padding: 10px 0 15px 15px;
+    padding: 10px 15px 0;
     font-size: 15px;
     font-weight: 600;
     color: #333;
@@ -106,21 +119,19 @@ const { setStyle } = toRefs(props.data)
       display: flex;
       flex-direction: column;
       width: 100%;
+      padding: 10px 15px;
+
       .list {
-        padding: 10px 15px;
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        padding: 10px 0;
         .left {
           display: flex;
           flex-direction: row;
           align-items: center;
-          img {
-            font-size: 0;
-            margin-right: 10px;
-          }
         }
         .right {
           color: #999;
@@ -128,18 +139,17 @@ const { setStyle } = toRefs(props.data)
       }
     }
     .row {
-      padding-bottom: 10px;
       width: 100%;
       display: flex;
       flex-wrap: wrap;
+      .van-image {
+        margin-bottom: 5px;
+      }
       .list {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 9px 0;
-        img {
-          margin-top: 5px;
-        }
+        margin: 15px 0;
         p {
           font-size: 12px;
           margin-top: 5px;

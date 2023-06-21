@@ -1,41 +1,53 @@
 <script lang="ts" setup>
 import _ from 'lodash'
 import { useStore } from '@/store'
-import componentProperty from '@/componentProperty'
-import { ElMessage } from 'element-plus'
+import componentProperty, { GroupEnum } from '@/componentProperty'
+
+interface ComponentItem {
+  title: string
+  icon: string
+  component: string
+}
+
+interface DataItem {
+  title: string
+  componentsList: ComponentItem[]
+}
 const activeNames = reactive([1, 2, 3])
-const data = reactive([
-  {
-    title: '基础组件',
-    componentsList: [
-      {
-        text: '轮播图',
-        icon: '',
-        name: 'slideshow'
-      },
-      {
-        text: '图文导航',
-        icon: '',
-        name: 'navigation'
-      },
-      {
-        text: 'Error',
-        icon: '',
-        name: 'error'
-      }
-    ]
-  }
-])
+
+const data = Array.from(componentProperty.values())
+  .sort((a, b) => {
+    return (a.sort ?? 0) - (b.sort ?? 0)
+  })
+  .reduce((acc, cur) => {
+    const groupName = GroupEnum[cur.group]
+    const groupIndex = acc.findIndex((item) => item.title === groupName)
+    if (groupIndex === -1) {
+      acc.push({
+        title: groupName,
+        componentsList: []
+      })
+    }
+    acc[groupIndex !== -1 ? groupIndex : acc.length - 1].componentsList.push({
+      title: cur.cName,
+      icon: '',
+      component: cur.component
+    })
+    return acc
+  }, [] as DataItem[])
+
 const { dataStore } = useStore()
-const { pageComponents } = storeToRefs(dataStore)
-const handleClick = (name: string) => {
-  const component = componentProperty.get(name)
+const { components } = storeToRefs(dataStore)
+const handleClick = (item: ComponentItem) => {
+  const component = componentProperty.get(item.component)
   if (component) {
-    pageComponents.value.push(_.cloneDeep(component))
+    const componentNum = components.value.map((v) => v.component === item.component).length
+    const newComponent = _.cloneDeep(component)
+    newComponent.id = componentNum
+    components.value.push(newComponent)
   } else {
-    console.log('组件不存在')
     ElMessage({
-      message: '组件不存在',
+      message: `组件 ${item.title} 不存在`,
       type: 'error'
     })
   }
@@ -60,10 +72,10 @@ const handleClick = (name: string) => {
               v-for="(item, ind) in items.componentsList"
               :key="ind"
               class="list-item"
-              @click="handleClick(item.name)"
+              @click="handleClick(item)"
             >
               <i v-if="item.icon" class="iconfont" :class="item.icon" />
-              <p>{{ item.text }}</p>
+              <p>{{ item.title }}</p>
             </div>
           </div>
         </el-collapse-item>
@@ -73,7 +85,6 @@ const handleClick = (name: string) => {
 </template>
 
 <style lang="scss" scoped>
-/* 组件 */
 .slider-assembly {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -157,7 +168,6 @@ const handleClick = (name: string) => {
       &:nth-child(3n) {
         margin-right: 0 !important;
       }
-      /* 图标 */
       i {
         font-size: 32px;
         width: 32px;
@@ -166,13 +176,11 @@ const handleClick = (name: string) => {
         color: #b0a8a8;
         margin-top: 4px;
       }
-      /* 标题 */
       p {
         font-size: 12px;
         color: #323233;
         margin-top: 4px;
       }
-      /* 数量 */
       span {
         color: #7d7e80;
         margin-top: 4px;

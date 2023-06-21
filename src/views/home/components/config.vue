@@ -1,16 +1,22 @@
 <script lang="ts" setup>
 import { useStore } from '@/store'
+import SelectImage from '@/components/selectImage/index.vue'
+import { selectImageKey } from '@/provider/index'
 const { dataStore } = useStore()
-const { pageComponents, activeComponentIndex } = storeToRefs(dataStore)
+const { components, activeComponentIndex } = storeToRefs(dataStore)
 const activeComponent = computed(() => {
   if (typeof activeComponentIndex.value == 'number') {
-    return pageComponents.value[activeComponentIndex.value]
+    return components.value[activeComponentIndex.value]
   } else {
     return {
       component: 'pageSetup',
       setStyle: {}
     }
   }
+})
+const selectImageRef = ref<InstanceType<typeof SelectImage> | null>(null)
+onMounted(() => {
+  provide(selectImageKey, selectImageRef?.value?.initSelectImage)
 })
 </script>
 
@@ -22,6 +28,7 @@ const activeComponent = computed(() => {
       :data="activeComponent.setStyle"
     />
   </div>
+  <SelectImage ref="selectImageRef" />
 </template>
 
 <style lang="scss" scoped>
@@ -31,7 +38,6 @@ const activeComponent = computed(() => {
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
-  padding: 0 15px;
   background: #fff;
   &::-webkit-scrollbar {
     width: 1px;

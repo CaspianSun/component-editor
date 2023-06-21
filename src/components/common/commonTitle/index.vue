@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-const props = defineProps({
-  title: {
-    type: String,
-    default: ''
+const props = withDefaults(
+  defineProps<{
+    title?: string
+  }>(),
+  {
+    title: ''
   }
-})
+)
 </script>
 
 <template>
@@ -18,6 +20,6 @@ const props = defineProps({
   font-size: 16px;
   font-weight: bold;
   color: #333;
-  padding: 15px 0 10px;
+  padding: 15px 15px 10px;
 }
 </style>

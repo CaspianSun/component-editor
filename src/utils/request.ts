@@ -25,7 +25,10 @@ class MyAxios {
 
 const request = new MyAxios(axios, {
   baseURL: baseUrl,
-  timeout: 10000
+  timeout: 10000,
+  headers: {
+    Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJpZCI6Mn0sImlhdCI6MTY4NjUzOTE0NCwiZXhwIjoxNjg5MTY3MTQ0fQ.e4D22EPrKazukGoBZwV747dDeMHemEjH73VFoezZhgo'
+  }
 })
 
 request.axios.interceptors.request.use(

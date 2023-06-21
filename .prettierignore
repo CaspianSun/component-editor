@@ -1,5 +1,10 @@
 /dist/*
 /public/*
 /node_modules/**
+.local
+.output.js
 **/*.svg
+**/*.sh
+# *.d.ts
 /yarn.lock
+/mock/*

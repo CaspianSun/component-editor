@@ -3,23 +3,12 @@ import { createCommonElement } from '@/components/layout/commonElement'
 import { listToElement } from '@/components/layout/listToElement'
 import { list } from './options'
 const props = defineProps<{
-  data: NavigationType
+  data: NoticeType
 }>()
 const { data } = toRefs(props)
 const activeTab = ref('1')
 const CommonRender = createCommonElement(data.value)
 const ListConfigRender = listToElement(data.value, list)
-const handleDeleteItem = (index: number) => {
-  data.value.imgList.splice(index, 1)
-}
-const handleAddItem = () => {
-  data.value.imgList.push({
-    src: '',
-    type: 1,
-    url: '',
-    name: '导航' + data.value.imgList.length + 1
-  })
-}
 </script>
 
 <template>
@@ -29,25 +18,6 @@ const handleAddItem = () => {
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <ListConfigRender />
-          <CommonCard title="设置">
-            <div class="list">
-              <template v-for="(item, index) in data.imgList" :key="index">
-                <div class="list-item">
-                  <div class="list-item-left">
-                    <CommonSelectImg :src="item.src" @update:src="item.src = $event" />
-                  </div>
-                  <div class="list-item__right"></div>
-                  <div class="delete" @click.stop="handleDeleteItem(index)">
-                    <ElIcon><IEpCircleCloseFilled /></ElIcon>
-                  </div>
-                </div>
-              </template>
-            </div>
-            <ElButton plain style="width: 100%" @click="handleAddItem">
-              <ElIcon style="margin-right: 5px"><IEpPlus /></ElIcon>
-              添加图片
-            </ElButton>
-          </CommonCard>
         </ElTabPane>
         <ElTabPane label="样式设置" name="2">
           <CommonCard>

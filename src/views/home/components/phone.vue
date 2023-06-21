@@ -1,52 +1,81 @@
 <script lang="ts" setup>
 import { VueDraggable } from 'vue-draggable-plus'
+import { SortableEvent } from 'sortablejs'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
-
 const { dataStore } = useStore()
-const { pageComponents, pageSetup, activeComponentIndex } = storeToRefs(dataStore)
+const { components, pageSetup, activeComponentIndex } = storeToRefs(dataStore)
 
-const onUpdate = () => {
-  //
+const onUpdate = (e: SortableEvent) => {
+  if (e.newIndex !== undefined && e.oldIndex !== undefined) {
+    if (e.newIndex === e.oldIndex) return
+    dataStore.setActiveComponentIndex(e.newIndex)
+  }
 }
 const handleSelectComponents = (index: number) => {
   dataStore.setActiveComponentIndex(index)
+}
+const deleteComponent = () => {
+  if (activeComponentIndex.value !== null) {
+    dataStore.deleteComponent(activeComponentIndex.value)
+  }
 }
 </script>
 
 <template>
   <!-- TODO 显示缩放功能 -->
   <div class="phone">
-    <section
-      class="phone-all"
-      :style="{
-        'background-color': pageSetup.pageBg
-      }"
-    >
-      <HeaderTop :pageSetup="pageSetup" />
-      <section class="phone-container">
-        <VueDraggable v-model="pageComponents" animation="150" @update="onUpdate">
-          <template v-for="(item, index) in pageComponents" :key="index">
-            <div
-              class="cursor-move drag-item"
-              :class="activeComponentIndex === index ? 'active' : ''"
-              @click="handleSelectComponents(index)"
-            >
-              <component :is="item.component" :data="item" :index="index" />
-            </div>
-          </template>
-        </VueDraggable>
-      </section>
-    </section>
+    <ElScrollbar maxHeight="100%">
+      <div
+        class="container"
+        :style="{
+          'background-color': pageSetup.pageBg
+        }"
+      >
+        <HeaderTop :pageSetup="pageSetup" />
+        <section class="content">
+          <VueDraggable v-model="components" :animation="150" @update.stop="onUpdate">
+            <template v-for="(item, index) in components" :key="item.id">
+              <div
+                class="cursor-move drag-item"
+                :class="activeComponentIndex === index ? 'active' : ''"
+                @click="handleSelectComponents(index)"
+              >
+                <component :is="item.component" :data="item.setStyle" :index="item.id" />
+                <template v-if="activeComponentIndex === index">
+                  <div class="controls">
+                    <div
+                      v-if="activeComponentIndex !== 0"
+                      class="controls-item"
+                      @click.stop="dataStore.adjustComponentOrder('up')"
+                    >
+                      <ElIcon><IEpArrowUp /></ElIcon>
+                    </div>
+                    <div class="controls-item" @click.stop="deleteComponent">
+                      <ElIcon><IEpDelete /></ElIcon>
+                    </div>
+                    <div
+                      v-if="activeComponentIndex !== components.length - 1"
+                      class="controls-item"
+                      @click.stop="dataStore.adjustComponentOrder('down')"
+                    >
+                      <ElIcon><IEpArrowDown /></ElIcon>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </VueDraggable>
+        </section>
+      </div>
+    </ElScrollbar>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .phone {
-  margin: 0 auto;
+  flex: 1;
   height: 100%;
-  padding: 20px;
-  overflow-y: scroll;
   background: #f7f8fa;
   moz-user-select: -moz-none;
   -moz-user-select: none;
@@ -55,38 +84,29 @@ const handleSelectComponents = (index: number) => {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  &::-webkit-scrollbar {
-    width: 1px;
-  }
-  // &::-webkit-scrollbar-thumb {
-  //   background-color: #155bd4;
-  // }
 
-  /* 手机样式 */
-  .phone-all {
+  .container {
     width: 375px;
     min-height: 760px;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
-    margin: 45px 0;
+    margin: 45px auto;
     position: relative;
-
-    /* 状态栏 */
+    overflow-x: visible;
     .status-bar {
       width: 100%;
       display: block;
     }
 
-    /* 主体内容 */
-    .phone-container {
-      min-height: 603px;
+    .content {
       box-sizing: border-box;
       cursor: pointer;
-      width: 100%;
       position: relative;
       background-repeat: no-repeat;
       background-size: 100% 100%;
+
       .drag-item {
         position: relative;
+
         &.active {
           &::after {
             border: 1px solid #155bd4;
@@ -108,6 +128,20 @@ const handleSelectComponents = (index: number) => {
         }
         &:hover::after {
           border: 1px dashed #155bd4;
+        }
+        .controls {
+          position: absolute;
+          right: -60px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #fff;
+          border-radius: 4px;
+          &-item {
+            padding: 10px 15px;
+          }
         }
       }
     }

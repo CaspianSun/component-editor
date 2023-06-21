@@ -1,57 +1,44 @@
 <script lang="ts" setup>
 import { createCommonElement } from '@/components/layout/commonElement'
-import { listToElement } from '@/components/layout/listToElement'
-import { list } from './options'
 const props = defineProps<{
-  data: NavigationType
+  data: OnePictureType
 }>()
-const { data } = toRefs(props)
 const activeTab = ref('1')
+const { data } = toRefs(props)
 const CommonRender = createCommonElement(data.value)
-const ListConfigRender = listToElement(data.value, list)
-const handleDeleteItem = (index: number) => {
-  data.value.imgList.splice(index, 1)
-}
-const handleAddItem = () => {
-  data.value.imgList.push({
-    src: '',
-    type: 1,
-    url: '',
-    name: '导航' + data.value.imgList.length + 1
-  })
-}
 </script>
 
 <template>
-  <div class="navigation-config">
+  <div class="slideshow-config">
     <div class="container">
-      <CommonTitle title="图文导航" />
+      <CommonTitle title="轮播图" />
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
-          <ListConfigRender />
-          <CommonCard title="设置">
-            <div class="list">
-              <template v-for="(item, index) in data.imgList" :key="index">
-                <div class="list-item">
-                  <div class="list-item-left">
-                    <CommonSelectImg :src="item.src" @update:src="item.src = $event" />
-                  </div>
-                  <div class="list-item__right"></div>
-                  <div class="delete" @click.stop="handleDeleteItem(index)">
-                    <ElIcon><IEpCircleCloseFilled /></ElIcon>
-                  </div>
-                </div>
-              </template>
+          <CommonCard title="图片设置">
+            <div class="tip">
+              <div>建议图片尺寸宽度750px，高度不限。</div>
+              <div>图片大小不超过500kb。</div>
             </div>
-            <ElButton plain style="width: 100%" @click="handleAddItem">
-              <ElIcon style="margin-right: 5px"><IEpPlus /></ElIcon>
-              添加图片
-            </ElButton>
+            <div class="list">
+              <div class="list-item">
+                <div class="list-item-left">
+                  <CommonSelectImg :src="data.src" @update:src="data.src = $event" />
+                </div>
+                <div class="list-item__right"></div>
+              </div>
+            </div>
           </CommonCard>
         </ElTabPane>
         <ElTabPane label="样式设置" name="2">
           <CommonCard>
             <CommonRender />
+            <CommonNumber
+              label="高度"
+              :max="500"
+              :min="1"
+              :number="data.height"
+              @update:number="data.height = $event"
+            />
           </CommonCard>
         </ElTabPane>
       </ElTabs>
@@ -60,7 +47,7 @@ const handleAddItem = () => {
 </template>
 
 <style lang="scss" scoped>
-.navigation-config {
+.slideshow-config {
   .container {
     .tip {
       color: #909399;
