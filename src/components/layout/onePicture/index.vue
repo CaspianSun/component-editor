@@ -18,8 +18,8 @@ const { data } = toRefs(props)
         height: data.height + 'px'
       }"
     >
-      <template v-if="data.src">
-        <VanImage fit="cover" :src="data.src" style="width: 100%; height: 100%"></VanImage>
+      <template v-if="data.link.src">
+        <VanImage fit="cover" :src="data.link.src" style="width: 100%; height: 100%"></VanImage>
       </template>
       <template v-else>
         <div class="empty">

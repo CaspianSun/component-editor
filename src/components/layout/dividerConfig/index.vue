@@ -1,0 +1,78 @@
+<script lang="ts" setup>
+const activeTab = ref('1')
+const props = defineProps<{
+  data: DividerType
+}>()
+const { data } = toRefs(props)
+</script>
+
+<template>
+  <div class="integral-config">
+    <div class="container">
+      <CommonTitle title="辅助分割" />
+      <ElTabs v-model="activeTab" stretch>
+        <ElTabPane label="内容设置" name="1">
+          <CommonCard title="组件设置">
+            <ElRadioGroup v-model="data.type">
+              <ElRadioButton :label="1">空白</ElRadioButton>
+              <ElRadioButton :label="2">实线</ElRadioButton>
+              <ElRadioButton :label="3">虚线</ElRadioButton>
+            </ElRadioGroup>
+          </CommonCard>
+          <CommonCard title="样式设置">
+            <template v-if="data.type === 1">
+              <CommonCell label="背景颜色">
+                <ElColorPicker v-model="data.bgColor" />
+              </CommonCell>
+            </template>
+            <template v-else>
+              <CommonCell label="分割线颜色">
+                <ElColorPicker v-model="data.lineColor" />
+              </CommonCell>
+              <CommonNumber
+                label="分割线大小"
+                :max="10"
+                :min="1"
+                :number="data.lineSize"
+                @update:number="data.lineSize = $event"
+              />
+            </template>
+            <CommonNumber
+              label="高度"
+              :max="20"
+              :min="1"
+              :number="data.height"
+              @update:number="data.height = $event"
+            />
+          </CommonCard>
+        </ElTabPane>
+        <ElTabPane label="样式设置" name="2">
+          <CommonCard>
+            <CommonNumber
+              label="上间距"
+              :number="data.marginT"
+              @update:number="data.marginT = $event"
+            />
+            <CommonNumber
+              label="下间距"
+              :number="data.marginB"
+              @update:number="data.marginB = $event"
+            />
+            <CommonNumber
+              label="左右间距"
+              :number="data.marginLR"
+              @update:number="data.marginLR = $event"
+            />
+          </CommonCard>
+        </ElTabPane>
+      </ElTabs>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.integral-config {
+  .container {
+  }
+}
+</style>

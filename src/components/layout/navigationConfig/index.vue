@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { v4 as uuidv4 } from 'uuid'
 import { createCommonElement } from '@/components/layout/commonElement'
 import { listToElement } from '@/components/layout/listToElement'
 import { list } from './options'
@@ -17,7 +18,9 @@ const handleAddItem = () => {
     src: '',
     type: 1,
     url: '',
-    name: '导航' + data.value.imgList.length + 1
+    urlName: '',
+    name: `导航${data.value.imgList.length + 1}`,
+    uuid: uuidv4()
   })
 }
 </script>
@@ -31,12 +34,17 @@ const handleAddItem = () => {
           <ListConfigRender />
           <CommonCard title="设置">
             <div class="list">
-              <template v-for="(item, index) in data.imgList" :key="index">
+              <template v-for="(item, index) in data.imgList" :key="item.uuid">
                 <div class="list-item">
-                  <div class="list-item-left">
+                  <CommonCell label="图标">
                     <CommonSelectImg :src="item.src" @update:src="item.src = $event" />
-                  </div>
-                  <div class="list-item__right"></div>
+                  </CommonCell>
+                  <CommonCell label="导航名称">
+                    <ElInput v-model="item.name" maxlength="5" show-word-limit type="text" />
+                  </CommonCell>
+                  <CommonCell label="跳转链接">
+                    <CommonSelectLink :link="item" />
+                  </CommonCell>
                   <div class="delete" @click.stop="handleDeleteItem(index)">
                     <ElIcon><IEpCircleCloseFilled /></ElIcon>
                   </div>
@@ -77,6 +85,9 @@ const handleAddItem = () => {
         padding: 10px;
         margin-bottom: 15px;
         position: relative;
+        &-right {
+          flex: 1;
+        }
         &:hover {
           .delete {
             display: block;

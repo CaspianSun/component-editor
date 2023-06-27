@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useStore } from '@/store'
 import SelectImage from '@/components/selectImage/index.vue'
-import { selectImageKey } from '@/provider/index'
+import SelectLink from '@/components/selectLink/index.vue'
+import { selectImageKey, selectLinkKey } from '@/provider/index'
 const { dataStore } = useStore()
 const { components, activeComponentIndex } = storeToRefs(dataStore)
 const activeComponent = computed(() => {
@@ -15,8 +16,10 @@ const activeComponent = computed(() => {
   }
 })
 const selectImageRef = ref<InstanceType<typeof SelectImage> | null>(null)
+const selectLinkRef = ref<InstanceType<typeof SelectLink> | null>(null)
 onMounted(() => {
   provide(selectImageKey, selectImageRef?.value?.initSelectImage)
+  provide(selectLinkKey, selectLinkRef?.value?.initSelectLink)
 })
 </script>
 
@@ -29,6 +32,7 @@ onMounted(() => {
     />
   </div>
   <SelectImage ref="selectImageRef" />
+  <SelectLink ref="selectLinkRef" />
 </template>
 
 <style lang="scss" scoped>

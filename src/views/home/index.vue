@@ -4,17 +4,16 @@ import FileSaver from 'file-saver'
 import { ArrowLeftBold } from '@element-plus/icons-vue'
 import Phone from './components/phone.vue'
 import Config from './components/config.vue'
+import Slider from './components/slider.vue'
 
-const id = ref(null)
 const { dataStore } = useStore()
 const { components, pageSetup } = storeToRefs(dataStore)
 
 const exportJSON = () => {
   const data = JSON.stringify({
-    id: id,
     name: pageSetup.value.title,
-    templateJson: JSON.stringify(pageSetup),
-    component: JSON.stringify(components)
+    templateJson: pageSetup.value,
+    component: components.value
   })
   const blob = new Blob([data], { type: '' })
   FileSaver.saveAs(blob, `${pageSetup.value.title}.json`)
@@ -55,7 +54,7 @@ const handleClickPageSetup = () => {
     </section>
 
     <section class="content">
-      <SliderAssembly />
+      <Slider />
       <Phone />
       <Config />
     </section>

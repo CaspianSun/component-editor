@@ -1,13 +1,97 @@
-declare type AllComponentType = SlideshowType | NavigationType | NoticeType | OnePictureType
+declare type AllComponentType =
+  | SlideshowType
+  | NavigationType
+  | NoticeType
+  | OnePictureType
+  | IntegralType
+  | PropertyType
+  | BalanceType
+  | DividerType
+  | CubePictureType
+  | VipType
 
-declare interface OnePictureType extends Partial<CommonStyleType>, Link {
+declare interface CubePictureType extends Partial<CommonStyleType> {
+  type: import('@/componentProperty').CubePictureTypeEnum
+  imgList: Link[]
+  itemRadiusT: number // 元素上圆角 0-50
+  itemRadiusB: number // 元素下圆角 0-50
+  itemHeight: number // 图片高度 120-375px
+  itemMargin: number // 图片间距 0-20px
+}
+
+declare interface BalanceType extends Partial<CommonStyleType> {
+  type: 1 | 2 // 组件样式
+  bgColor: string // 背景颜色
+  isShowIcon: boolean // 是否显示图标
+  icon: string // 图标
+  title: string // 标题
+  titleColor: string // 标题颜色
+  textColor: string // 文字颜色
+  buttonText: string // 按钮文字
+  btnTextColor: string // 按钮文字颜色
+  btnBgColor: string // 按钮背景颜色
+  rightIconColor: string // 右侧图标颜色
+  link: Link
+}
+
+declare interface PropertyType extends Partial<CommonStyleType> {
+  btnBgColor: string
+  btnTextColor: string
+  fontSize: number
+  bgColor: string
+  itemList: Array<
+    {
+      name: string
+      unit: string
+    } & Link
+  >
+}
+
+declare interface PropertyArr {
+  name: string
+  checked: boolean
+  type: import('@/componentProperty').PropertyTypeEnum
+}
+
+declare interface VipType extends Partial<CommonStyleType> {
+  fontSize: number
+  bgColor: string
+  propertyArr: PropertyArr[]
+  vipStyle: number
+  propertyTextColor: string
+  propertyNumberColor: string
+  welcomeText: string
+  welcomeColor: string
+  subTitleText: string
+  subTitleColor: string
+  loginBtnText: string
+  btnTextColor: string
+  btnBgColor: string
+}
+
+declare interface IntegralType extends Partial<CommonStyleType> {
+  type: 1 | 2 // 组件样式
+  bgColor: string // 背景颜色
+  isShowIcon: boolean // 是否显示图标
+  icon: string // 图标
+  title: string // 标题
+  titleColor: string // 标题颜色
+  textColor: string // 文字颜色
+  buttonText: string // 按钮文字
+  btnTextColor: string // 按钮文字颜色
+  btnBgColor: string // 按钮背景颜色
+  rightIconColor: string // 右侧图标颜色
+}
+
+declare interface OnePictureType extends Partial<CommonStyleType> {
   height: number // 图片高度 1-500px
+  link: Link
 }
 
 declare interface SlideshowType extends Partial<CommonStyleType> {
   height: number // 轮播图高度 1-500px
   delay: number // 轮播间隔 1-10s
-  imgList: Array<Link>
+  imgList: Link[]
 }
 
 declare interface NavigationType extends Partial<CommonStyleType> {
@@ -45,6 +129,14 @@ declare interface NoticeType extends Partial<CommonStyleType> {
   leftBgColor: string // 左侧文字背景颜色
 }
 
+declare interface DividerType extends Partial<CommonStyleType> {
+  type: 1 | 2 | 3 // 分割线类型 1: 空白 2: 实线 3: 虚线
+  bgColor: string // 背景颜色
+  lineColor: string // 分割线颜色
+  lineSize: number // 分割线粗细 1-10px
+  height: number // 分割线高度 10-20px
+}
+
 declare interface CommonStyleType {
   radiusT: number // 上圆角 0-50
   radiusB: number // 下圆角 0-50
@@ -58,10 +150,12 @@ declare interface CommonStyleType {
   marginLRRange?: [number, number]
 }
 
-interface Link {
+declare interface Link {
   src: string // 图片地址
-  type: 1 //跳转类型
+  type: import('@/componentProperty').LinkTypeEnum // 跳转类型
   url: string // 跳转地址
+  urlName: string //
+  uuid: string
   appInfo?: {
     page: string
     appid: string

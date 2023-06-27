@@ -21,7 +21,11 @@ export default defineConfig({
     }),
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
-      resolvers: [ElementPlusResolver(), IconsResolver(), VantResolver()],
+      resolvers: [
+        ElementPlusResolver(),
+        IconsResolver()
+        // import.meta.env.MODE !== 'development' ? VantResolver() : () => null
+      ],
       dts: 'types/auto-import.d.ts'
     }),
     Components({
@@ -30,8 +34,8 @@ export default defineConfig({
         IconsResolver({
           enabledCollections: ['ep']
         }),
-        ElementPlusResolver(),
-        VantResolver()
+        ElementPlusResolver()
+        // import.meta.env.MODE !== 'development' ? VantResolver() : () => null
       ]
     }),
     Icons({

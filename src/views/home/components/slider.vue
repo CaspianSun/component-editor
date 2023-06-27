@@ -65,7 +65,7 @@ const handleClick = (item: ComponentItem) => {
           :title="items.title"
         >
           <template #title>
-            <span class="title">{{ items.title }}</span>
+            <span class="title">{{ items.title }}({{ items.componentsList.length }})</span>
           </template>
           <div class="list">
             <div

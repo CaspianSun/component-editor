@@ -1,30 +1,92 @@
+import {
+  generalStyle,
+  GroupEnum,
+  commonLink,
+  CubePictureTypeEnum,
+  LinkTypeEnum,
+  PropertyTypeEnum
+} from '@/utils/componentProperty'
+export { GroupEnum, CubePictureTypeEnum, LinkTypeEnum, PropertyTypeEnum }
 const componentProperties: Map<string, ComponentType> = new Map()
 
-export enum GroupEnum {
-  '基础组件' = 1
-}
+generalStyle<CubePictureType>(
+  componentProperties,
+  {
+    component: 'cubePicture',
+    cName: '图片魔方',
+    group: GroupEnum['基础组件'],
+    sort: 1
+  },
+  {
+    type: CubePictureTypeEnum['一行二个'],
+    imgList: Array(4)
+      .fill({})
+      .map(() => {
+        return { ...commonLink() }
+      }),
+    itemRadiusT: 0,
+    itemRadiusB: 0,
+    itemHeight: 120,
+    itemMargin: 0
+  }
+)
 
-const commonStyle: CommonStyleType = {
-  radiusT: 10, // 上圆角 0-50
-  radiusB: 10, // 下圆角 0-50
-  marginT: 10, // 上边距 0-50
-  marginB: 10, // 下边距 -100-50
-  marginLR: 15 // 左右边距 0-50
-}
+generalStyle<BalanceType>(
+  componentProperties,
+  {
+    component: 'balance',
+    cName: '我的余额',
+    group: GroupEnum['基础组件'],
+    sort: 2
+  },
+  {
+    type: 1,
+    bgColor: '#ffffff',
+    isShowIcon: true,
+    icon: '',
+    title: '我的余额',
+    titleColor: '#333333',
+    textColor: '#333333',
+    buttonText: '立即充值',
+    btnTextColor: '#ffffff',
+    btnBgColor: '#333333',
+    rightIconColor: '#666666',
+    link: commonLink(),
+    radiusTRange: [0, 40],
+    radiusBRange: [0, 40]
+  }
+)
 
-const generalStyle = <T extends AllComponentType>(set: Omit<Component<T>, 'setStyle'>, data: T) => {
-  componentProperties.set(set.component, {
-    component: set.component,
-    cName: set.cName,
-    group: set.group,
-    sort: set.sort ?? 0,
-    setStyle: {
-      ...commonStyle,
-      ...data
-    }
-  } as ComponentType)
-}
+generalStyle<IntegralType>(
+  componentProperties,
+  {
+    component: 'integral', // 组件名称
+    cName: '我的积分', // 组件中文名称
+    group: GroupEnum['基础组件'], // 组件分组
+    sort: 2
+  },
+  {
+    // 组件默认样式
+    type: 1,
+    bgColor: '#ffffff',
+    isShowIcon: true,
+    icon: '',
+    title: '我的积分',
+    titleColor: '#333333',
+    textColor: '#333333',
+    buttonText: '立即使用',
+    btnTextColor: '#ffffff',
+    btnBgColor: '#333333',
+    rightIconColor: '#666666',
+    // url: '',
+    // src: '',
+    radiusTRange: [0, 40],
+    radiusBRange: [0, 40]
+  }
+)
+
 generalStyle<OnePictureType>(
+  componentProperties,
   {
     component: 'onePicture',
     cName: '图片',
@@ -32,30 +94,29 @@ generalStyle<OnePictureType>(
   },
   {
     height: 220,
-    src: '',
-    type: 1,
-    url: ''
+    link: commonLink()
   }
 )
 
 generalStyle<SlideshowType>(
+  componentProperties,
   {
     component: 'slideshow',
     cName: '轮播图',
     group: GroupEnum['基础组件']
   },
   {
+    marginT: 0,
+    marginB: 0,
     height: 300,
     delay: 3,
     marginBRange: [-100, 50],
-    imgList: [
-      { src: '', type: 1, url: '' },
-      { src: '', type: 1, url: '' }
-    ]
+    imgList: [commonLink()]
   }
 )
 
 generalStyle<NavigationType>(
+  componentProperties,
   {
     component: 'navigation',
     cName: '导航',
@@ -77,15 +138,16 @@ generalStyle<NavigationType>(
     iconSize: 30,
     isShowIcon: true,
     isShowBorderBottom: true,
-    imgList: [
-      { src: '', type: 1, url: '', name: '导航1' },
-      { src: '', type: 1, url: '', name: '导航2' },
-      { src: '', type: 1, url: '', name: '导航3' }
-    ]
+    imgList: Array(4)
+      .fill('')
+      .map((item, index) => {
+        return { ...commonLink(), name: `导航${index + 1}` }
+      })
   }
 )
 
 generalStyle<NoticeType>(
+  componentProperties,
   {
     component: 'notice',
     cName: '公告',
@@ -103,6 +165,73 @@ generalStyle<NoticeType>(
     leftBgColor: '#ffffff',
     radiusBRange: [0, 20],
     radiusTRange: [0, 20]
+  }
+)
+
+generalStyle<PropertyType>(
+  componentProperties,
+  {
+    component: 'property',
+    cName: '资产组件',
+    group: GroupEnum['基础组件']
+  },
+  {
+    btnBgColor: '#333',
+    btnTextColor: '#fff',
+    bgColor: '#fff',
+    fontSize: 14,
+    itemList: [
+      { ...commonLink(), unit: '元', name: '我的余额' },
+      { ...commonLink(), unit: '分', name: '我的积分' },
+      { ...commonLink(), unit: '张', name: '我的优惠券' }
+    ]
+  }
+)
+
+generalStyle<VipType>(
+  componentProperties,
+  {
+    component: 'vip',
+    cName: '会员信息',
+    group: GroupEnum['基础组件']
+  },
+  {
+    bgColor: '#fff',
+    fontSize: 14,
+    propertyArr: [
+      { name: '余额', checked: true, type: PropertyTypeEnum['余额'] },
+      { name: '积分', checked: false, type: PropertyTypeEnum['积分'] },
+      { name: '优惠券', checked: false, type: PropertyTypeEnum['优惠券'] }
+    ],
+    vipStyle: 1,
+    propertyTextColor: '#000',
+    propertyNumberColor: '#000',
+    welcomeText: '欢迎光临，请登录',
+    welcomeColor: '#000',
+    subTitleText: '成为会员，享受更多会员权益',
+    subTitleColor: '#000',
+    loginBtnText: '立即登录',
+    btnTextColor: '#fff',
+    btnBgColor: '#000'
+  }
+)
+
+generalStyle<DividerType>(
+  componentProperties,
+  {
+    component: 'divider',
+    cName: '辅助分割',
+    group: GroupEnum['辅助组件']
+  },
+  {
+    type: 1,
+    bgColor: '#ffffff',
+    lineColor: '#999999',
+    lineSize: 1,
+    height: 20,
+    marginLR: 0,
+    marginT: 0,
+    marginB: 0
   }
 )
 

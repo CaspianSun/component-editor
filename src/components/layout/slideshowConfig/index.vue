@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { v4 as uuidv4 } from 'uuid'
 import { createCommonElement } from '@/components/layout/commonElement'
 const props = defineProps<{
   data: SlideshowType
@@ -13,7 +14,9 @@ const handleAddItem = () => {
   data.value.imgList.push({
     src: '',
     type: 1,
-    url: ''
+    url: '',
+    urlName: '',
+    uuid: uuidv4()
   })
 }
 </script>
@@ -35,12 +38,14 @@ const handleAddItem = () => {
               <div>图片大小不超过500kb。</div>
             </div>
             <div class="list">
-              <template v-for="(item, index) in data.imgList" :key="index">
+              <template v-for="(item, index) in data.imgList" :key="item.uuid">
                 <div class="list-item">
                   <div class="list-item-left">
                     <CommonSelectImg :src="item.src" @update:src="item.src = $event" />
                   </div>
-                  <div class="list-item__right"></div>
+                  <div class="list-item-right">
+                    <CommonSelectLink :link="item" />
+                  </div>
                   <div class="delete" @click.stop="handleDeleteItem(index)">
                     <ElIcon><IEpCircleCloseFilled /></ElIcon>
                   </div>
@@ -83,11 +88,16 @@ const handleAddItem = () => {
     }
     .list {
       &-item {
+        display: flex;
+        align-items: center;
         background-color: #f5f7fa;
         border-radius: 4px;
         padding: 10px;
         margin-bottom: 15px;
         position: relative;
+        &-right {
+          flex: 1;
+        }
         &:hover {
           .delete {
             display: block;

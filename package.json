@@ -5,8 +5,12 @@
   "license": "MIT",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
-    "dev": "vite --mode dev",
+    "dev": "cross-env NODE_ENV=development vite",
+    "prod": "cross-env NODE_ENV=production vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint src/**/*.{vue,ts} --fix"
@@ -16,7 +20,9 @@
     "@iconify-json/ep": "^1.1.10",
     "@types/file-saver": "^2.0.5",
     "@types/sortablejs": "^1.15.1",
+    "@types/uuid": "^9.0.2",
     "axios": "^1.4.0",
+    "cross-env": "^7.0.3",
     "element-plus": "^2.3.7",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
@@ -24,8 +30,9 @@
     "pinia": "^2.1.4",
     "sortablejs": "^1.15.0",
     "swiper": "^9.4.1",
-    "typescript": "^5.1.3",
+    "typescript": "5.0.4",
     "unplugin-icons": "^0.16.3",
+    "uuid": "^9.0.0",
     "vant": "^4.5.0",
     "vite-plugin-mock": "^3.0.0",
     "vue": "^3.3.4",

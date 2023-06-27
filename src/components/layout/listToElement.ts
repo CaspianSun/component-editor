@@ -5,27 +5,29 @@ import CommonSelectImg from '@/components/common/commonSelectImg/index.vue'
 import { ElColorPicker, ElInput, ElInputNumber, ElRadio, ElRadioGroup } from 'element-plus'
 
 export type ListType<T extends AllComponentType> = {
-  label: string
+  label: string // 一级标题
   item: ItemType<T>[]
   leftSpan?: number
   rightSpan?: number
 }
 
 type ItemType<T> = {
-  label: string
-  prop: keyof T
-  type: 'input' | 'number' | 'cNumber' | 'color' | 'radio' | 'cSelectImg'
-  leftSpan?: number
-  rightSpan?: number
+  label: string // 左侧标题
+  prop: keyof T // 对应的属性字段
+  type: 'input' | 'number' | 'cNumber' | 'color' | 'radio' | 'cSelectImg' // 可选的渲染类型
+  leftSpan?: number //
+  rightSpan?: number //
   input?: {
+    // input类型的配置
     maxlength?: number
   }
   commonNumber?: {
+    // commonNumber类型的配置
     min?: number
     max?: number
   }
-  radio?: RadioType[]
-  control?: ControlShowType<T> | ControlShowItemType<T>
+  radio?: RadioType[] // radio类型的配置
+  control?: ControlShowType<T> | ControlShowItemType<T> // 控制显示的配置 v-if
 }
 
 type RadioType = {

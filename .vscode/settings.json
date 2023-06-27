@@ -48,5 +48,6 @@
     ".eslintrc.cjs": ".eslintignore,prettier.config.cjs,.prettierignore,.editorconfig",
     "vite.config.ts": "tsconfig.json"
   },
-  "terminal.integrated.scrollback": 10000
+  "terminal.integrated.scrollback": 10000,
+  "cSpell.words": ["uuidv4"]
 }

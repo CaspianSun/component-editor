@@ -9,7 +9,7 @@ const CommonRender = createCommonElement(data.value)
 </script>
 
 <template>
-  <div class="slideshow-config">
+  <div class="one-picture-config">
     <div class="container">
       <CommonTitle title="轮播图" />
       <ElTabs v-model="activeTab" stretch>
@@ -22,9 +22,11 @@ const CommonRender = createCommonElement(data.value)
             <div class="list">
               <div class="list-item">
                 <div class="list-item-left">
-                  <CommonSelectImg :src="data.src" @update:src="data.src = $event" />
+                  <CommonSelectImg :src="data.link.src" @update:src="data.link.src = $event" />
                 </div>
-                <div class="list-item__right"></div>
+                <div class="list-item-right">
+                  <CommonSelectLink :link="data.link" />
+                </div>
               </div>
             </div>
           </CommonCard>
@@ -47,7 +49,7 @@ const CommonRender = createCommonElement(data.value)
 </template>
 
 <style lang="scss" scoped>
-.slideshow-config {
+.one-picture-config {
   .container {
     .tip {
       color: #909399;
@@ -64,6 +66,11 @@ const CommonRender = createCommonElement(data.value)
         padding: 10px;
         margin-bottom: 15px;
         position: relative;
+        display: flex;
+        align-items: center;
+        &-right {
+          flex: 1;
+        }
         &:hover {
           .delete {
             display: block;

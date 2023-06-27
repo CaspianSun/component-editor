@@ -2,15 +2,22 @@
 const props = withDefaults(
   defineProps<{
     title?: string
+    borderBottom?: boolean
   }>(),
   {
-    title: ''
+    title: '',
+    borderBottom: true
   }
 )
 </script>
 
 <template>
-  <div class="common-card">
+  <div
+    class="common-card"
+    :style="{
+      borderBottom: props.borderBottom ? '5px solid #f5f7fa' : 'none'
+    }"
+  >
     <div class="container">
       <div v-if="props.title" class="title">{{ props.title }}</div>
       <div class="content">
@@ -31,6 +38,5 @@ const props = withDefaults(
       margin-bottom: 15px;
     }
   }
-  border-bottom: 5px solid #f5f7fa;
 }
 </style>
