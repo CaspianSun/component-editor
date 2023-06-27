@@ -11,8 +11,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "prod": "cross-env NODE_ENV=production vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview",
+    "build": "vue-tsc --noEmit && vite build",
     "lint": "eslint src/**/*.{vue,ts} --fix"
   },
   "dependencies": {

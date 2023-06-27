@@ -45,8 +45,8 @@ const commonStyle: CommonStyleType = {
 }
 
 export const generalStyle = <T extends AllComponentType>(
-  componentProperties: Map<string, ComponentType>,
-  set: Omit<Component<T>, 'setStyle'>,
+  componentProperties: Map<string, ComponentProperty>,
+  set: Omit<ComponentProperty<T>, 'setStyle'>,
   data: T
 ) => {
   componentProperties.set(set.component, {
@@ -58,5 +58,5 @@ export const generalStyle = <T extends AllComponentType>(
       ...commonStyle,
       ...data
     }
-  } as ComponentType)
+  })
 }

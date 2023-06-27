@@ -85,7 +85,7 @@ const { data } = toRefs(props)
     overflow: hidden;
     .row {
       .item {
-        padding: 20px;
+        padding: 15px 10px 15px 15px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

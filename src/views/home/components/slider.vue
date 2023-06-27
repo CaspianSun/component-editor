@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
 import { useStore } from '@/store'
 import componentProperty, { GroupEnum } from '@/componentProperty'
@@ -41,9 +42,8 @@ const { components } = storeToRefs(dataStore)
 const handleClick = (item: ComponentItem) => {
   const component = componentProperty.get(item.component)
   if (component) {
-    const componentNum = components.value.map((v) => v.component === item.component).length
     const newComponent = _.cloneDeep(component)
-    newComponent.id = componentNum
+    newComponent.id = uuidv4()
     components.value.push(newComponent)
   } else {
     ElMessage({

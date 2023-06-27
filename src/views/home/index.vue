@@ -48,7 +48,6 @@ const handleClickPageSetup = () => {
       </div>
       <div class="right">
         <ElButton @click="handleClickPageSetup">页面设置</ElButton>
-        <!-- <el-button @click="">保存</el-button> -->
         <ElButton plain type="primary" @click="exportJSON">保存并发布</ElButton>
       </div>
     </section>

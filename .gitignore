@@ -22,3 +22,7 @@ yarn.lock
 *.sw?
 *.rar
 *.zip
+
+dist
+types/components.d.ts
+types/auto-import.d.ts

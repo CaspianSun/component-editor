@@ -22,7 +22,7 @@ const CommonRender = createCommonElement(data.value)
             <div class="list">
               <div class="list-item">
                 <div class="list-item-left">
-                  <CommonSelectImg :src="data.link.src" @update:src="data.link.src = $event" />
+                  <CommonSelectImg :src="data.src" @update:src="data.src = $event" />
                 </div>
                 <div class="list-item-right">
                   <CommonSelectLink :link="data.link" />

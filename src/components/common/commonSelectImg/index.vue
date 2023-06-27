@@ -3,12 +3,18 @@ import { selectImageKey } from '@/provider/index'
 const prop = defineProps<{
   src: string
 }>()
+watch(
+  () => prop.src,
+  (val) => {
+    src.value = val
+  }
+)
 const emit = defineEmits(['update:src'])
 const src = ref(prop.src)
-const selectImage = inject(selectImageKey)
-const handleClickChooseImage = () => {
-  if (selectImage) {
-    selectImage((imgUrl: string) => {
+const initSelectImage = inject(selectImageKey)
+const handleChooseImg = () => {
+  if (initSelectImage) {
+    initSelectImage((imgUrl: string) => {
       src.value = imgUrl
       emit('update:src', src.value)
     })
@@ -23,12 +29,12 @@ const handleDeleteImg = () => {
 <template>
   <div class="select-img">
     <template v-if="src">
-      <ElImage class="avatar" fit="cover" :preview-src-list="[src]" :src="src" />
+      <ElImage class="avatar" fit="contain" :preview-src-list="[src]" :src="src" />
       <div class="delete" @click.stop="handleDeleteImg">
         <ElIcon><IEpCircleCloseFilled /></ElIcon>
       </div>
     </template>
-    <ElIcon v-else class="select-img-icon" @click="handleClickChooseImage"><IEpPlus /></ElIcon>
+    <ElIcon v-else class="select-img-icon" @click="handleChooseImg"><IEpPlus /></ElIcon>
   </div>
 </template>
 
@@ -42,6 +48,7 @@ const handleDeleteImg = () => {
   cursor: pointer;
   position: relative;
   transition: var(--el-transition-duration-fast);
+  background-color: #ffffff;
   .avatar {
     width: 100%;
     height: 100%;
@@ -55,8 +62,6 @@ const handleDeleteImg = () => {
   }
   .el-image {
     border-radius: 6px;
-    width: 100%;
-    height: 100%;
   }
   .select-img-icon {
     border-radius: 6px;

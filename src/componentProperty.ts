@@ -7,7 +7,7 @@ import {
   PropertyTypeEnum
 } from '@/utils/componentProperty'
 export { GroupEnum, CubePictureTypeEnum, LinkTypeEnum, PropertyTypeEnum }
-const componentProperties: Map<string, ComponentType> = new Map()
+const componentProperties: Map<string, ComponentProperty> = new Map()
 
 generalStyle<CubePictureType>(
   componentProperties,
@@ -22,7 +22,7 @@ generalStyle<CubePictureType>(
     imgList: Array(4)
       .fill({})
       .map(() => {
-        return { ...commonLink() }
+        return { ...commonLink(), src: '' }
       }),
     itemRadiusT: 0,
     itemRadiusB: 0,
@@ -94,6 +94,7 @@ generalStyle<OnePictureType>(
   },
   {
     height: 220,
+    src: '',
     link: commonLink()
   }
 )
@@ -111,7 +112,12 @@ generalStyle<SlideshowType>(
     height: 300,
     delay: 3,
     marginBRange: [-100, 50],
-    imgList: [commonLink()]
+    imgList: [
+      {
+        ...commonLink(),
+        src: ''
+      }
+    ]
   }
 )
 
@@ -141,7 +147,7 @@ generalStyle<NavigationType>(
     imgList: Array(4)
       .fill('')
       .map((item, index) => {
-        return { ...commonLink(), name: `导航${index + 1}` }
+        return { ...commonLink(), src: '', name: `导航${index + 1}` }
       })
   }
 )

@@ -62,10 +62,7 @@ type ControlShowItemType<T> =
       value: keyof T
     }
 
-export function listToElement<T extends AllComponentType>(
-  data: SetStyleType<T>,
-  list: ListType<T>[]
-) {
+export function listToElement<T extends AllComponentType>(data: T, list: ListType<T>[]) {
   const node = () => {
     return list.map((listItem) => {
       return h(CommonCard, { title: listItem.label }, () => {
@@ -81,7 +78,7 @@ export function listToElement<T extends AllComponentType>(
 }
 // TODO 未完成，由control进行分组
 function handleControlShow<T extends AllComponentType>(
-  data: SetStyleType<T>,
+  data: T,
   control: ControlShowType<T> | ControlShowItemType<T> | undefined
 ): boolean {
   if (!control) return true
@@ -113,7 +110,7 @@ function handleControlShow<T extends AllComponentType>(
 }
 
 function generateDynamicItem<T extends AllComponentType>(
-  data: SetStyleType<T>,
+  data: T,
   list: ListType<T>,
   item: ItemType<T>
 ) {
@@ -149,7 +146,7 @@ const generateCell = <T extends AllComponentType>(
   )
 }
 
-const generateInput = <T extends AllComponentType>(data: SetStyleType<T>, item: ItemType<T>) => {
+const generateInput = <T extends AllComponentType>(data: T, item: ItemType<T>) => {
   return h(ElInput, {
     modelValue: data[item.prop] as string,
     'onUpdate:modelValue': (e: string) => ((data[item.prop] as string) = e),
@@ -159,7 +156,7 @@ const generateInput = <T extends AllComponentType>(data: SetStyleType<T>, item: 
   })
 }
 
-const generateRadio = <T extends AllComponentType>(data: SetStyleType<T>, item: ItemType<T>) => {
+const generateRadio = <T extends AllComponentType>(data: T, item: ItemType<T>) => {
   return h(
     ElRadioGroup,
     {
@@ -182,14 +179,14 @@ const generateRadio = <T extends AllComponentType>(data: SetStyleType<T>, item: 
   )
 }
 
-const generateColor = <T extends AllComponentType>(data: SetStyleType<T>, item: ItemType<T>) => {
+const generateColor = <T extends AllComponentType>(data: T, item: ItemType<T>) => {
   return h(ElColorPicker, {
     modelValue: data[item.prop] as string,
     'onUpdate:modelValue': (e: string | null) => ((data[item.prop] as string | null) = e)
   })
 }
 
-const generateNumber = <T extends AllComponentType>(data: SetStyleType<T>, item: ItemType<T>) => {
+const generateNumber = <T extends AllComponentType>(data: T, item: ItemType<T>) => {
   return h(ElInputNumber, {
     modelValue: data[item.prop] as number,
     'onUpdate:modelValue': (val: number | undefined) =>
@@ -202,10 +199,7 @@ const generateNumber = <T extends AllComponentType>(data: SetStyleType<T>, item:
   })
 }
 
-const generateCommonNumber = <T extends AllComponentType>(
-  data: SetStyleType<T>,
-  item: ItemType<T>
-) => {
+const generateCommonNumber = <T extends AllComponentType>(data: T, item: ItemType<T>) => {
   return h(CommonNumber, {
     label: item.label,
     number: data[item.prop] as number,
@@ -215,10 +209,7 @@ const generateCommonNumber = <T extends AllComponentType>(
   })
 }
 
-const generateCommonSelectImg = <T extends AllComponentType>(
-  data: SetStyleType<T>,
-  item: ItemType<T>
-) => {
+const generateCommonSelectImg = <T extends AllComponentType>(data: T, item: ItemType<T>) => {
   return h(CommonSelectImg, {
     src: data[item.prop] as string,
     'onUpdate:src': (e: string) => ((data[item.prop] as string) = e)

@@ -1,5 +1,5 @@
 export default {
-  base: '/',
+  base: '/low-code-editor',
   port: 3000,
   baseUrl: 'http://localhost:3000',
   outDir: 'dist',

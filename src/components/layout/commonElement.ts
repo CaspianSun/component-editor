@@ -14,7 +14,7 @@ type CommonNumbersType = Array<{
   show?: boolean
 }>
 
-export function createCommonElement(data: SetStyleType, list?: CommonNumberKeys[]) {
+export function createCommonElement(data: AllComponentType, list?: CommonNumberKeys[]) {
   const commonNumbers: CommonNumbersType = [
     {
       label: '上圆角',

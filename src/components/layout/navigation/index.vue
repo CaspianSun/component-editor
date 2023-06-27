@@ -8,6 +8,7 @@ const { data } = toRefs(props)
 <template>
   <div class="navigation">
     <div
+      class="container"
       :style="{
         background: data.bgColor,
         marginTop: data.marginT + 'px',
@@ -25,7 +26,7 @@ const { data } = toRefs(props)
         {{ data.title }}
       </div>
 
-      <section class="container">
+      <div>
         <div v-if="data.type == 2" class="column">
           <template v-for="(item, index) in data.imgList" :key="index">
             <div
@@ -98,7 +99,7 @@ const { data } = toRefs(props)
             </div>
           </template>
         </div>
-      </section>
+      </div>
     </div>
   </div>
 </template>
@@ -107,14 +108,14 @@ const { data } = toRefs(props)
 .navigation {
   position: relative;
   z-index: 20;
-  .title {
-    padding: 10px 15px 0;
-    font-size: 15px;
-    font-weight: 600;
-    color: #333;
-    font-family: PingFangSC-Medium, PingFang SC;
-  }
   .container {
+    .title {
+      padding: 10px 15px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      font-family: PingFangSC-Medium, PingFang SC;
+    }
     .column {
       display: flex;
       flex-direction: column;
@@ -136,20 +137,24 @@ const { data } = toRefs(props)
         .right {
           color: #999;
         }
+        &:last-child {
+          border-bottom: none !important;
+        }
       }
     }
     .row {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      .van-image {
+      padding: 0 0 15px 0;
+      van-icon {
         margin-bottom: 5px;
       }
       .list {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 15px 0;
+        margin: 15px 0 0;
         p {
           font-size: 12px;
           margin-top: 5px;

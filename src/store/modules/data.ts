@@ -11,7 +11,7 @@ export type PageSetup = {
 export default defineStore('backstageUser', {
   state() {
     return {
-      components: [] as ComponentType[],
+      components: [] as ComponentProperty[],
       activeComponentIndex: null as number | null,
       pageSetup: {
         title: '页面名称',

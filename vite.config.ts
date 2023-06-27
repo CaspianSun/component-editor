@@ -22,9 +22,9 @@ export default defineConfig({
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
       resolvers: [
-        ElementPlusResolver(),
-        IconsResolver()
-        // import.meta.env.MODE !== 'development' ? VantResolver() : () => null
+        IconsResolver(),
+        process.env.NODE_ENV !== 'development' ? ElementPlusResolver() : () => null,
+        process.env.NODE_ENV !== 'development' ? VantResolver() : () => null
       ],
       dts: 'types/auto-import.d.ts'
     }),
@@ -34,8 +34,8 @@ export default defineConfig({
         IconsResolver({
           enabledCollections: ['ep']
         }),
-        ElementPlusResolver()
-        // import.meta.env.MODE !== 'development' ? VantResolver() : () => null
+        process.env.NODE_ENV !== 'development' ? ElementPlusResolver() : () => null,
+        process.env.NODE_ENV !== 'development' ? VantResolver() : () => null
       ]
     }),
     Icons({

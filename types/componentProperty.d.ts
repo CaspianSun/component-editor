@@ -12,7 +12,11 @@ declare type AllComponentType =
 
 declare interface CubePictureType extends Partial<CommonStyleType> {
   type: import('@/componentProperty').CubePictureTypeEnum
-  imgList: Link[]
+  imgList: Array<
+    {
+      src: string
+    } & Link
+  >
   itemRadiusT: number // 元素上圆角 0-50
   itemRadiusB: number // 元素下圆角 0-50
   itemHeight: number // 图片高度 120-375px
@@ -85,13 +89,18 @@ declare interface IntegralType extends Partial<CommonStyleType> {
 
 declare interface OnePictureType extends Partial<CommonStyleType> {
   height: number // 图片高度 1-500px
+  src: string // 图片链接
   link: Link
 }
 
 declare interface SlideshowType extends Partial<CommonStyleType> {
   height: number // 轮播图高度 1-500px
   delay: number // 轮播间隔 1-10s
-  imgList: Link[]
+  imgList: Array<
+    {
+      src: string
+    } & Link
+  >
 }
 
 declare interface NavigationType extends Partial<CommonStyleType> {
@@ -112,6 +121,7 @@ declare interface NavigationType extends Partial<CommonStyleType> {
   isShowBorderBottom: boolean //是否显示下边框
   imgList: Array<
     {
+      src: string
       name: string
     } & Link
   >
@@ -123,7 +133,7 @@ declare interface NoticeType extends Partial<CommonStyleType> {
   type: 1 | 2 // 1: 垂直滚动 2: 横向滚动
   delay: number // 滚动间隔 1-10s
   leftType: 1 | 2 // 1: 文字 2: 图标
-  leftIcon: string // 图标 // TODO 图片链接
+  leftIcon: string // 图标
   leftText: string // 文字
   leftTextColor: string // 文字颜色
   leftBgColor: string // 左侧文字背景颜色
@@ -151,7 +161,6 @@ declare interface CommonStyleType {
 }
 
 declare interface Link {
-  src: string // 图片地址
   type: import('@/componentProperty').LinkTypeEnum // 跳转类型
   url: string // 跳转地址
   urlName: string //
@@ -163,14 +172,11 @@ declare interface Link {
   }
 }
 
-declare type SetStyleType<T = AllComponentType> = T
-
-declare interface Component<T> {
+declare interface ComponentProperty<T = AllComponentType> {
   component: string
   cName: string
   group: import('@/componentProperty').GroupEnum
-  setStyle: SetStyleType<T>
+  setStyle: T
   sort?: number
-  id?: number
+  id?: string
 }
-declare type ComponentType<T = AllComponentType> = Component<T>

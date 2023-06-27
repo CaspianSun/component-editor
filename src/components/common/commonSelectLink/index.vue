@@ -30,7 +30,7 @@ const handleChooseLick = () => {
 <template>
   <div class="select-link" @click="handleChooseLick">
     <template v-if="url">{{ LinkTypeEnum[type] }}-{{ urlName }}</template>
-    <template v-else><div>请选择点击跳转链接</div></template>
+    <template v-else><span style="color: #999999">请选择跳转链接</span></template>
   </div>
 </template>
 
