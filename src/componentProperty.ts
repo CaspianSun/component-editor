@@ -8,6 +8,9 @@ import {
 } from '@/utils/componentProperty'
 export { GroupEnum, CubePictureTypeEnum, LinkTypeEnum, PropertyTypeEnum }
 const componentProperties: Map<string, ComponentProperty> = new Map()
+/**
+ * 图标采用iconify icon-park
+ */
 
 generalStyle<CubePictureType>(
   componentProperties,
@@ -15,7 +18,8 @@ generalStyle<CubePictureType>(
     component: 'cubePicture',
     cName: '图片魔方',
     group: GroupEnum['基础组件'],
-    sort: 1
+    sort: 1,
+    icon: 'icon-park:waterfalls-v'
   },
   {
     type: CubePictureTypeEnum['一行二个'],
@@ -37,7 +41,8 @@ generalStyle<BalanceType>(
     component: 'balance',
     cName: '我的余额',
     group: GroupEnum['基础组件'],
-    sort: 2
+    sort: 2,
+    icon: 'icon-park:finance'
   },
   {
     type: 1,
@@ -63,7 +68,8 @@ generalStyle<IntegralType>(
     component: 'integral', // 组件名称
     cName: '我的积分', // 组件中文名称
     group: GroupEnum['基础组件'], // 组件分组
-    sort: 2
+    sort: 2,
+    icon: 'icon-park:financing'
   },
   {
     // 组件默认样式
@@ -90,7 +96,8 @@ generalStyle<OnePictureType>(
   {
     component: 'onePicture',
     cName: '图片',
-    group: GroupEnum['基础组件']
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:new-picture'
   },
   {
     height: 220,
@@ -104,7 +111,8 @@ generalStyle<SlideshowType>(
   {
     component: 'slideshow',
     cName: '轮播图',
-    group: GroupEnum['基础组件']
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:picture-album'
   },
   {
     marginT: 0,
@@ -126,7 +134,8 @@ generalStyle<NavigationType>(
   {
     component: 'navigation',
     cName: '导航',
-    group: GroupEnum['基础组件']
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:application-two'
   },
   {
     type: 1,
@@ -157,7 +166,8 @@ generalStyle<NoticeType>(
   {
     component: 'notice',
     cName: '公告',
-    group: GroupEnum['基础组件']
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:volume-notice'
   },
   {
     bgColor: '#ffffff',
@@ -179,7 +189,8 @@ generalStyle<PropertyType>(
   {
     component: 'property',
     cName: '资产组件',
-    group: GroupEnum['基础组件']
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:strongbox'
   },
   {
     btnBgColor: '#333',
@@ -199,7 +210,8 @@ generalStyle<VipType>(
   {
     component: 'vip',
     cName: '会员信息',
-    group: GroupEnum['基础组件']
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:vip-one'
   },
   {
     bgColor: '#fff',
@@ -227,7 +239,8 @@ generalStyle<DividerType>(
   {
     component: 'divider',
     cName: '辅助分割',
-    group: GroupEnum['辅助组件']
+    group: GroupEnum['辅助组件'],
+    icon: 'icon-park:division'
   },
   {
     type: 1,

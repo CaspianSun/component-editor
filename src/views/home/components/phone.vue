@@ -32,7 +32,14 @@ const deleteComponent = () => {
           'background-color': pageSetup.pageBg
         }"
       >
-        <HeaderTop :pageSetup="pageSetup" />
+        <div class="header">
+          <img src="@/assets/images/phoneTop.png" />
+          <template v-if="pageSetup.tabbarStyle == 1">
+            <div class="header-title">
+              {{ pageSetup.title }}
+            </div>
+          </template>
+        </div>
         <section class="content">
           <VueDraggable v-model="components" :animation="150" @update.stop="onUpdate">
             <template v-for="(item, index) in components" :key="item.id">
@@ -92,9 +99,33 @@ const deleteComponent = () => {
     margin: 45px auto;
     position: relative;
     overflow-x: visible;
-    .status-bar {
+
+    .header {
       width: 100%;
-      display: block;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      img {
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+        height: 88px;
+        top: 0;
+        z-index: 500;
+      }
+
+      .header-title {
+        font-weight: 700;
+        width: 100%;
+        height: 88px;
+        padding-top: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .content {

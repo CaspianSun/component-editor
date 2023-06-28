@@ -175,6 +175,7 @@ declare interface Link {
 declare interface ComponentProperty<T = AllComponentType> {
   component: string
   cName: string
+  icon?: string
   group: import('@/componentProperty').GroupEnum
   setStyle: T
   sort?: number

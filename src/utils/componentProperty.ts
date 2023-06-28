@@ -29,7 +29,6 @@ export enum PropertyTypeEnum {
 export const commonLink = (): Link => {
   return {
     url: '',
-    src: '',
     type: 0,
     urlName: '',
     uuid: uuidv4()
@@ -49,14 +48,17 @@ export const generalStyle = <T extends AllComponentType>(
   set: Omit<ComponentProperty<T>, 'setStyle'>,
   data: T
 ) => {
-  componentProperties.set(set.component, {
-    component: set.component,
-    cName: set.cName,
-    group: set.group,
-    sort: set.sort ?? 0,
-    setStyle: {
-      ...commonStyle,
-      ...data
-    }
-  })
+  componentProperties.set(
+    set.component,
+    Object.assign(
+      {
+        setStyle: {
+          ...commonStyle,
+          ...data
+        },
+        sort: 0
+      },
+      set
+    )
+  )
 }

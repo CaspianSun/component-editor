@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
 import { useStore } from '@/store'
 import componentProperty, { GroupEnum } from '@/componentProperty'
-
+import { Icon } from '@iconify/vue'
 interface ComponentItem {
   title: string
-  icon: string
+  icon: string | undefined
   component: string
 }
 
@@ -31,7 +31,7 @@ const data = Array.from(componentProperty.values())
     }
     acc[groupIndex !== -1 ? groupIndex : acc.length - 1].componentsList.push({
       title: cur.cName,
-      icon: '',
+      icon: cur.icon,
       component: cur.component
     })
     return acc
@@ -40,17 +40,10 @@ const data = Array.from(componentProperty.values())
 const { dataStore } = useStore()
 const { components } = storeToRefs(dataStore)
 const handleClick = (item: ComponentItem) => {
-  const component = componentProperty.get(item.component)
-  if (component) {
-    const newComponent = _.cloneDeep(component)
-    newComponent.id = uuidv4()
-    components.value.push(newComponent)
-  } else {
-    ElMessage({
-      message: `组件 ${item.title} 不存在`,
-      type: 'error'
-    })
-  }
+  const component = componentProperty.get(item.component) as ComponentProperty<AllComponentType>
+  const newComponent = _.cloneDeep(component)
+  newComponent.id = uuidv4()
+  components.value.push(newComponent)
 }
 </script>
 
@@ -69,12 +62,12 @@ const handleClick = (item: ComponentItem) => {
           </template>
           <div class="list">
             <div
-              v-for="(item, ind) in items.componentsList"
-              :key="ind"
+              v-for="item in items.componentsList"
+              :key="item.component"
               class="list-item"
               @click="handleClick(item)"
             >
-              <i v-if="item.icon" class="iconfont" :class="item.icon" />
+              <Icon v-if="item.icon" :icon="item.icon" style="font-size: 24px" />
               <p>{{ item.title }}</p>
             </div>
           </div>

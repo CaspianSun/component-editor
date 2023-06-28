@@ -49,5 +49,5 @@
     "vite.config.ts": "tsconfig.json"
   },
   "terminal.integrated.scrollback": 10000,
-  "cSpell.words": ["uuidv4"]
+  "cSpell.words": ["iconify", "sortablejs", "uuidv4"]
 }
