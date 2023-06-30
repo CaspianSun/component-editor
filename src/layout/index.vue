@@ -1,11 +1,7 @@
 <template>
   <div class="layout">
-    <section class="subject">
-      <router-view v-slot="{ Component }">
-        <transition name="layoutFade">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+    <section class="container">
+      <RouterView></RouterView>
     </section>
   </div>
 </template>
@@ -16,7 +12,7 @@
 .layout {
   width: 100%;
   height: 100%;
-  .subject {
+  .container {
     width: 100%;
     height: 100%;
     display: flex;

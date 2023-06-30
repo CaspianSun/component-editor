@@ -1,16 +1,7 @@
-import axios, {
-  AxiosRequestConfig,
-  AxiosInstance,
-  AxiosStatic,
-} from 'axios'
+import axios, { AxiosRequestConfig, AxiosInstance, AxiosStatic } from 'axios'
 import config from '@/config/index'
 
-const {
-  baseUrl,
-  statusName,
-  successCode,
-  messageName
-} = config
+const { baseUrl, statusName, successCode, messageName } = config
 
 class MyAxios {
   readonly axios: AxiosInstance
@@ -25,10 +16,7 @@ class MyAxios {
 
 const request = new MyAxios(axios, {
   baseURL: baseUrl,
-  timeout: 10000,
-  headers: {
-    Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJpZCI6Mn0sImlhdCI6MTY4NjUzOTE0NCwiZXhwIjoxNjg5MTY3MTQ0fQ.e4D22EPrKazukGoBZwV747dDeMHemEjH73VFoezZhgo'
-  }
+  timeout: 10000
 })
 
 request.axios.interceptors.request.use(

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useStore } from '@/store'
-import SelectImage from '@/components/selectImage/index.vue'
-import SelectLink from '@/components/selectLink/index.vue'
+import SelectImage from '@/components/select-img/index.vue'
+import SelectLink from '@/components/select-link/index.vue'
 import { selectImageKey, selectLinkKey } from '@/provider/index'
 const { dataStore } = useStore()
 const { components, activeComponentIndex } = storeToRefs(dataStore)

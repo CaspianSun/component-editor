@@ -5,7 +5,7 @@ import {
   CubePictureTypeEnum,
   LinkTypeEnum,
   PropertyTypeEnum
-} from '@/utils/componentProperty'
+} from '@/property/utils'
 export { GroupEnum, CubePictureTypeEnum, LinkTypeEnum, PropertyTypeEnum }
 const componentProperties: Map<string, ComponentProperty> = new Map()
 /**
@@ -84,8 +84,6 @@ generalStyle<IntegralType>(
     btnTextColor: '#ffffff',
     btnBgColor: '#333333',
     rightIconColor: '#666666',
-    // url: '',
-    // src: '',
     radiusTRange: [0, 40],
     radiusBRange: [0, 40]
   }

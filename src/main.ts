@@ -9,7 +9,8 @@ import 'element-plus/dist/index.css'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
-import components from '@/components/index'
+import Property from '@/property'
+import CommonComponents from '@/components/common'
 
 import './style/index.scss'
 
@@ -18,4 +19,4 @@ if (process.env.NODE_ENV === 'development') {
   app.use(ElementPlus).use(Vant)
 }
 
-app.use(Router).use(Pinia).use(components).mount('#app')
+app.use(Router).use(Pinia).use(Property).use(CommonComponents).mount('#app')
