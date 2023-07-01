@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 const activeTab = ref('1')
 const props = defineProps<{
-  data: DividerType
+  data: Divider
 }>()
 const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="integral-config">
+  <div class="divider-config">
     <div class="container">
       <CommonTitle title="辅助分割" />
       <ElTabs v-model="activeTab" stretch>
@@ -71,7 +71,7 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.integral-config {
+.divider-config {
   .container {
   }
 }

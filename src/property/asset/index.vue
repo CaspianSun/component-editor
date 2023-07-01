@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: PropertyType
+  data: Asset
 }>()
 const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="property">
+  <div class="asset">
     <div
       class="container"
       :style="{
@@ -78,7 +78,7 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.property {
+.asset {
   position: relative;
   z-index: 20;
   .container {

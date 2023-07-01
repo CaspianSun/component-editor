@@ -95,6 +95,7 @@ module.exports = {
         ],
         alphabetical: true //字母顺序
       }
-    ]
+    ],
+    complexity: ['error', 10]
   }
 }

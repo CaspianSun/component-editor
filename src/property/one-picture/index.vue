@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: OnePictureType
+  data: OnePicture
 }>()
 const { data } = toRefs(props)
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: NoticeType
+  data: Notice
 }>()
 const { data } = toRefs(props)
 </script>

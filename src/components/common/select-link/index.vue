@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LinkTypeEnum } from '@/componentProperty'
+import { LinkEnum } from '@/componentProperty'
 import { selectLinkKey } from '@/provider/index'
 const prop = defineProps<{
   link: Link
@@ -28,7 +28,7 @@ const handleChooseLick = () => {
 
 <template>
   <div class="select-link" @click="handleChooseLick">
-    <template v-if="url">{{ LinkTypeEnum[type] }}-{{ urlName }}</template>
+    <template v-if="url">{{ LinkEnum[type] }}-{{ urlName }}</template>
     <template v-else><span style="color: #999999">请选择跳转链接</span></template>
   </div>
 </template>

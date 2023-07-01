@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { createCommonElement } from '@/property/commonElement'
 const props = defineProps<{
-  data: OnePictureType
+  data: OnePicture
 }>()
 const activeTab = ref('1')
 const { data } = toRefs(props)

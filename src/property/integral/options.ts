@@ -1,6 +1,6 @@
-import {ListType, ControlShowItemMethod} from '@/property/listToElement'
+import {List, ControlShowItemMethod} from '@/property/listToElement'
 
-export const list: ListType<IntegralType>[] = [
+export const list: List<Integral>[] = [
   {
     label: '组件设置',
     item: [
@@ -8,7 +8,7 @@ export const list: ListType<IntegralType>[] = [
         label: '样式',
         type: 'ElRadio',
         prop: 'type',
-        radio: [
+        config: [
           {label: '样式一', value: 1},
           {label: '样式二', value: 2}
         ]
@@ -22,7 +22,7 @@ export const list: ListType<IntegralType>[] = [
         label: '图标',
         type: 'ElRadio',
         prop: 'isShowIcon',
-        radio: [
+        config: [
           {label: '显示', value: true},
           {label: '不显示', value: false}
         ]
@@ -37,7 +37,7 @@ export const list: ListType<IntegralType>[] = [
         label: '标题',
         type: 'ElInput',
         prop: 'title',
-        input: {maxlength: 8}
+        config: {maxlength: 8}
       },
       {
         label: '标题文字颜色',
@@ -63,7 +63,7 @@ export const list: ListType<IntegralType>[] = [
         label: '按钮文字',
         type: 'ElInput',
         prop: 'buttonText',
-        input: {maxlength: 4},
+        config: {maxlength: 4},
         control: {method: ControlShowItemMethod.equality, value: ['type', 1]}
       },
       {

@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { createCommonElement } from '@/property/commonElement'
 const props = defineProps<{
-  data: SlideshowType
+  data: Slideshow
 }>()
 const activeTab = ref('1')
 const { data } = toRefs(props)

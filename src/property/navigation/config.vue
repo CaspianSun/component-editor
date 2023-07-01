@@ -4,7 +4,7 @@ import { createCommonElement } from '@/property/commonElement'
 import { listToElement } from '@/property/listToElement'
 import { list } from './options'
 const props = defineProps<{
-  data: NavigationType
+  data: Navigation
 }>()
 const { data } = toRefs(props)
 const activeTab = ref('1')

@@ -27,6 +27,7 @@
     "pinia": "^2.1.4",
     "sortablejs": "^1.15.0",
     "swiper": "^9.4.1",
+    "ts-pattern": "^5.0.1",
     "typescript": "5.0.4",
     "unplugin-icons": "^0.16.3",
     "uuid": "^9.0.0",

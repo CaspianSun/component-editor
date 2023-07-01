@@ -4,11 +4,11 @@ import { listToElement } from '@/property/listToElement'
 import { list } from './options'
 const activeTab = ref('1')
 const props = defineProps<{
-  data: IntegralType
+  data: Integral
 }>()
 const { data } = toRefs(props)
-const CommonRender = createCommonElement(data.value) // 通用配置项渲染函数
-const ListConfigRender = listToElement(data.value, list) // 配置列表渲染函数
+const CommonRender = createCommonElement(data.value)
+const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
@@ -21,7 +21,6 @@ const ListConfigRender = listToElement(data.value, list) // 配置列表渲染�
         </ElTabPane>
         <ElTabPane label="样式设置" name="2">
           <CommonCard>
-            <!-- 通用配置项渲染 -->
             <CommonRender />
           </CommonCard>
         </ElTabPane>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: NavigationType
+  data: Navigation
 }>()
 const { data } = toRefs(props)
 </script>

@@ -5,7 +5,7 @@ import { listToElement } from '@/property/listToElement'
 import { list } from './options'
 import { ElMessage } from 'element-plus'
 const props = defineProps<{
-  data: VipType
+  data: Vip
 }>()
 const { data } = toRefs(props)
 const activeTab = ref('1')
@@ -29,7 +29,7 @@ watch(
 </script>
 
 <template>
-  <div class="navigation-config">
+  <div class="vip-config">
     <div class="container">
       <CommonTitle title="资产组件" />
       <ElTabs v-model="activeTab" stretch>
@@ -99,7 +99,7 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-.navigation-config {
+.vip-config {
   .container {
     .property {
       .item {

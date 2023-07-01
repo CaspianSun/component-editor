@@ -40,7 +40,7 @@ const data = Array.from(componentProperty.values())
 const { dataStore } = useStore()
 const { components } = storeToRefs(dataStore)
 const handleClick = (item: ComponentItem) => {
-  const component = componentProperty.get(item.component) as ComponentProperty<AllComponentType>
+  const component = componentProperty.get(item.component) as ComponentProperty<AllProperty>
   const newComponent = _.cloneDeep(component)
   newComponent.id = uuidv4()
   components.value.push(newComponent)

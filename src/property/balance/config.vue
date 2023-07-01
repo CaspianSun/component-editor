@@ -4,7 +4,7 @@ import { listToElement } from '@/property/listToElement'
 import { list } from './options'
 const activeTab = ref('1')
 const props = defineProps<{
-  data: BalanceType
+  data: Balance
 }>()
 const { data } = toRefs(props)
 const CommonRender = createCommonElement(data.value) // 通用配置项渲染函数
@@ -12,7 +12,7 @@ const ListConfigRender = listToElement(data.value, list) // 配置列表渲染�
 </script>
 
 <template>
-  <div class="integral-config">
+  <div class="balance-config">
     <div class="container">
       <CommonTitle title="我的积分" />
       <ElTabs v-model="activeTab" stretch>
@@ -30,7 +30,7 @@ const ListConfigRender = listToElement(data.value, list) // 配置列表渲染�
 </template>
 
 <style lang="scss" scoped>
-.integral-config {
+.balance-config {
   .container {
   }
 }

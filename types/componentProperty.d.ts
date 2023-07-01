@@ -1,17 +1,17 @@
-declare type AllComponentType =
-  | SlideshowType
-  | NavigationType
-  | NoticeType
-  | OnePictureType
-  | IntegralType
-  | PropertyType
-  | BalanceType
-  | DividerType
-  | CubePictureType
-  | VipType
+declare type AllProperty =
+  | Slideshow
+  | Navigation
+  | Notice
+  | OnePicture
+  | Integral
+  | Asset
+  | Balance
+  | Divider
+  | CubePicture
+  | Vip
 
-declare interface CubePictureType extends Partial<CommonStyleType> {
-  type: import('@/componentProperty').CubePictureTypeEnum
+declare interface CubePicture extends Partial<CommonStyle> {
+  type: import('@/componentProperty').CubePictureEnum
   imgList: Array<
     {
       src: string
@@ -23,7 +23,7 @@ declare interface CubePictureType extends Partial<CommonStyleType> {
   itemMargin: number // 图片间距 0-20px
 }
 
-declare interface BalanceType extends Partial<CommonStyleType> {
+declare interface Balance extends Partial<CommonStyle> {
   type: 1 | 2 // 组件样式
   bgColor: string // 背景颜色
   isShowIcon: boolean // 是否显示图标
@@ -38,7 +38,7 @@ declare interface BalanceType extends Partial<CommonStyleType> {
   link: Link
 }
 
-declare interface PropertyType extends Partial<CommonStyleType> {
+declare interface Asset extends Partial<CommonStyle> {
   btnBgColor: string
   btnTextColor: string
   fontSize: number
@@ -51,16 +51,10 @@ declare interface PropertyType extends Partial<CommonStyleType> {
   >
 }
 
-declare interface PropertyArr {
-  name: string
-  checked: boolean
-  type: import('@/componentProperty').PropertyTypeEnum
-}
-
-declare interface VipType extends Partial<CommonStyleType> {
+declare interface Vip extends Partial<CommonStyle> {
   fontSize: number
   bgColor: string
-  propertyArr: PropertyArr[]
+  propertyArr: { name: string; checked: boolean; type: import('@/componentProperty').AssetEnum }[]
   vipStyle: number
   propertyTextColor: string
   propertyNumberColor: string
@@ -73,7 +67,7 @@ declare interface VipType extends Partial<CommonStyleType> {
   btnBgColor: string
 }
 
-declare interface IntegralType extends Partial<CommonStyleType> {
+declare interface Integral extends Partial<CommonStyle> {
   type: 1 | 2 // 组件样式
   bgColor: string // 背景颜色
   isShowIcon: boolean // 是否显示图标
@@ -87,13 +81,13 @@ declare interface IntegralType extends Partial<CommonStyleType> {
   rightIconColor: string // 右侧图标颜色
 }
 
-declare interface OnePictureType extends Partial<CommonStyleType> {
+declare interface OnePicture extends Partial<CommonStyle> {
   height: number // 图片高度 1-500px
   src: string // 图片链接
   link: Link
 }
 
-declare interface SlideshowType extends Partial<CommonStyleType> {
+declare interface Slideshow extends Partial<CommonStyle> {
   height: number // 轮播图高度 1-500px
   delay: number // 轮播间隔 1-10s
   imgList: Array<
@@ -103,7 +97,7 @@ declare interface SlideshowType extends Partial<CommonStyleType> {
   >
 }
 
-declare interface NavigationType extends Partial<CommonStyleType> {
+declare interface Navigation extends Partial<CommonStyle> {
   type: 1 | 2 //图文导航类型 1: 横向 2: 纵向
   iconRadius: number //图标圆角 0-50
   rowNum: number //行数 1-3
@@ -127,7 +121,7 @@ declare interface NavigationType extends Partial<CommonStyleType> {
   >
 }
 
-declare interface NoticeType extends Partial<CommonStyleType> {
+declare interface Notice extends Partial<CommonStyle> {
   bgColor: string // 背景颜色
   textColor: string // 文字颜色
   type: 1 | 2 // 1: 垂直滚动 2: 横向滚动
@@ -139,7 +133,7 @@ declare interface NoticeType extends Partial<CommonStyleType> {
   leftBgColor: string // 左侧文字背景颜色
 }
 
-declare interface DividerType extends Partial<CommonStyleType> {
+declare interface Divider extends Partial<CommonStyle> {
   type: 1 | 2 | 3 // 分割线类型 1: 空白 2: 实线 3: 虚线
   bgColor: string // 背景颜色
   lineColor: string // 分割线颜色
@@ -147,7 +141,7 @@ declare interface DividerType extends Partial<CommonStyleType> {
   height: number // 分割线高度 10-20px
 }
 
-declare interface CommonStyleType {
+declare interface CommonStyle {
   radiusT: number // 上圆角 0-50
   radiusB: number // 下圆角 0-50
   marginT: number // 上边距 0-50
@@ -161,7 +155,7 @@ declare interface CommonStyleType {
 }
 
 declare interface Link {
-  type: import('@/componentProperty').LinkTypeEnum // 跳转类型
+  type: import('@/componentProperty').LinkEnum // 跳转类型
   url: string // 跳转地址
   urlName: string //
   uuid: string
@@ -172,7 +166,7 @@ declare interface Link {
   }
 }
 
-declare interface ComponentProperty<T = AllComponentType> {
+declare interface ComponentProperty<T = AllProperty> {
   component: string
   cName: string
   icon?: string

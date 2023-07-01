@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: BalanceType
+  data: Balance
 }>()
 const { data } = toRefs(props)
 </script>

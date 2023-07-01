@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: IntegralType
+  data: Integral
 }>()
 const { data } = toRefs(props)
 </script>

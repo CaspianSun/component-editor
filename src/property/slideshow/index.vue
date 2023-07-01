@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: SlideshowType
+  data: Slideshow
 }>()
 const { data } = toRefs(props)
 </script>

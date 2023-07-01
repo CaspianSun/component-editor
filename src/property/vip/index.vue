@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: VipType
+  data: Vip
 }>()
 const { data } = toRefs(props)
 const format = () => ''

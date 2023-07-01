@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LinkTypeEnum } from '@/componentProperty'
+import { LinkEnum } from '@/componentProperty'
 const dialogVisible = ref(false)
 
 const baseLink = reactive<{ title: string; item: LinkItem[] }[]>([
@@ -34,7 +34,7 @@ const baseLink = reactive<{ title: string; item: LinkItem[] }[]>([
 const handleChangeType = (val: string) => {
   activeType.value = +val
 }
-const activeType = ref<LinkTypeEnum>(1)
+const activeType = ref<LinkEnum>(1)
 
 export interface LinkItem {
   name: string
@@ -42,7 +42,7 @@ export interface LinkItem {
 }
 
 export interface CallbackLinkItem extends LinkItem {
-  type: LinkTypeEnum
+  type: LinkEnum
 }
 
 export type callbackType = (item: CallbackLinkItem) => void

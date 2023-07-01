@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { CubePictureTypeEnum } from '@/componentProperty'
+import { CubePictureEnum } from '@/componentProperty'
 const props = defineProps<{
-  data: CubePictureType
+  data: CubePicture
 }>()
 const { data } = toRefs(props)
 const itemBorderRadius = computed(() => {
@@ -24,7 +24,7 @@ const twoItemWidth = computed(() => {
         borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`
       }"
     >
-      <template v-if="data.type <= CubePictureTypeEnum['一行四个']">
+      <template v-if="data.type <= CubePictureEnum['一行四个']">
         <VanRow class="row" :gutter="data.itemMargin">
           <template v-for="index of data.type + 2" :key="index">
             <VanCol :span="24 / (data.type + 2)">
@@ -61,7 +61,7 @@ const twoItemWidth = computed(() => {
           </template>
         </VanRow>
       </template>
-      <template v-else-if="data.type === CubePictureTypeEnum['二左二右']">
+      <template v-else-if="data.type === CubePictureEnum['二左二右']">
         <VanRow class="row" :gutter="data.itemMargin">
           <template v-for="index of 4" :key="index">
             <VanCol :span="12">
@@ -94,7 +94,7 @@ const twoItemWidth = computed(() => {
           </template>
         </VanRow>
       </template>
-      <template v-else-if="data.type === CubePictureTypeEnum['一左二右']">
+      <template v-else-if="data.type === CubePictureEnum['一左二右']">
         <VanRow class="row" :gutter="data.itemMargin">
           <VanCol :span="12">
             <div
@@ -153,7 +153,7 @@ const twoItemWidth = computed(() => {
           </VanCol>
         </VanRow>
       </template>
-      <template v-else-if="data.type === CubePictureTypeEnum['一上两下']">
+      <template v-else-if="data.type === CubePictureEnum['一上两下']">
         <div class="row">
           <div
             class="row-item"

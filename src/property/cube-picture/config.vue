@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { CubePictureTypeEnum } from '@/componentProperty'
+import { CubePictureEnum } from '@/componentProperty'
 import { createCommonElement } from '@/property/commonElement'
 const activeTab = ref('1')
 const props = defineProps<{
-  data: CubePictureType
+  data: CubePicture
 }>()
-const typeLength = Object.keys(CubePictureTypeEnum).length / 2
+const typeLength = Object.keys(CubePictureEnum).length / 2
 const { data } = toRefs(props)
 const CommonRender = createCommonElement(data.value, ['marginT', 'marginB', 'marginLR']) // 通用配置项渲染函数
 
@@ -33,11 +33,11 @@ const handleUpdateImgSrc = (src: string) => {
           <CommonCard title="组件设置">
             <ElRadioGroup v-model="data.type" @change="handleChangeType">
               <template v-for="index of typeLength" :key="index">
-                <ElRadio :label="index - 1">{{ CubePictureTypeEnum[index - 1] }}</ElRadio>
+                <ElRadio :label="index - 1">{{ CubePictureEnum[index - 1] }}</ElRadio>
               </template>
             </ElRadioGroup>
             <div class="wrapper">
-              <template v-if="data.type <= CubePictureTypeEnum['一行四个']">
+              <template v-if="data.type <= CubePictureEnum['一行四个']">
                 <VanRow class="row">
                   <template v-for="index of data.type + 2" :key="index">
                     <VanCol :span="24 / (data.type + 2)">
@@ -63,7 +63,7 @@ const handleUpdateImgSrc = (src: string) => {
                   </template>
                 </VanRow>
               </template>
-              <template v-else-if="data.type === CubePictureTypeEnum['二左二右']">
+              <template v-else-if="data.type === CubePictureEnum['二左二右']">
                 <VanRow class="row">
                   <template v-for="index of 4" :key="index">
                     <VanCol :span="12">
@@ -84,7 +84,7 @@ const handleUpdateImgSrc = (src: string) => {
                   </template>
                 </VanRow>
               </template>
-              <template v-else-if="data.type === CubePictureTypeEnum['一左二右']">
+              <template v-else-if="data.type === CubePictureEnum['一左二右']">
                 <VanRow class="row">
                   <VanCol :span="12">
                     <div
@@ -121,7 +121,7 @@ const handleUpdateImgSrc = (src: string) => {
                   </VanCol>
                 </VanRow>
               </template>
-              <template v-else-if="data.type === CubePictureTypeEnum['一上两下']">
+              <template v-else-if="data.type === CubePictureEnum['一上两下']">
                 <div class="row">
                   <div
                     class="row-item"

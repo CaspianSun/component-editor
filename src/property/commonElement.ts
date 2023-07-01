@@ -2,20 +2,20 @@ import { h } from 'vue'
 import CommonNumber from '@/components/common/number/index.vue'
 
 type CommonNumberKeys = {
-  [K in keyof CommonStyleType]: CommonStyleType[K] extends number ? K : never
-}[keyof CommonStyleType] extends infer U
+  [K in keyof CommonStyle]: CommonStyle[K] extends number ? K : never
+}[keyof CommonStyle] extends infer U
   ? Exclude<U, undefined>
   : never
 
-type CommonNumbersType = Array<{
+interface CommonNumbers {
   label: string
   prop: CommonNumberKeys
   range?: [number, number]
   show?: boolean
-}>
+}
 
-export function createCommonElement(data: AllComponentType, list?: CommonNumberKeys[]) {
-  const commonNumbers: CommonNumbersType = [
+export function createCommonElement(data: AllProperty, list?: CommonNumberKeys[]) {
+  const commonNumbers: CommonNumbers[] = [
     {
       label: '上圆角',
       prop: 'radiusT',

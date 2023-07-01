@@ -28,7 +28,7 @@ watch(
 </script>
 
 <template>
-  <CommonCell class="cell" :label="props.label">
+  <div class="cell">
     <ElSlider v-model="number" :max="props.max" :min="props.min" size="small" />
     <ElInput
       :max="props.max"
@@ -45,11 +45,14 @@ watch(
     >
       <template #append>px</template>
     </ElInput>
-  </CommonCell>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .cell {
+  display: flex;
+  align-items: center;
+  width: 100%;
   :deep(.el-input) {
     margin-left: 20px;
     width: 120px;

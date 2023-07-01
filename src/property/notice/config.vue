@@ -3,7 +3,7 @@ import { createCommonElement } from '@/property/commonElement'
 import { listToElement } from '@/property/listToElement'
 import { list } from './options'
 const props = defineProps<{
-  data: NoticeType
+  data: Notice
 }>()
 const { data } = toRefs(props)
 const activeTab = ref('1')
@@ -12,7 +12,7 @@ const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
-  <div class="navigation-config">
+  <div class="notice-config">
     <div class="container">
       <CommonTitle title="图文导航" />
       <ElTabs v-model="activeTab" stretch>
@@ -30,42 +30,8 @@ const ListConfigRender = listToElement(data.value, list)
 </template>
 
 <style lang="scss" scoped>
-.navigation-config {
+.notice-config {
   .container {
-    .tip {
-      color: #909399;
-      font-size: 12px;
-      margin-bottom: 10px;
-      > div:not(:last-child) {
-        margin-bottom: 3px;
-      }
-    }
-    .list {
-      &-item {
-        background-color: #f5f7fa;
-        border-radius: 4px;
-        padding: 10px;
-        margin-bottom: 15px;
-        position: relative;
-        &:hover {
-          .delete {
-            display: block;
-          }
-        }
-        .delete {
-          position: absolute;
-          top: -7px;
-          right: -7px;
-          display: none;
-          .el-icon {
-            font-size: 18px;
-            border-radius: 50%;
-            padding: 2px;
-            cursor: pointer;
-          }
-        }
-      }
-    }
   }
 }
 </style>

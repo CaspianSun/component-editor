@@ -3,7 +3,7 @@ import { createCommonElement } from '@/property/commonElement'
 import { listToElement } from '@/property/listToElement'
 import { list } from './options'
 const props = defineProps<{
-  data: PropertyType
+  data: Asset
 }>()
 const { data } = toRefs(props)
 const activeTab = ref('1')
@@ -12,7 +12,7 @@ const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
-  <div class="navigation-config">
+  <div class="asset-config">
     <div class="container">
       <CommonTitle title="资产组件" />
       <ElTabs v-model="activeTab" stretch>
@@ -22,7 +22,7 @@ const ListConfigRender = listToElement(data.value, list)
             <div class="list">
               <template v-for="(item, index) in data.itemList" :key="index">
                 <div class="list-item">
-                  <div class="list-item__right">
+                  <div class="list-item-right">
                     <CommonCell label="名称" :left-span="4" :right-span="20">
                       <ElInput
                         v-model="item.name"
@@ -52,16 +52,8 @@ const ListConfigRender = listToElement(data.value, list)
 </template>
 
 <style lang="scss" scoped>
-.navigation-config {
+.asset-config {
   .container {
-    .tip {
-      color: #909399;
-      font-size: 12px;
-      margin-bottom: 10px;
-      > div:not(:last-child) {
-        margin-bottom: 3px;
-      }
-    }
     .list {
       &-item {
         background-color: #f5f7fa;
@@ -69,21 +61,6 @@ const ListConfigRender = listToElement(data.value, list)
         padding: 10px;
         margin-bottom: 15px;
         position: relative;
-        &:hover {
-          .delete {
-            display: block;
-          }
-        }
-        &__right-item {
-          display: flex;
-          margin: 4px 0;
-          span {
-            display: flex;
-            min-width: 80px;
-            align-items: center;
-            justify-content: flex-end;
-          }
-        }
       }
     }
   }

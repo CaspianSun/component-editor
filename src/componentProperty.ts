@@ -2,17 +2,14 @@ import {
   generalStyle,
   GroupEnum,
   commonLink,
-  CubePictureTypeEnum,
-  LinkTypeEnum,
-  PropertyTypeEnum
+  CubePictureEnum,
+  LinkEnum,
+  AssetEnum
 } from '@/property/utils'
-export { GroupEnum, CubePictureTypeEnum, LinkTypeEnum, PropertyTypeEnum }
+export { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum }
 const componentProperties: Map<string, ComponentProperty> = new Map()
-/**
- * 图标采用iconify icon-park
- */
 
-generalStyle<CubePictureType>(
+generalStyle<CubePicture>(
   componentProperties,
   {
     component: 'cubePicture',
@@ -22,7 +19,7 @@ generalStyle<CubePictureType>(
     icon: 'icon-park:waterfalls-v'
   },
   {
-    type: CubePictureTypeEnum['一行二个'],
+    type: CubePictureEnum['一行二个'],
     imgList: Array(4)
       .fill({})
       .map(() => {
@@ -35,7 +32,7 @@ generalStyle<CubePictureType>(
   }
 )
 
-generalStyle<BalanceType>(
+generalStyle<Balance>(
   componentProperties,
   {
     component: 'balance',
@@ -62,7 +59,7 @@ generalStyle<BalanceType>(
   }
 )
 
-generalStyle<IntegralType>(
+generalStyle<Integral>(
   componentProperties,
   {
     component: 'integral', // 组件名称
@@ -89,7 +86,7 @@ generalStyle<IntegralType>(
   }
 )
 
-generalStyle<OnePictureType>(
+generalStyle<OnePicture>(
   componentProperties,
   {
     component: 'onePicture',
@@ -104,7 +101,7 @@ generalStyle<OnePictureType>(
   }
 )
 
-generalStyle<SlideshowType>(
+generalStyle<Slideshow>(
   componentProperties,
   {
     component: 'slideshow',
@@ -127,7 +124,7 @@ generalStyle<SlideshowType>(
   }
 )
 
-generalStyle<NavigationType>(
+generalStyle<Navigation>(
   componentProperties,
   {
     component: 'navigation',
@@ -159,7 +156,7 @@ generalStyle<NavigationType>(
   }
 )
 
-generalStyle<NoticeType>(
+generalStyle<Notice>(
   componentProperties,
   {
     component: 'notice',
@@ -182,10 +179,10 @@ generalStyle<NoticeType>(
   }
 )
 
-generalStyle<PropertyType>(
+generalStyle<Asset>(
   componentProperties,
   {
-    component: 'property',
+    component: 'asset',
     cName: '资产组件',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:strongbox'
@@ -203,7 +200,7 @@ generalStyle<PropertyType>(
   }
 )
 
-generalStyle<VipType>(
+generalStyle<Vip>(
   componentProperties,
   {
     component: 'vip',
@@ -215,9 +212,9 @@ generalStyle<VipType>(
     bgColor: '#fff',
     fontSize: 14,
     propertyArr: [
-      { name: '余额', checked: true, type: PropertyTypeEnum['余额'] },
-      { name: '积分', checked: false, type: PropertyTypeEnum['积分'] },
-      { name: '优惠券', checked: false, type: PropertyTypeEnum['优惠券'] }
+      { name: '余额', checked: true, type: AssetEnum['余额'] },
+      { name: '积分', checked: false, type: AssetEnum['积分'] },
+      { name: '优惠券', checked: false, type: AssetEnum['优惠券'] }
     ],
     vipStyle: 1,
     propertyTextColor: '#000',
@@ -232,7 +229,7 @@ generalStyle<VipType>(
   }
 )
 
-generalStyle<DividerType>(
+generalStyle<Divider>(
   componentProperties,
   {
     component: 'divider',

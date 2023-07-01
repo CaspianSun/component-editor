@@ -1,6 +1,6 @@
-import {ListType, ControlShowItemMethod, ControlShowMethod} from '@/property/listToElement'
+import {List, ControlShowItemMethod} from '@/property/listToElement'
 
-export const list: ListType<NoticeType>[] = [
+export const list: List<Notice>[] = [
   {
     label: '组件设置',
     item: [
@@ -8,13 +8,13 @@ export const list: ListType<NoticeType>[] = [
         label: '滚动方向',
         type: 'ElRadio',
         prop: 'type',
-        radio: [{label: '垂直', value: 1}]
+        config: [{label: '垂直', value: 1}]
       },
       {
         label: '滚动间隔',
         type: 'ElNumber',
         prop: 'delay',
-        commonNumber: {min: 1, max: 10}
+        config: {min: 1, max: 10}
       },
       {
         label: '文字颜色',
@@ -35,7 +35,7 @@ export const list: ListType<NoticeType>[] = [
         label: '样式',
         type: 'ElRadio',
         prop: 'leftType',
-        radio: [
+        config: [
           {label: '文字', value: 1},
           {label: '图标', value: 2}
         ]
@@ -44,7 +44,7 @@ export const list: ListType<NoticeType>[] = [
         label: '文字',
         type: 'ElInput',
         prop: 'leftText',
-        input: {maxlength: 4},
+        config: {maxlength: 4},
         control: {method: ControlShowItemMethod.equality, value: ['leftType', 1]}
       },
       {

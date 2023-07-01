@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  data: DividerType
+  data: Divider
 }>()
 const { data } = toRefs(props)
 </script>

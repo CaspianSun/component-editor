@@ -6,7 +6,7 @@ const activeTab = ref('1')
 </script>
 
 <template>
-  <div class="page-setup">
+  <div class="page-setup-config">
     <div class="container">
       <CommonTitle title="页面设置" />
       <ElTabs v-model="activeTab" stretch>
@@ -36,7 +36,7 @@ const activeTab = ref('1')
 </template>
 
 <style lang="scss" scoped>
-.page-setup {
+.page-setup-config {
   .container {
     width: 100%;
     height: 100%;
