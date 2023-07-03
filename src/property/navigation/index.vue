@@ -107,7 +107,7 @@ const { data } = toRefs(props)
 <style lang="scss" scoped>
 .navigation {
   position: relative;
-  z-index: 20;
+  z-index: 10;
   .container {
     .title {
       padding: 10px 15px 0;

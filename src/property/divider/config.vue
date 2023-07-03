@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import { createCommonElement } from '@/property/commonElement'
 const activeTab = ref('1')
 const props = defineProps<{
   data: Divider
 }>()
 const { data } = toRefs(props)
+const CommonRender = createCommonElement(data.value, ['marginT', 'marginB', 'marginLR'])
 </script>
 
 <template>
@@ -48,21 +50,7 @@ const { data } = toRefs(props)
         </ElTabPane>
         <ElTabPane label="样式设置" name="2">
           <CommonCard>
-            <CommonNumber
-              label="上间距"
-              :number="data.marginT"
-              @update:number="data.marginT = $event"
-            />
-            <CommonNumber
-              label="下间距"
-              :number="data.marginB"
-              @update:number="data.marginB = $event"
-            />
-            <CommonNumber
-              label="左右间距"
-              :number="data.marginLR"
-              @update:number="data.marginLR = $event"
-            />
+            <CommonRender />
           </CommonCard>
         </ElTabPane>
       </ElTabs>

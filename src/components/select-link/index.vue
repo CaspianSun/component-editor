@@ -45,13 +45,13 @@ export interface CallbackLinkItem extends LinkItem {
   type: LinkEnum
 }
 
-export type callbackType = (item: CallbackLinkItem) => void
+export type Callback = (item: CallbackLinkItem) => void
 
-let callbackFun: callbackType | null = null
+let callbackFun: Callback | null = null
 
-export type initSelectLinkType = (callback: callbackType) => void
+export type InitSelectLink = (callback: Callback) => void
 
-const initSelectLink = (callback: callbackType) => {
+const initSelectLink = (callback: Callback) => {
   callbackFun = callback
   dialogVisible.value = true
 }

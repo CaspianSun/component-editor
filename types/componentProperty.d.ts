@@ -2,7 +2,7 @@ declare type AllProperty =
   | Slideshow
   | Navigation
   | Notice
-  | OnePicture
+  | HotPicture
   | Integral
   | Asset
   | Balance
@@ -81,10 +81,9 @@ declare interface Integral extends Partial<CommonStyle> {
   rightIconColor: string // 右侧图标颜色
 }
 
-declare interface OnePicture extends Partial<CommonStyle> {
-  height: number // 图片高度 1-500px
+declare interface HotPicture extends Partial<CommonStyle> {
   src: string // 图片链接
-  link: Link
+  hotpots: Array<import('@/components/hotpotEdit/index.vue').HotpotsListItem>
 }
 
 declare interface Slideshow extends Partial<CommonStyle> {

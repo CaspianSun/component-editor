@@ -40,7 +40,7 @@ const { data } = toRefs(props)
 <style lang="scss" scoped>
 .slideshow {
   position: relative;
-  z-index: 10;
+  z-index: 5;
   .container {
     overflow: hidden;
 

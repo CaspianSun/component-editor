@@ -61,13 +61,14 @@ const handleAddItem = () => {
         <ElTabPane label="样式设置" name="2">
           <CommonCard>
             <CommonRender />
-            <CommonNumber
-              label="高度"
-              :max="500"
-              :min="1"
-              :number="data.height"
-              @update:number="data.height = $event"
-            />
+            <CommonCell label="高度">
+              <CommonNumber
+                :max="500"
+                :min="1"
+                :number="data.height"
+                @update:number="data.height = $event"
+              />
+            </CommonCell>
           </CommonCard>
         </ElTabPane>
       </ElTabs>

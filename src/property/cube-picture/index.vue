@@ -20,8 +20,7 @@ const twoItemWidth = computed(() => {
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
         marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
-        borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`
+        marginRight: data.marginLR + 'px'
       }"
     >
       <template v-if="data.type <= CubePictureEnum['一行四个']">
@@ -214,11 +213,14 @@ const twoItemWidth = computed(() => {
 
 <style lang="scss" scoped>
 .cube-picture {
+  position: relative;
+  z-index: 10;
   .container {
     overflow: hidden;
     .row {
       width: 100%;
       &-item {
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;

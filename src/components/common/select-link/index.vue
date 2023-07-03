@@ -16,31 +16,34 @@ watch(
 )
 const initSelectLink = inject(selectLinkKey)
 const handleChooseLick = () => {
-  if (initSelectLink) {
-    initSelectLink((item: import('@/components/select-link/index.vue').CallbackLinkItem) => {
-      url.value = item.pagePath
-      urlName.value = item.name
-      type.value = item.type
-    })
-  }
+  initSelectLink?.((item: import('@/components/select-link/index.vue').CallbackLinkItem) => {
+    url.value = item.pagePath
+    urlName.value = item.name
+    type.value = item.type
+  })
 }
 </script>
 
 <template>
-  <div class="select-link" @click="handleChooseLick">
-    <template v-if="url">{{ LinkEnum[type] }}-{{ urlName }}</template>
-    <template v-else><span style="color: #999999">请选择跳转链接</span></template>
-  </div>
+  <slot>
+    <div class="container">
+      <template v-if="url">{{ LinkEnum[type] }}-{{ urlName }}</template>
+      <template v-else><span style="color: #999999">请选择跳转链接</span></template>
+    </div>
+  </slot>
 </template>
 
 <style lang="scss" scoped>
 .select-link {
-  cursor: pointer;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
   flex: 1;
-  padding: 10px 15px;
-  background-color: #fff;
+  cursor: pointer;
+  .container {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #fff;
+  }
 }
 </style>

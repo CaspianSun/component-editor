@@ -13,12 +13,10 @@ const emit = defineEmits(['update:src'])
 const src = ref(prop.src)
 const initSelectImage = inject(selectImageKey)
 const handleChooseImg = () => {
-  if (initSelectImage) {
-    initSelectImage((imgUrl: string) => {
-      src.value = imgUrl
-      emit('update:src', src.value)
-    })
-  }
+  initSelectImage?.((imgUrl: string) => {
+    src.value = imgUrl
+    emit('update:src', src.value)
+  })
 }
 const handleDeleteImg = () => {
   src.value = ''

@@ -81,7 +81,7 @@ const format = () => ''
 <style lang="scss" scoped>
 .vip {
   position: relative;
-  z-index: 20;
+  z-index: 10;
   .container {
     overflow: hidden;
     .row {

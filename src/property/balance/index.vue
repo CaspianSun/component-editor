@@ -21,15 +21,14 @@ const { data } = toRefs(props)
       <VanCell :border="false" center :style="{ background: data.bgColor }">
         <template v-if="data.isShowIcon" #icon>
           <template v-if="data.icon">
-            <VanIcon :name="data.icon" size="22" style="margin-right: 5px" />
+            <div style="width: 22px; height: 22px; margin-right: 5px">
+              <VanIcon :name="data.icon" size="22" />
+            </div>
           </template>
           <template v-else>
-            <VanIcon
-              :color="data.titleColor"
-              name="balance-pay"
-              size="22"
-              style="margin-right: 5px"
-            />
+            <div style="width: 22px; height: 22px; margin-right: 5px">
+              <VanIcon :color="data.titleColor" name="balance-pay" size="22" />
+            </div>
           </template>
         </template>
         <template #title>

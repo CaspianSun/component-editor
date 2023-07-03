@@ -1,5 +1,6 @@
 import { h } from 'vue'
 import CommonNumber from '@/components/common/number/index.vue'
+import CommonCell from '@/components/common/cell/index.vue'
 
 type CommonNumberKeys = {
   [K in keyof CommonStyle]: CommonStyle[K] extends number ? K : never
@@ -49,15 +50,22 @@ export function createCommonElement(data: AllProperty, list?: CommonNumberKeys[]
   ]
   const node = commonNumbers.map(({ label, prop, range, show }) => {
     if (show) {
-      return h(CommonNumber, {
-        max: range?.[1] || 50,
-        min: range?.[0] || 0,
-        number: data[prop],
-        label,
-        'onUpdate:number': (val: number) => {
-          data[prop] = val
-        }
-      })
+      return h(
+        CommonCell,
+        {
+          label: label
+        },
+        () =>
+          h(CommonNumber, {
+            max: range?.[1] || 50,
+            min: range?.[0] || 0,
+            number: data[prop],
+            label,
+            'onUpdate:number': (val: number) => {
+              data[prop] = val
+            }
+          })
+      )
     }
   })
 

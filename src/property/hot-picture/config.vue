@@ -1,11 +1,18 @@
 <script lang="ts" setup>
 import { createCommonElement } from '@/property/commonElement'
+import { hotpotsEditKey } from '@/provider'
+import { ElMessage } from 'element-plus'
 const props = defineProps<{
-  data: OnePicture
+  data: HotPicture
 }>()
 const activeTab = ref('1')
 const { data } = toRefs(props)
 const CommonRender = createCommonElement(data.value)
+const initSelectImage = inject(hotpotsEditKey)
+const handleShowHotpotEdit = () => {
+  if (!data.value.src) return ElMessage.warning('请选择图片')
+  initSelectImage?.(data.value.src, data.value.hotpots)
+}
 </script>
 
 <template>
@@ -24,8 +31,8 @@ const CommonRender = createCommonElement(data.value)
                 <div class="list-item-left">
                   <CommonSelectImg :src="data.src" @update:src="data.src = $event" />
                 </div>
-                <div class="list-item-right">
-                  <CommonSelectLink :link="data.link" />
+                <div class="lis-item-right">
+                  <ElButton @click="handleShowHotpotEdit">热区编辑</ElButton>
                 </div>
               </div>
             </div>
@@ -34,13 +41,6 @@ const CommonRender = createCommonElement(data.value)
         <ElTabPane label="样式设置" name="2">
           <CommonCard>
             <CommonRender />
-            <CommonNumber
-              label="高度"
-              :max="500"
-              :min="1"
-              :number="data.height"
-              @update:number="data.height = $event"
-            />
           </CommonCard>
         </ElTabPane>
       </ElTabs>

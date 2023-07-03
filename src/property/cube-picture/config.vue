@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 const typeLength = Object.keys(CubePictureEnum).length / 2
 const { data } = toRefs(props)
-const CommonRender = createCommonElement(data.value, ['marginT', 'marginB', 'marginLR']) // 通用配置项渲染函数
+const CommonRender = createCommonElement(data.value, ['marginT', 'marginB', 'marginLR'])
 
 const twoItemWidth = computed(() => {
   return ((750 - data.value.itemMargin) / 2 - (data.value.marginLR ?? 0) * 2).toFixed()
@@ -175,29 +175,27 @@ const handleUpdateImgSrc = (src: string) => {
             </div>
           </CommonCard>
           <CommonCard title="元素设置">
-            <CommonNumber
-              label="上圆角"
-              :number="data.itemRadiusT"
-              @update:number="data.itemRadiusT = $event"
-            />
-            <CommonNumber
-              label="下圆角"
-              :number="data.itemRadiusB"
-              @update:number="data.itemRadiusB = $event"
-            />
-            <CommonNumber
-              label="内间距"
-              :max="20"
-              :number="data.itemMargin"
-              @update:number="data.itemMargin = $event"
-            />
-            <CommonNumber
-              label="最小组件高度"
-              :max="375"
-              :min="120"
-              :number="data.itemHeight"
-              @update:number="data.itemHeight = $event"
-            />
+            <CommonCell label="上圆角">
+              <CommonNumber :number="data.itemRadiusT" @update:number="data.itemRadiusT = $event" />
+            </CommonCell>
+            <CommonCell label="下圆角">
+              <CommonNumber :number="data.itemRadiusB" @update:number="data.itemRadiusB = $event" />
+            </CommonCell>
+            <CommonCell label="内间距">
+              <CommonNumber
+                :max="20"
+                :number="data.itemMargin"
+                @update:number="data.itemMargin = $event"
+              />
+            </CommonCell>
+            <CommonCell label="最小组件高度">
+              <CommonNumber
+                :max="375"
+                :min="120"
+                :number="data.itemHeight"
+                @update:number="data.itemHeight = $event"
+              />
+            </CommonCell>
           </CommonCard>
         </ElTabPane>
         <ElTabPane label="样式设置" name="2">

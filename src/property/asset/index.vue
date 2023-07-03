@@ -80,7 +80,7 @@ const { data } = toRefs(props)
 <style lang="scss" scoped>
 .asset {
   position: relative;
-  z-index: 20;
+  z-index: 10;
   .container {
     overflow: hidden;
     .row {

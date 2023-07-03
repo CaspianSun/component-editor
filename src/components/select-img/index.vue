@@ -10,8 +10,7 @@ import {
   ImgListItem,
   GroupListItem
 } from '@/api'
-import type { UploadProps } from 'element-plus'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage, UploadProps } from 'element-plus'
 const dialogVisible = ref(false)
 const groupList = ref<GroupListItem[]>([])
 const total = ref(0)
@@ -136,13 +135,13 @@ const handleClickConfirm = async () => {
     handleClickClose()
   }
 }
-export type callbackType = (imgUrl: string) => void
+export type Callback = (imgUrl: string) => void
 
-let callbackFun: callbackType | null = null
+let callbackFun: Callback | null = null
 
-export type initSelectImageType = (callback: callbackType) => void
+export type InitSelectImage = (callback: Callback) => void
 
-const initSelectImage = async (callback: callbackType) => {
+const initSelectImage = async (callback: Callback) => {
   callbackFun = callback
   await getGroupList()
   await getImgList()

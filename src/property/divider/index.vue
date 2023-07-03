@@ -46,6 +46,8 @@ const { data } = toRefs(props)
 
 <style lang="scss" scoped>
 .divider {
+  position: relative;
+  z-index: 10;
   .container {
     .empty {
       width: 100%;

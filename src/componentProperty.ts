@@ -7,6 +7,7 @@ import {
   AssetEnum
 } from '@/property/utils'
 export { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum }
+import { v4 as uuidv4 } from 'uuid'
 const componentProperties: Map<string, ComponentProperty> = new Map()
 
 generalStyle<CubePicture>(
@@ -86,18 +87,27 @@ generalStyle<Integral>(
   }
 )
 
-generalStyle<OnePicture>(
+generalStyle<HotPicture>(
   componentProperties,
   {
-    component: 'onePicture',
-    cName: '图片',
+    component: 'hotPicture',
+    cName: '图片热区',
     group: GroupEnum['基础组件'],
+    sort: 1,
     icon: 'icon-park:new-picture'
   },
   {
-    height: 220,
     src: '',
-    link: commonLink()
+    hotpots: [
+      {
+        id: uuidv4(),
+        link: commonLink(),
+        top: 0,
+        left: 0,
+        width: 100,
+        height: 100
+      }
+    ]
   }
 )
 
