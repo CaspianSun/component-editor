@@ -4,6 +4,11 @@ import VueDraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 import { LinkEnum } from '@/componentProperty'
 import _ from 'lodash'
+import { ElMessage } from 'element-plus'
+import SelectLink from '@/components/select-link/index.vue'
+
+const selectLinkRef = ref<InstanceType<typeof SelectLink> | null>(null)
+
 const dialogVisible = ref(false)
 
 const handleClickClose = () => {
@@ -41,10 +46,20 @@ const src = ref('')
 const hotpots = ref<HotpotsListItem[]>([])
 export type InitHotpotEdit = (url: string, list: HotpotsListItem[]) => void
 const initHotpotEdit = (url: string, list: HotpotsListItem[]) => {
-  if (!url) return
+  if (!url) return ElMessage.warning('请选择图片')
   src.value = url
   hotpots.value = list
   dialogVisible.value = true
+}
+
+const handleSelectLink = (link: Link) => {
+  selectLinkRef.value?.initSelectLink?.(
+    (item: import('@/components/select-link/index.vue').CallbackLinkItem) => {
+      link.url = item.pagePath
+      link.urlName = item.name
+      link.type = item.type
+    }
+  )
 }
 
 defineExpose({
@@ -82,12 +97,12 @@ defineExpose({
           :resizable="true"
         >
           <div class="drag-item">
-            <CommonSelectLink :link="item.link">
+            <div class="link" @click="handleSelectLink(item.link)">
               <span v-if="item.link.url">
                 {{ LinkEnum[item.link.type] }}-{{ item.link.urlName }}
               </span>
               <span v-else>选择链接</span>
-            </CommonSelectLink>
+            </div>
           </div>
         </VueDraggableResizable>
       </template>
@@ -98,6 +113,7 @@ defineExpose({
       <ElButton @click="addHotpot">添加热区({{ hotpots.length }}/10)</ElButton>
       <ElButton type="primary" @click="handleClickClose">保存</ElButton>
     </div>
+    <SelectLink ref="selectLinkRef" />
   </ElDialog>
 </template>
 
@@ -127,6 +143,9 @@ defineExpose({
   }
   .drag-item {
     text-align: center;
+    .link {
+      cursor: pointer;
+    }
   }
 }
 .bottom {

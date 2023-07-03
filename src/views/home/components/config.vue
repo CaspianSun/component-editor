@@ -27,8 +27,11 @@ onMounted(() => {
 </script>
 
 <template>
+  <SelectImage ref="selectImageRef" />
+  <SelectLink ref="selectLinkRef" />
+  <HotpotsEdit ref="hotpotsEditRef" />
   <div class="config">
-    <template v-if="selectImageRef && selectLinkRef">
+    <template v-if="selectImageRef && selectLinkRef && HotpotsEdit">
       <Transition mode="out-in" name="slide-up">
         <component
           :is="activeComponent.component + 'Config'"
@@ -38,9 +41,6 @@ onMounted(() => {
       </Transition>
     </template>
   </div>
-  <SelectImage ref="selectImageRef" />
-  <SelectLink ref="selectLinkRef" />
-  <HotpotsEdit ref="hotpotsEditRef" />
 </template>
 
 <style lang="scss" scoped>

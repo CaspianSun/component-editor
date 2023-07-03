@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import { createCommonElement } from '@/property/commonElement'
 import { hotpotsEditKey } from '@/provider'
-import { ElMessage } from 'element-plus'
 const props = defineProps<{
   data: HotPicture
 }>()
 const activeTab = ref('1')
 const { data } = toRefs(props)
 const CommonRender = createCommonElement(data.value)
-const initSelectImage = inject(hotpotsEditKey)
+const initHotpotsEdit = inject(hotpotsEditKey)
 const handleShowHotpotEdit = () => {
-  if (!data.value.src) return ElMessage.warning('请选择图片')
-  initSelectImage?.(data.value.src, data.value.hotpots)
+  initHotpotsEdit?.(data.value.src, data.value.hotpots)
 }
 </script>
 
