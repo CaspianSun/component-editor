@@ -7,9 +7,12 @@ const props = defineProps<{
 const activeTab = ref('1')
 const { data } = toRefs(props)
 const CommonRender = createCommonElement(data.value)
+const imageWidth = computed(() => {
+  return 375 - (data.value.marginLR || 0) * 2
+})
 const initHotpotsEdit = inject(hotpotsEditKey)
 const handleShowHotpotEdit = () => {
-  initHotpotsEdit?.(data.value.src, data.value.hotpots)
+  initHotpotsEdit?.(data.value.src, data.value.hotpots, imageWidth.value)
 }
 </script>
 

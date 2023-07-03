@@ -44,9 +44,11 @@ const addHotpot = () => {
 }
 const src = ref('')
 const hotpots = ref<HotpotsListItem[]>([])
-export type InitHotpotEdit = (url: string, list: HotpotsListItem[]) => void
-const initHotpotEdit = (url: string, list: HotpotsListItem[]) => {
+const imageWidth = ref(375)
+export type InitHotpotEdit = (url: string, list: HotpotsListItem[], width: number) => void
+const initHotpotEdit = (url: string, list: HotpotsListItem[], width: number) => {
   if (!url) return ElMessage.warning('请选择图片')
+  imageWidth.value = width
   src.value = url
   hotpots.value = list
   dialogVisible.value = true
@@ -78,7 +80,12 @@ defineExpose({
     @close="handleClickClose"
   >
     <div class="top"></div>
-    <div class="container">
+    <div
+      class="container"
+      :style="{
+        width: `${imageWidth * 2}px`
+      }"
+    >
       <template v-for="(item, index) in hotpots" :key="index">
         <VueDraggableResizable
           v-if="imgLoaded"
@@ -119,6 +126,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .container {
+  margin: 0 auto;
   width: 750px;
   min-height: 500px;
   height: auto;
