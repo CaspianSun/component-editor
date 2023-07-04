@@ -12,7 +12,9 @@ const imageWidth = computed(() => {
 })
 const initHotpotsEdit = inject(hotpotsEditKey)
 const handleShowHotpotEdit = () => {
-  initHotpotsEdit?.(data.value.src, data.value.hotpots, imageWidth.value)
+  initHotpotsEdit?.(data.value.src, data.value.hotpots, imageWidth.value, (list) => {
+    data.value.hotpots = list
+  })
 }
 </script>
 

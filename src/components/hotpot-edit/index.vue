@@ -44,15 +44,25 @@ const addHotpot = () => {
 }
 const src = ref('')
 const hotpots = ref<HotpotsListItem[]>([])
+const originHotpots = ref<HotpotsListItem[]>([])
 const imageWidth = ref(375)
-export type InitHotpotEdit = (url: string, list: HotpotsListItem[], width: number) => void
-const initHotpotEdit = (url: string, list: HotpotsListItem[], width: number) => {
+export type Callback = (list: HotpotsListItem[]) => void
+let callbackFun: Callback | null = null
+const initHotpotEdit = (
+  url: string,
+  list: HotpotsListItem[],
+  width: number,
+  callback: Callback
+) => {
   if (!url) return ElMessage.warning('请选择图片')
+  callbackFun = callback
+  originHotpots.value = list
   imageWidth.value = width
   src.value = url
-  hotpots.value = list
+  hotpots.value = _.cloneDeep(list)
   dialogVisible.value = true
 }
+export type InitHotpotEdit = typeof initHotpotEdit
 
 const handleSelectLink = (link: Link) => {
   selectLinkRef.value?.initSelectLink?.(
@@ -64,6 +74,29 @@ const handleSelectLink = (link: Link) => {
   )
 }
 
+const changeHotpot = (
+  data: { x: number; y: number; w?: number; h?: number },
+  item: HotpotsListItem
+) => {
+  const newData = {
+    left: data.x,
+    top: data.y,
+    width: data.w ?? item.width,
+    height: data.h ?? item.height
+  }
+  Object.assign(item, newData)
+}
+
+const handleClickSave = () => {
+  callbackFun?.(hotpots.value)
+  dialogVisible.value = false
+}
+
+const changeActiveIndex = (index: number) => {
+  activeIndex.value = index
+}
+const containerRef = ref<HTMLElement | null>(null)
+
 defineExpose({
   initHotpotEdit
 })
@@ -74,13 +107,14 @@ defineExpose({
     v-model="dialogVisible"
     append-to-body
     :close-on-click-modal="false"
+    destroy-on-close
     lock-scroll
     title="热区编辑"
     width="800px"
     @close="handleClickClose"
   >
-    <div class="top"></div>
     <div
+      ref="containerRef"
       class="container"
       :style="{
         width: `${imageWidth * 2}px`
@@ -88,21 +122,27 @@ defineExpose({
     >
       <template v-for="(item, index) in hotpots" :key="index">
         <VueDraggableResizable
-          v-if="imgLoaded"
-          v-model:h="item.height"
-          v-model:w="item.width"
-          v-model:x="item.left"
-          v-model:y="item.top"
+          v-if="imgLoaded && containerRef"
           :active="activeIndex == index"
           classNameDraggable="item"
           :draggable="true"
-          :initH="item.width"
-          :initW="item.height"
+          :h="item.height"
+          :handles="['tl', 'tm', 'mr', 'br', 'bm', 'bl', 'ml']"
+          :index="item.id"
           :min-h="50"
           :min-w="50"
           :parent="true"
           :resizable="true"
+          :w="item.width"
+          :x="item.left"
+          :y="item.top"
+          @activated="changeActiveIndex(index)"
+          @drag-end="changeHotpot($event, item)"
+          @resize-end="changeHotpot($event, item)"
         >
+          <div v-if="activeIndex == index" class="delete">
+            <IEpCircleCloseFilled @click="hotpots.splice(index, 1)" />
+          </div>
           <div class="drag-item">
             <div class="link" @click="handleSelectLink(item.link)">
               <span v-if="item.link.url">
@@ -118,7 +158,7 @@ defineExpose({
     </div>
     <div class="bottom">
       <ElButton @click="addHotpot">添加热区({{ hotpots.length }}/10)</ElButton>
-      <ElButton type="primary" @click="handleClickClose">保存</ElButton>
+      <ElButton type="primary" @click="handleClickSave">保存</ElButton>
     </div>
     <SelectLink ref="selectLinkRef" />
   </ElDialog>
@@ -126,9 +166,8 @@ defineExpose({
 
 <style lang="scss" scoped>
 .container {
-  margin: 0 auto;
   width: 750px;
-  min-height: 500px;
+  margin: 0 auto;
   height: auto;
   display: flex;
   align-items: center;
@@ -148,6 +187,13 @@ defineExpose({
     justify-content: center;
     color: #fff;
     cursor: move;
+  }
+  .delete {
+    color: #000;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    z-index: 1;
   }
   .drag-item {
     text-align: center;
