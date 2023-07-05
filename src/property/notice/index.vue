@@ -45,6 +45,9 @@ const { data } = toRefs(props)
             :autoplay="data.delay * 1000"
             class="notice-swipe"
             :show-indicators="false"
+            :style="{
+              color: data.textColor
+            }"
             vertical
           >
             <VanSwipeItem>公告1</VanSwipeItem>

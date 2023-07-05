@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {
   generalStyle,
   GroupEnum,
@@ -10,8 +11,30 @@ export { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum }
 import { v4 as uuidv4 } from 'uuid'
 const componentProperties: Map<string, ComponentProperty> = new Map()
 
-generalStyle<CubePicture>(
-  componentProperties,
+const generalStyleCurry = generalStyle(componentProperties)
+
+generalStyleCurry<CubePicture>(
+  {
+    component: 'cubePicture',
+    cName: '图片魔方',
+    group: GroupEnum['基础组件'],
+    sort: 1,
+    icon: 'icon-park:waterfalls-v'
+  },
+  {
+    type: CubePictureEnum['一行二个'],
+    imgList: Array(4)
+      .fill({})
+      .map(() => {
+        return { ...commonLink(), src: '' }
+      }),
+    itemRadiusT: 0,
+    itemRadiusB: 0,
+    itemHeight: 120,
+    itemMargin: 0
+  }
+)
+generalStyleCurry<CubePicture>(
   {
     component: 'cubePicture',
     cName: '图片魔方',
@@ -33,8 +56,7 @@ generalStyle<CubePicture>(
   }
 )
 
-generalStyle<Balance>(
-  componentProperties,
+generalStyleCurry<Balance>(
   {
     component: 'balance',
     cName: '我的余额',
@@ -60,8 +82,7 @@ generalStyle<Balance>(
   }
 )
 
-generalStyle<Integral>(
-  componentProperties,
+generalStyleCurry<Integral>(
   {
     component: 'integral', // 组件名称
     cName: '我的积分', // 组件中文名称
@@ -87,8 +108,7 @@ generalStyle<Integral>(
   }
 )
 
-generalStyle<HotPicture>(
-  componentProperties,
+generalStyleCurry<HotPicture>(
   {
     component: 'hotPicture',
     cName: '图片热区',
@@ -111,8 +131,7 @@ generalStyle<HotPicture>(
   }
 )
 
-generalStyle<Slideshow>(
-  componentProperties,
+generalStyleCurry<Slideshow>(
   {
     component: 'slideshow',
     cName: '轮播图',
@@ -134,8 +153,7 @@ generalStyle<Slideshow>(
   }
 )
 
-generalStyle<Navigation>(
-  componentProperties,
+generalStyleCurry<Navigation>(
   {
     component: 'navigation',
     cName: '导航',
@@ -166,8 +184,7 @@ generalStyle<Navigation>(
   }
 )
 
-generalStyle<Notice>(
-  componentProperties,
+generalStyleCurry<Notice>(
   {
     component: 'notice',
     cName: '公告',
@@ -189,8 +206,7 @@ generalStyle<Notice>(
   }
 )
 
-generalStyle<Asset>(
-  componentProperties,
+generalStyleCurry<Asset>(
   {
     component: 'asset',
     cName: '资产组件',
@@ -210,8 +226,7 @@ generalStyle<Asset>(
   }
 )
 
-generalStyle<Vip>(
-  componentProperties,
+generalStyleCurry<Vip>(
   {
     component: 'vip',
     cName: '会员信息',
@@ -239,8 +254,7 @@ generalStyle<Vip>(
   }
 )
 
-generalStyle<Divider>(
-  componentProperties,
+generalStyleCurry<Divider>(
   {
     component: 'divider',
     cName: '辅助分割',

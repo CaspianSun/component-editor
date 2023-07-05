@@ -43,22 +43,20 @@ const commonStyle: CommonStyle = {
   marginLR: 15 // 左右边距 0-50
 }
 
-export const generalStyle = <T extends AllProperty>(
-  componentProperties: Map<string, ComponentProperty>,
-  set: Omit<ComponentProperty<T>, 'setStyle'>,
-  data: T
-) => {
-  componentProperties.set(
-    set.component,
-    Object.assign(
-      {
-        setStyle: {
-          ...commonStyle,
-          ...data
+export const generalStyle =
+  (componentProperties: Map<string, ComponentProperty>) =>
+  <T extends AllProperty>(set: Omit<ComponentProperty<T>, 'setStyle'>, data: T) => {
+    componentProperties.set(
+      set.component,
+      Object.assign(
+        {
+          setStyle: {
+            ...commonStyle,
+            ...data
+          },
+          sort: 0
         },
-        sort: 0
-      },
-      set
+        set
+      )
     )
-  )
-}
+  }
