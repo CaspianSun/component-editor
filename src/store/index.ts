@@ -4,7 +4,7 @@ import DataStore from './modules/data'
 
 export function useStore() {
   return {
-    dataStore: DataStore(),
+    dataStore: DataStore()
   }
 }
 

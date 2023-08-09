@@ -11,7 +11,7 @@ export interface List<T extends AllProperty> {
   rightSpan?: number
 }
 // TODO 未完成，根据type类型，对应不同的config
-type ListItem<T> = {
+type ListItem<T extends AllProperty> = {
   label: string
   prop: keyof T
   type: 'ElInput' | 'ElNumber' | 'ElRadio' | 'ElColor' | 'CSelectImg' | 'CNumber'

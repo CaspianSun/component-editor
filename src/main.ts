@@ -9,7 +9,7 @@ import 'element-plus/dist/index.css'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
-import Property from '@/property'
+import Property from '@/property/component'
 import CommonComponents from '@/components/common'
 
 import './style/index.scss'

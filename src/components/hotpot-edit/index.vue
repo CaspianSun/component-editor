@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import VueDraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
-import { LinkEnum } from '@/componentProperty'
+import { LinkEnum } from '@/property'
 import _ from 'lodash'
 import { ElMessage } from 'element-plus'
 import SelectLink from '@/components/select-link/index.vue'

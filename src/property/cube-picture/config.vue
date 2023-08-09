@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CubePictureEnum } from '@/componentProperty'
+import { CubePictureEnum } from '@/property'
 import { createCommonElement } from '@/property/commonElement'
 const activeTab = ref('1')
 const props = defineProps<{

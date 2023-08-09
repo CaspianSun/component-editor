@@ -9,9 +9,10 @@ declare type AllProperty =
   | Divider
   | CubePicture
   | Vip
+  | User
 
 declare interface CubePicture extends Partial<CommonStyle> {
-  type: import('@/componentProperty').CubePictureEnum
+  type: import('./utils').CubePictureEnum
   imgList: Array<
     {
       src: string
@@ -54,7 +55,7 @@ declare interface Asset extends Partial<CommonStyle> {
 declare interface Vip extends Partial<CommonStyle> {
   fontSize: number
   bgColor: string
-  propertyArr: { name: string; checked: boolean; type: import('@/componentProperty').AssetEnum }[]
+  propertyArr: { name: string; checked: boolean; type: import('./utils').AssetEnum }[]
   vipStyle: number
   propertyTextColor: string
   propertyNumberColor: string
@@ -83,7 +84,7 @@ declare interface Integral extends Partial<CommonStyle> {
 
 declare interface HotPicture extends Partial<CommonStyle> {
   src: string // 图片链接
-  hotpots: Array<import('@/components/hotpotEdit/index.vue').HotpotsListItem>
+  hotpots: Array<import('@/components/hotpot-edit/index.vue').HotpotsListItem>
 }
 
 declare interface Slideshow extends Partial<CommonStyle> {
@@ -140,6 +141,13 @@ declare interface Divider extends Partial<CommonStyle> {
   height: number // 分割线高度 10-20px
 }
 
+declare interface User extends Partial<CommonStyle> {
+  finance: (1 | 2 | 3 | 4)[]
+  financeTitleColor: string
+  financeNumberColor: string
+  nameColor: string
+}
+
 declare interface CommonStyle {
   radiusT: number // 上圆角 0-50
   radiusB: number // 下圆角 0-50
@@ -154,7 +162,7 @@ declare interface CommonStyle {
 }
 
 declare interface Link {
-  type: import('@/componentProperty').LinkEnum // 跳转类型
+  type: import('./utils').LinkEnum // 跳转类型
   url: string // 跳转地址
   urlName: string //
   uuid: string
@@ -169,7 +177,7 @@ declare interface ComponentProperty<T = AllProperty> {
   component: string
   cName: string
   icon?: string
-  group: import('@/componentProperty').GroupEnum
+  group: import('./utils').GroupEnum
   setStyle: T
   sort?: number
   id?: string

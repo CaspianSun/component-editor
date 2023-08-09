@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CubePictureEnum } from '@/componentProperty'
+import { CubePictureEnum } from '@/property/utils'
 const props = defineProps<{
   data: CubePicture
 }>()

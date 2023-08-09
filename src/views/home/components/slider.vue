@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
 import { useStore } from '@/store'
-import componentProperty, { GroupEnum } from '@/componentProperty'
+import componentProperty, { GroupEnum } from '@/property'
 import { Icon } from '@iconify/vue'
 interface ComponentItem {
   title: string

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LinkEnum } from '@/componentProperty'
+import { LinkEnum } from '@/property'
 const dialogVisible = ref(false)
 
 const baseLink = reactive<{ title: string; item: LinkItem[] }[]>([

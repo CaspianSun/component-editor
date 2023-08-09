@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LinkEnum } from '@/componentProperty'
+import { LinkEnum } from '@/property'
 import { selectLinkKey } from '@/provider/index'
 const prop = defineProps<{
   link: Link
@@ -15,7 +15,6 @@ watch(
   }
 )
 const initSelectLink = inject(selectLinkKey)
-console.log(initSelectLink)
 const handleChooseLick = () => {
   initSelectLink?.((item: import('@/components/select-link/index.vue').CallbackLinkItem) => {
     url.value = item.pagePath
