@@ -148,6 +148,16 @@ declare interface User extends Partial<CommonStyle> {
   nameColor: string
 }
 
+declare interface User extends Partial<CommonStyle> {
+  bgColor: string // 背景颜色
+  bgImg: string // 背景图片
+  spacing: number // 间距 0-50px
+  numColor: string // 数字颜色
+  numSize: number // 数字大小 10-30px
+  textColor: string // 文字颜色
+  textSize: number // 文字大小 10-30px
+}
+
 declare interface CommonStyle {
   radiusT: number // 上圆角 0-50
   radiusB: number // 下圆角 0-50

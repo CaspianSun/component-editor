@@ -166,7 +166,7 @@ defineExpose({
     <div class="container">
       <div class="container-left">
         <ElMenu default-active="0">
-          <ElScrollbar style="height: 523px; width: 100%">
+          <ElScrollbar style="height: 400px; width: 100%">
             <div class="group-list">
               <ElMenuItem index="0" @click="fetchAll()">
                 <template v-slot:title>
@@ -218,7 +218,7 @@ defineExpose({
             <ElButton type="primary">上传图片</ElButton>
           </ElUpload>
         </div>
-        <ElScrollbar style="height: 460px">
+        <ElScrollbar style="height: 380px">
           <div class="image-list">
             <template v-for="(item, index) in imgList" :key="index">
               <div class="image-list-item">

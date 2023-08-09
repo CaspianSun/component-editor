@@ -273,4 +273,22 @@ generalStyleCurry<Divider>(
   }
 )
 
+generalStyleCurry<User>(
+  {
+    component: 'user',
+    cName: '用户信息',
+    group: GroupEnum['基础组件'],
+    icon: 'icon-park:user-positioning'
+  },
+  {
+    bgColor: '#2f88ff',
+    bgImg: '',
+    spacing: 10,
+    textColor: '#999999',
+    textSize: 14,
+    numColor: '#f1cd60',
+    numSize: 18
+  }
+)
+
 export default componentProperties
