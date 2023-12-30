@@ -1,12 +1,11 @@
-// store/index.ts
 import { createPinia } from 'pinia'
-import DataStore from './modules/data'
-
-export function useStore() {
-  return {
-    dataStore: DataStore()
-  }
-}
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { PiniaUndo } from './plugin/undo'
+export { useDataStore } from './modules/data'
+export { usePageSizeStore } from './modules/pageSize'
 
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+pinia.use(PiniaUndo)
+
 export default pinia

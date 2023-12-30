@@ -17,7 +17,7 @@ export const getImgListApi = (params: GetImgListParams) => {
   return service.request<BaseResponseWithArray<ImgListItem>>({
     url: Urls.materialLibrary,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -26,8 +26,8 @@ export const deleteImgApi = (id: number) => {
     url: Urls.materialLibrary,
     method: 'delete',
     data: {
-      id
-    }
+      id,
+    },
   })
 }
 
@@ -39,7 +39,7 @@ export interface GroupListItem {
 export const getGroupListApi = () => {
   return service.request<BaseResponseWithArray<GroupListItem>>({
     url: Urls.materialLibraryGroup,
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -47,7 +47,7 @@ export const addImgGroupApi = (data: Omit<GroupListItem, 'id'>) => {
   return service.request<BaseResponse>({
     url: Urls.materialLibraryGroup,
     method: 'post',
-    data
+    data,
   })
 }
 export const deleteImgGroupListApi = (id: number) => {
@@ -55,7 +55,7 @@ export const deleteImgGroupListApi = (id: number) => {
     url: Urls.materialLibraryGroup,
     method: 'delete',
     data: {
-      id
-    }
+      id,
+    },
   })
 }

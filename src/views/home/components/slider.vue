@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { v4 as uuidv4 } from 'uuid'
-import _ from 'lodash'
-import { useStore } from '@/store'
-import componentProperty, { GroupEnum } from '@/property'
-import { Icon } from '@iconify/vue'
+import { reactive } from 'vue'
+import { storeToRefs } from 'pinia'
+import { v4 as uuid } from 'uuid'
+import { cloneDeep } from 'lodash-es'
+import { useDataStore } from '@/store/modules/data'
+import componentProperty, { GroupEnum } from '@/common'
+
 interface ComponentItem {
   title: string
   icon: string | undefined
@@ -26,23 +28,23 @@ const data = Array.from(componentProperty.values())
     if (groupIndex === -1) {
       acc.push({
         title: groupName,
-        componentsList: []
+        componentsList: [],
       })
     }
     acc[groupIndex !== -1 ? groupIndex : acc.length - 1].componentsList.push({
       title: cur.cName,
       icon: cur.icon,
-      component: cur.component
+      component: cur.component,
     })
     return acc
   }, [] as DataItem[])
 
-const { dataStore } = useStore()
+const dataStore = useDataStore()
 const { components } = storeToRefs(dataStore)
 const handleClick = (item: ComponentItem) => {
   const component = componentProperty.get(item.component) as ComponentProperty<AllProperty>
-  const newComponent = _.cloneDeep(component)
-  newComponent.id = uuidv4()
+  const newComponent = cloneDeep(component)
+  newComponent.id = uuid()
   components.value.push(newComponent)
 }
 </script>
@@ -51,23 +53,12 @@ const handleClick = (item: ComponentItem) => {
   <div class="slider-assembly">
     <div class="container">
       <el-collapse v-model="activeNames">
-        <el-collapse-item
-          v-for="(items, index) in data"
-          :key="index"
-          :name="index + 1"
-          :title="items.title"
-        >
+        <el-collapse-item v-for="(items, index) in data" :key="index" :name="index + 1" :title="items.title">
           <template #title>
             <span class="title">{{ items.title }}({{ items.componentsList.length }})</span>
           </template>
           <div class="list">
-            <div
-              v-for="item in items.componentsList"
-              :key="item.component"
-              class="list-item"
-              @click="handleClick(item)"
-            >
-              <Icon v-if="item.icon" :icon="item.icon" style="font-size: 24px" />
+            <div v-for="item in items.componentsList" :key="item.component" class="list-item" @click="handleClick(item)">
               <p>{{ item.title }}</p>
             </div>
           </div>

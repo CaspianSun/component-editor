@@ -4,8 +4,8 @@ const props = withDefaults(
     title?: string
   }>(),
   {
-    title: ''
-  }
+    title: '',
+  },
 )
 </script>
 

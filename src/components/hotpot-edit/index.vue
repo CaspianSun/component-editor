@@ -1,13 +1,11 @@
 <script lang="ts" setup>
+import { defineExpose, ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import VueDraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
-import { LinkEnum } from '@/property'
-import _ from 'lodash'
+import { LinkEnum } from '@/common'
+import { cloneDeep } from 'lodash-es'
 import { ElMessage } from 'element-plus'
-import SelectLink from '@/components/select-link/index.vue'
-
-const selectLinkRef = ref<InstanceType<typeof SelectLink> | null>(null)
 
 const dialogVisible = ref(false)
 
@@ -37,8 +35,8 @@ const addHotpot = () => {
       uuid: uuidv4(),
       type: 1,
       url: '',
-      urlName: ''
-    }
+      urlName: '',
+    },
   })
   activeIndex.value = hotpots.value.length - 1
 }
@@ -48,41 +46,25 @@ const originHotpots = ref<HotpotsListItem[]>([])
 const imageWidth = ref(375)
 export type Callback = (list: HotpotsListItem[]) => void
 let callbackFun: Callback | null = null
-const initHotpotEdit = (
-  url: string,
-  list: HotpotsListItem[],
-  width: number,
-  callback: Callback
-) => {
+const initHotpotEdit = (url: string, list: HotpotsListItem[], width: number, callback: Callback) => {
   if (!url) return ElMessage.warning('请选择图片')
   callbackFun = callback
   originHotpots.value = list
   imageWidth.value = width
   src.value = url
-  hotpots.value = _.cloneDeep(list)
+  hotpots.value = cloneDeep(list)
   dialogVisible.value = true
 }
 export type InitHotpotEdit = typeof initHotpotEdit
 
-const handleSelectLink = (link: Link) => {
-  selectLinkRef.value?.initSelectLink?.(
-    (item: import('@/components/select-link/index.vue').CallbackLinkItem) => {
-      link.url = item.pagePath
-      link.urlName = item.name
-      link.type = item.type
-    }
-  )
-}
+const handleSelectLink = (link: Link) => {}
 
-const changeHotpot = (
-  data: { x: number; y: number; w?: number; h?: number },
-  item: HotpotsListItem
-) => {
+const changeHotpot = (data: { x: number; y: number; w?: number; h?: number }, item: HotpotsListItem) => {
   const newData = {
     left: data.x,
     top: data.y,
     width: data.w ?? item.width,
-    height: data.h ?? item.height
+    height: data.h ?? item.height,
   }
   Object.assign(item, newData)
 }
@@ -98,7 +80,7 @@ const changeActiveIndex = (index: number) => {
 const containerRef = ref<HTMLElement | null>(null)
 
 defineExpose({
-  initHotpotEdit
+  initHotpotEdit,
 })
 </script>
 
@@ -117,14 +99,14 @@ defineExpose({
       ref="containerRef"
       class="container"
       :style="{
-        width: `${imageWidth * 2}px`
+        width: `${imageWidth * 2}px`,
       }"
     >
       <template v-for="(item, index) in hotpots" :key="index">
         <VueDraggableResizable
           v-if="imgLoaded && containerRef"
           :active="activeIndex == index"
-          classNameDraggable="item"
+          class-name-draggable="item"
           :draggable="true"
           :h="item.height"
           :handles="['tl', 'tm', 'mr', 'br', 'bm', 'bl', 'ml']"
@@ -145,9 +127,7 @@ defineExpose({
           </div>
           <div class="drag-item">
             <div class="link" @click="handleSelectLink(item.link)">
-              <span v-if="item.link.url">
-                {{ LinkEnum[item.link.type] }}-{{ item.link.urlName }}
-              </span>
+              <span v-if="item.link.url"> {{ LinkEnum[item.link.type] }}-{{ item.link.urlName }} </span>
               <span v-else>选择链接</span>
             </div>
           </div>

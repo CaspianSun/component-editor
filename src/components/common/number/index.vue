@@ -14,8 +14,8 @@ const props = withDefaults(
     max: 50,
     min: 0,
     leftSpan: 6,
-    rightSpan: 18
-  }
+    rightSpan: 18,
+  },
 )
 const emit = defineEmits(['update:number'])
 const number = ref(props.number)
@@ -23,7 +23,7 @@ watch(
   () => number.value,
   (val) => {
     emit('update:number', val)
-  }
+  },
 )
 </script>
 

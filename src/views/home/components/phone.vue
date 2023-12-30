@@ -2,7 +2,7 @@
 import { VueDraggable } from 'vue-draggable-plus'
 import { SortableEvent } from 'sortablejs'
 import { storeToRefs } from 'pinia'
-import { useStore } from '@/store'
+import { useDataStore } from '@/store/modules/data'
 const { dataStore } = useStore()
 const { components, pageSetup, activeComponentIndex } = storeToRefs(dataStore)
 
@@ -25,11 +25,11 @@ const deleteComponent = () => {
 <template>
   <!-- TODO 显示缩放功能 -->
   <div class="phone">
-    <ElScrollbar maxHeight="100%">
+    <ElScrollbar max-height="100%">
       <div
         class="container"
         :style="{
-          'background-color': pageSetup.pageBg
+          'background-color': pageSetup.pageBg,
         }"
       >
         <div class="header">
@@ -51,11 +51,7 @@ const deleteComponent = () => {
                 <component :is="item.component" :data="item.setStyle" :index="item.id" />
                 <template v-if="activeComponentIndex === index">
                   <div class="controls">
-                    <div
-                      v-if="activeComponentIndex !== 0"
-                      class="controls-item"
-                      @click.stop="dataStore.adjustComponentOrder('up')"
-                    >
+                    <div v-if="activeComponentIndex !== 0" class="controls-item" @click.stop="dataStore.adjustComponentOrder('up')">
                       <ElIcon><IEpArrowUp /></ElIcon>
                     </div>
                     <div class="controls-item" @click.stop="deleteComponent">

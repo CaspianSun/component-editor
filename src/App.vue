@@ -1,26 +1,9 @@
-<template>
-  <div id="app">
-    <RouterView v-if="isRouterAlive" />
-  </div>
-</template>
-
 <script lang="ts" setup>
-const isRouterAlive = ref(true)
-
-const reload = () => {
-  isRouterAlive.value = false
-  nextTick(() => {
-    isRouterAlive.value = true
-  })
-}
-
-provide('reload', reload)
+import { RouterView } from 'vue-router'
 </script>
 
-<style lang="scss">
-#app {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-</style>
+<template>
+  <RouterView />
+</template>
+
+<style lang="scss"></style>

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 export type PageSetup = {
   title: string
   detail: string
@@ -8,22 +9,50 @@ export type PageSetup = {
   tabbarBg: string
 }
 
-export default defineStore('backstageUser', {
-  state() {
+export const useDataStore = defineStore('dataStore', {
+  state(): {
+    components: ComponentProperty[]
+    activeComponentIndex: number | null
+    pageSetup: PageSetup
+    pageId: string
+    templateId: string
+    templateInfo: {
+      name: string
+      introduction: string
+    } | null
+  } {
     return {
-      components: [] as ComponentProperty[],
-      activeComponentIndex: null as number | null,
+      components: [],
+      activeComponentIndex: null,
       pageSetup: {
         title: '页面名称',
         detail: '',
         tabbarStyle: 1,
-        color: '#ffffff',
+        color: '#000000',
         pageBg: '#F9F9F9',
-        tabbarBg: '#ffffff'
-      } as PageSetup
+        tabbarBg: '#ffffff',
+      },
+      pageId: '',
+      templateId: '',
+      templateInfo: null,
     }
   },
   actions: {
+    setPageId(id: string) {
+      this.pageId = id
+    },
+    setTemplateId(id: string) {
+      this.templateId = id
+    },
+    setTemplateInfo(info: { name: string; introduction: string } | null) {
+      this.templateInfo = info
+    },
+    setComponents(components: ComponentProperty[]) {
+      this.components = components
+    },
+    setPageSetup(pageSetup: PageSetup) {
+      this.pageSetup = pageSetup
+    },
     setActiveComponentIndex(index: number | null) {
       this.activeComponentIndex = index
     },
@@ -47,7 +76,13 @@ export default defineStore('backstageUser', {
         this.components[index] = temp
         this.setActiveComponentIndex(index + 1)
       }
-    }
+    },
+    reset() {
+      //
+    },
   },
-  getters: {}
+  undo: {
+    enable: true,
+    omit: ['activeComponentIndex'],
+  },
 })

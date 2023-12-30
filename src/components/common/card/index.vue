@@ -6,8 +6,8 @@ const props = withDefaults(
   }>(),
   {
     title: '',
-    borderBottom: true
-  }
+    borderBottom: true,
+  },
 )
 </script>
 
@@ -15,7 +15,7 @@ const props = withDefaults(
   <div
     class="common-card"
     :style="{
-      borderBottom: props.borderBottom ? '5px solid #f5f7fa' : 'none'
+      borderBottom: props.borderBottom ? '5px solid #f5f7fa' : 'none',
     }"
   >
     <div class="container">

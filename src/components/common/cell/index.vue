@@ -8,8 +8,8 @@ const props = withDefaults(
   {
     label: '',
     leftSpan: 6,
-    rightSpan: 18
-  }
+    rightSpan: 18,
+  },
 )
 </script>
 

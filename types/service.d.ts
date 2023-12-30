@@ -1,4 +1,4 @@
-declare interface BaseParams  {
+declare interface BaseParams {
   page: number
   limit: number
 }
