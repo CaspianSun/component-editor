@@ -1,8 +1,9 @@
-import Mock from "mockjs";
-import { MockMethod } from 'vite-plugin-mock'
+import { defineMock } from 'vite-plugin-mock-dev-server'
+
 import { Urls } from '@/api/urls'
 import { GroupListItem, ImgListItem } from '@/api/index'
-const GroupList: GroupListItem[] = Mock.mock([
+
+const GroupList: GroupListItem[] = [
   {
     id: 1,
     name: 'DogGroup 1',
@@ -11,9 +12,9 @@ const GroupList: GroupListItem[] = Mock.mock([
     id: 2,
     name: 'DogGroup 2',
   }
-] as GroupListItem[]);
+]
 
-const ImgList:ImgListItem[] = Mock.mock([
+const ImgList: ImgListItem[] = [
   {
     id: 1,
     name: 'Dog 1',
@@ -38,20 +39,20 @@ const ImgList:ImgListItem[] = Mock.mock([
     groupId: 2,
     path: 'https://images.dog.ceo/breeds/redbone/n02090379_5525.jpg',
   },
-] as ImgListItem[]);
+]
 
-export default [
+export default defineMock([
   {
     url: Urls.materialLibrary,
-    method: 'get',
-    response: (option):BaseResponseWithArray<ImgListItem> => {
+    method: 'GET',
+    body: (option): BaseResponseWithArray<ImgListItem> => {
       const groupId = Number(option.query.groupId)
       const name = option.query.name
       let newImgList = ImgList
-      if(groupId) {
+      if (groupId) {
         newImgList = newImgList.filter((item) => item.groupId === groupId)
       }
-      if(name) {
+      if (name) {
         newImgList = newImgList.filter((item) => item.name.includes(name))
       }
       return {
@@ -63,10 +64,10 @@ export default [
         }
       }
     },
-  },{
+  }, {
     url: Urls.materialLibrary,
-    method: 'delete',
-    response: (option):BaseResponse => {
+    method: 'DELETE',
+    body: (option): BaseResponse => {
       const index = ImgList.findIndex((item) => item.id === Number(option.body.id))
       ImgList.splice(index, 1)
       return {
@@ -75,10 +76,10 @@ export default [
 
       }
     },
-  },{
+  }, {
     url: Urls.materialLibraryGroup,
-    method: 'get',
-    response: (option):BaseResponseWithArray<GroupListItem> => {
+    method: 'GET',
+    body: (option): BaseResponseWithArray<GroupListItem> => {
       return {
         status: 200,
         message: 'success',
@@ -88,10 +89,10 @@ export default [
         }
       }
     },
-  },{
+  }, {
     url: Urls.materialLibraryGroup,
-    method: 'post',
-    response: (option):BaseResponse => {
+    method: 'POST',
+    body: (option): BaseResponse => {
       const lastId = GroupList[GroupList.length - 1].id
       GroupList.push({
         id: lastId + 1,
@@ -106,8 +107,8 @@ export default [
   },
   {
     url: Urls.materialLibraryGroup,
-    method: 'delete',
-    response: (option):BaseResponse => {
+    method: 'DELETE',
+    body: (option): BaseResponse => {
       const index = GroupList.findIndex((item) => item.id === Number(option.body.id))
       GroupList.splice(index, 1)
       return {
@@ -115,10 +116,10 @@ export default [
         message: 'success',
       }
     }
-  },{
+  }, {
     url: '/api/ossPut',
-    method: 'post',
-    response: (option):BaseResponse => {
+    method: 'POST',
+    body: (option): BaseResponse => {
       const index = GroupList.findIndex((item) => item.id === Number(option.body.id))
       GroupList.splice(index, 1)
       return {
@@ -127,4 +128,4 @@ export default [
       }
     }
   }
-] as MockMethod[]
+])

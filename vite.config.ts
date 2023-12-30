@@ -2,21 +2,21 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
-import { viteMockServe } from 'vite-plugin-mock'
+import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
 import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   server: {
-    host: "0.0.0.0"
+    host: "0.0.0.0",
+    proxy: {
+      '^/api': 'http://example.com/',
+    },
   },
   plugins: [
     Vue(),
     VueJsx(),
     UnoCSS(),
-    viteMockServe({
-      mockPath: 'mock',
-      enable: true
-    }),
+    mockDevServerPlugin(),
   ],
   resolve: {
     alias: [
