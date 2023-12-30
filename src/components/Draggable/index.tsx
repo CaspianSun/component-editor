@@ -3,27 +3,24 @@ import { draggableEmits, draggableProps } from './draggable'
 import { useDraggable } from './useDraggable'
 
 export const Draggable = defineComponent({
-  replace: true,
   props: draggableProps,
   emits: draggableEmits,
   setup(props, ctx) {
     const eleRef = ref<HTMLElement>()
-    const draggable = useDraggable(props, ctx, eleRef)
-
+    const { style, enabled, dragging, elementMouseDown, elementTouchDown } = useDraggable(props, ctx, eleRef)
     return () => (
       <div
         ref={eleRef}
-        style={draggable.style.value}
+        style={style.value}
         class={[
+          'absolute touch-none z-100',
           {
-            [props.classNameActive]: draggable.enabled,
-            [props.classNameDragging]: draggable.dragging,
-            [props.classNameDraggable]: draggable,
+            active: enabled.value,
+            dragging: dragging.value,
           },
-          props.className,
         ]}
-        onMousedown={draggable.elementMouseDown}
-        onTouchstart={draggable.elementTouchDown}
+        onMousedown={elementMouseDown}
+        onTouchstart={elementTouchDown}
       >
         {ctx.slots.default?.()}
       </div>

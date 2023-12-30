@@ -17,7 +17,7 @@ const handleShowHotpotEdit = () => {}
 <template>
   <div class="one-picture-config">
     <div class="container">
-      <CommonTitle title="轮播图" />
+      <h3>轮播图</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <CommonCard title="图片设置">

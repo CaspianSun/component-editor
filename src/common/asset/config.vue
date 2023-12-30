@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { defineProps, toRefs, ref } from 'vue'
+import { ElTabs, ElTabPane, ElInput } from 'element-plus'
 import { createCommonElement } from '@/utils/commonElement'
 import { listToElement } from '@/utils/listToElement'
 import { list } from './options'
@@ -15,7 +16,7 @@ const ListConfigRender = listToElement(data.value, list)
 <template>
   <div class="asset-config">
     <div class="container">
-      <CommonTitle title="资产组件" />
+      <h3>资产组件</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <ListConfigRender />

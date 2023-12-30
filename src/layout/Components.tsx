@@ -1,15 +1,13 @@
 import { defineComponent, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { ElCollapse, ElCollapseItem, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import { useDataStore } from '../store'
 import componentProperty, { GroupEnum } from '../common/index'
 
-interface ComponentItem {
+interface ComponentItem extends Pick<ComponentProperty, 'icon' | 'component'> {
   title: string
-  icon: string | undefined
-  component: string
 }
 
 interface DataItem {
@@ -33,7 +31,7 @@ const data = Array.from(componentProperty.values())
       })
     }
     acc[groupIndex !== -1 ? groupIndex : acc.length - 1].componentsList.push({
-      title: cur.cName,
+      title: cur.title,
       icon: cur.icon,
       component: cur.component,
     })
@@ -51,7 +49,7 @@ const handleClick = (item: ComponentItem) => {
   }
   if (component) {
     const newComponent = cloneDeep(component)
-    newComponent.id = uuidv4()
+    newComponent.id = uuid()
     components.value.push(newComponent)
   } else {
     ElMessage({
@@ -62,11 +60,12 @@ const handleClick = (item: ComponentItem) => {
 }
 
 export const Components = defineComponent({
-  setup() {
+  setup(props, ctx) {
     return () => {
       return (
         <div class={'p-16px bg-#fff'}>
-          <div class={'text-18px font-bold mb-15px'}>组件库</div>
+          {/* <div class={'text-18px font-bold mb-15px'}>组件库</div> */}
+          <h3>组件库</h3>
           <ElCollapse modelValue={activeNames.value}>
             {data.map((items, index) => {
               return (
@@ -74,12 +73,12 @@ export const Components = defineComponent({
                   {{
                     default: () => {
                       return (
-                        <div class={'flex flex-wrap'}>
+                        <div class={'grid grid-cols-[repeat(auto-fill,85px)] justify-center w-full'}>
                           {items.componentsList.map((item) => {
                             return (
                               <div
                                 class={
-                                  'w-72px h-72px relative mr-15px mt-8px cursor-pointer rd-5px overflow-hidden bg-#fff flex-center flex-col b-1px b-solid b-#ebeef5 hover:b-#409eff'
+                                  'w-70px mx-a mt-5px mb-10px h-70px relative cursor-pointer rd-5px bg-#fff flex-center flex-col b-1px b-solid b-#ebeef5 hover:b-#409eff'
                                 }
                                 onClick={() => handleClick(item)}
                               >

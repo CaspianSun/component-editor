@@ -7,10 +7,9 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import Property from '@/common/component'
-import CommonComponents from '@/components/common'
 import './style/index.scss'
-import "virtual:uno.css"
+import 'virtual:uno.css'
 
 const app = createApp(App)
 
-app.use(Router).use(Pinia).use(ElementPlus).use(Property).use(CommonComponents).mount('#app')
+app.use(Router).use(Pinia).use(ElementPlus).use(Property).mount('#app')

@@ -120,14 +120,3 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 </style>
-
-<style>
-.qs-draggable {
-  touch-action: none;
-  position: absolute;
-  box-sizing: border-box;
-  &:not(.dragging) {
-    transition: all 0.1s;
-  }
-}
-</style>

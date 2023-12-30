@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { toRefs, ref, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { createCommonElement } from '@/utils/commonElement'
 import { listToElement } from '@/utils/listToElement'
@@ -31,7 +32,7 @@ watch(
 <template>
   <div class="vip-config">
     <div class="container">
-      <CommonTitle title="资产组件" />
+      <h3>资产组件</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <CommonCard title="资产配置">

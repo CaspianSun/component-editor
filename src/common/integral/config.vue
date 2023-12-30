@@ -15,7 +15,7 @@ const ListConfigRender = listToElement(data.value, list)
 <template>
   <div class="integral-config">
     <div class="container">
-      <CommonTitle title="我的积分" />
+      <h3>我的积分</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <ListConfigRender />

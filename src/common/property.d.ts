@@ -1,7 +1,7 @@
 declare type AllProperty = Slideshow | Navigation | Notice | HotPicture | Integral | Asset | Balance | Divider | CubePicture | Vip | User
 
 declare interface CubePicture extends Partial<CommonStyle> {
-  type: import('@/enum').CubePictureEnum
+  type: import('../enum').CubePictureEnum
   imgList: Array<
     {
       src: string
@@ -44,7 +44,7 @@ declare interface Asset extends Partial<CommonStyle> {
 declare interface Vip extends Partial<CommonStyle> {
   fontSize: number
   bgColor: string
-  propertyArr: { name: string; checked: boolean; type: import('./utils').AssetEnum }[]
+  propertyArr: { name: string; checked: boolean; type: import('../enum').AssetEnum }[]
   vipStyle: number
   propertyTextColor: string
   propertyNumberColor: string
@@ -131,13 +131,6 @@ declare interface Divider extends Partial<CommonStyle> {
 }
 
 declare interface User extends Partial<CommonStyle> {
-  finance: (1 | 2 | 3 | 4)[]
-  financeTitleColor: string
-  financeNumberColor: string
-  nameColor: string
-}
-
-declare interface User extends Partial<CommonStyle> {
   bgColor: string // 背景颜色
   bgImg: string // 背景图片
   spacing: number // 间距 0-50px
@@ -161,7 +154,7 @@ declare interface CommonStyle {
 }
 
 declare interface Link {
-  type: import('./utils').LinkEnum // 跳转类型
+  type: import('../enum').LinkEnum // 跳转类型
   url: string // 跳转地址
   urlName: string //
   uuid: string
@@ -174,10 +167,11 @@ declare interface Link {
 
 declare interface ComponentProperty<T = AllProperty> {
   component: string
-  cName: string
-  icon?: string
-  group: import('./utils').GroupEnum
+  title: string
+  icon?: string | JSX.Element
+  group: import('../enum').GroupEnum
   setStyle: T
   sort?: number
   id?: string
+  configPage: () => import('vue-router').RouteComponent
 }

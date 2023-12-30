@@ -10,7 +10,7 @@ export const list: List<Vip>[] = [
       { label: '副标题颜色', type: 'ElColor', prop: 'subTitleColor' },
       { label: '按钮文字', type: 'ElInput', prop: 'loginBtnText', config: { maxlength: 4 } },
       { label: '按钮文字颜色', type: 'ElColor', prop: 'btnTextColor' },
-      { label: '按钮背景颜色', type: 'ElColor', prop: 'btnBgColor' }
-    ]
-  }
+      { label: '按钮背景颜色', type: 'ElColor', prop: 'btnBgColor' },
+    ],
+  },
 ]

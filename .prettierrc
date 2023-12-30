@@ -4,5 +4,7 @@
   "semi": false,
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "packageManager": "pnpm"
+  "quoteProps": "as-needed",
+  "bracketSpacing": true,
+  "vueIndentScriptAndStyle": false
 }

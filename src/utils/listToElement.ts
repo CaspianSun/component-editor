@@ -40,13 +40,13 @@ interface ControlShow<T> {
 
 type ControlShowItem<T> =
   | {
-      method: ControlShowItemMethod.equality | ControlShowItemMethod.inequality
-      value: [keyof T, unknown]
-    }
+    method: ControlShowItemMethod.equality | ControlShowItemMethod.inequality
+    value: [keyof T, unknown]
+  }
   | {
-      method: ControlShowItemMethod.exist | ControlShowItemMethod.nonExistent
-      value: keyof T
-    }
+    method: ControlShowItemMethod.exist | ControlShowItemMethod.nonExistent
+    value: keyof T
+  }
 
 export enum ControlShowMethod {
   and,
@@ -91,7 +91,8 @@ function generateDynamicItem<T extends AllProperty>(data: T, list: List<T>, item
       .with({ type: 'ElRadio' }, (res) => generateRadio(data, res))
       .with({ type: 'ElColor' }, (res) => generateColor(data, res))
       .with({ type: 'ElNumber' }, (res) => generateNumber(data, res))
-      .with({ type: 'CNumber' }, (res) => generateCommonNumber(data, res)),
+      .with({ type: 'CNumber' }, (res) => generateCommonNumber(data, res))
+      .exhaustive(),
   )
 }
 

@@ -15,7 +15,7 @@ const ListConfigRender = listToElement(data.value, list)
 <template>
   <div class="notice-config">
     <div class="container">
-      <CommonTitle title="图文导航" />
+      <h3>图文导航</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <ListConfigRender />

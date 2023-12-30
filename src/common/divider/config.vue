@@ -12,7 +12,7 @@ const CommonRender = createCommonElement(data.value, ['marginT', 'marginB', 'mar
 <template>
   <div class="divider-config">
     <div class="container">
-      <CommonTitle title="辅助分割" />
+      <h3>辅助分割</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <CommonCard title="组件设置">

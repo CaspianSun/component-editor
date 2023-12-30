@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { defineExpose, ref } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 import VueDraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 import { LinkEnum } from '@/common'
@@ -26,13 +26,13 @@ const imgLoaded = ref(false)
 const addHotpot = () => {
   if (hotpots.value.length >= 10) return
   hotpots.value.push({
-    id: uuidv4(),
+    id: uuid(),
     width: 100,
     height: 100,
     left: 0,
     top: 0,
     link: {
-      uuid: uuidv4(),
+      uuid: uuid(),
       type: 1,
       url: '',
       urlName: '',

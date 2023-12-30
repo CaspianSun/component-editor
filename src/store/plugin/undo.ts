@@ -1,5 +1,30 @@
 import type { PiniaPluginContext } from 'pinia'
-import createStack from 'undo-stacker'
+
+function createStack<T>(current: T) {
+  const stack = [current]
+  let index = stack.length
+  function update() {
+    current = stack[index - 1]
+    return current
+  }
+  return {
+    push: (value: T) => {
+      stack.length = index
+      stack[index++] = value
+      return update()
+    },
+    undo: () => {
+      if (index > 1) index -= 1
+      return update()
+    },
+    redo: () => {
+      if (index < stack.length) index += 1
+      return update()
+    },
+    index: () => index,
+    length: () => stack.length,
+  }
+}
 
 type Store = PiniaPluginContext['store']
 type Options = PiniaPluginContext['options']
@@ -54,16 +79,24 @@ export function PiniaUndo({ store, options, serializer }: PluginOptions) {
   if (!options.undo || !options.undo.enable) return
   let stack = createStack(removeOmittedKeys(options, store, serializer))
   let preventUpdateOnSubscribe = false
+  const setIndexLength = () => {
+    store.stackIndex = stack.index()
+    store.stackLength = stack.length()
+  }
+  setIndexLength()
   store.undo = () => {
     preventUpdateOnSubscribe = true
     store.$patch(stack.undo())
+    setIndexLength()
   }
   store.redo = () => {
     preventUpdateOnSubscribe = true
     store.$patch(stack.redo())
+    setIndexLength()
   }
   store.resetStack = () => {
     stack = createStack(removeOmittedKeys(options, store, serializer))
+    setIndexLength()
   }
   store.$subscribe(
     () => {
@@ -72,6 +105,7 @@ export function PiniaUndo({ store, options, serializer }: PluginOptions) {
         return
       }
       stack.push(removeOmittedKeys(options, store, serializer))
+      setIndexLength()
     },
     {
       flush: 'sync',
@@ -97,12 +131,13 @@ declare module 'pinia' {
      * counterStore.resetStack();
      * ```
      */
+    stackIndex: number
+    stackLength: number
     undo: () => void
     redo: () => void
     resetStack: () => void
   }
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
   export interface DefineStoreOptionsBase<S, Store> {
     /**
      * Disable or ignore specific fields.

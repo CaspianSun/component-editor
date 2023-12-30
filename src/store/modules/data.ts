@@ -1,13 +1,16 @@
 import { defineStore } from 'pinia'
 
-export type PageSetup = {
-  title: string
-  detail: string
-  tabbarStyle: number // 1: 标准 2: 沉浸式
-  color: string
-  pageBg: string
-  tabbarBg: string
+const defaultPageSetup = () => {
+  return {
+    title: '页面名称',
+    detail: '',
+    tabbarStyle: 1,
+    color: '#000000',
+    pageBg: '#F9F9F9',
+    tabbarBg: '#ffffff',
+  }
 }
+export type PageSetup = ReturnType<typeof defaultPageSetup>
 
 export const useDataStore = defineStore('dataStore', {
   state(): {
@@ -24,14 +27,7 @@ export const useDataStore = defineStore('dataStore', {
     return {
       components: [],
       activeComponentIndex: null,
-      pageSetup: {
-        title: '页面名称',
-        detail: '',
-        tabbarStyle: 1,
-        color: '#000000',
-        pageBg: '#F9F9F9',
-        tabbarBg: '#ffffff',
-      },
+      pageSetup: defaultPageSetup(),
       pageId: '',
       templateId: '',
       templateInfo: null,
@@ -78,7 +74,13 @@ export const useDataStore = defineStore('dataStore', {
       }
     },
     reset() {
-      //
+      this.components = []
+      this.activeComponentIndex = null
+      this.pageSetup = defaultPageSetup()
+      this.pageId = ''
+      this.templateId = ''
+      this.templateInfo = null
+      this.resetStack()
     },
   },
   undo: {

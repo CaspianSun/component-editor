@@ -1,11 +1,11 @@
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 export const commonLink = (): Link => {
   return {
     url: '',
     type: 0,
     urlName: '',
-    uuid: uuidv4(),
+    uuid: uuid(),
   }
 }
 
@@ -17,20 +17,8 @@ const commonStyle: CommonStyle = {
   marginLR: 15, // 左右边距 0-50
 }
 
-export const generalStyle =
-  (componentProperties: Map<string, ComponentProperty>) =>
-  <T extends AllProperty>(set: Omit<ComponentProperty<T>, 'setStyle'>, data: T) => {
-    componentProperties.set(
-      set.component,
-      Object.assign(
-        {
-          setStyle: {
-            ...commonStyle,
-            ...data,
-          },
-          sort: 0,
-        },
-        set,
-      ),
-    )
+export const generalStyle = (componentProperties: Map<string, ComponentProperty>) => {
+  return <T extends AllProperty>(set: Omit<ComponentProperty<T>, 'setStyle'>, data: T) => {
+    componentProperties.set(set.component, Object.assign({ setStyle: { ...commonStyle, ...data }, sort: 0 }, set))
   }
+}

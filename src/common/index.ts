@@ -1,7 +1,8 @@
 import { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum } from '../enum'
 import { generalStyle, commonLink } from '../utils'
 export { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum }
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuid } from 'uuid'
+
 const componentProperties: Map<string, ComponentProperty> = new Map()
 
 const generalStyleCurry = generalStyle(componentProperties)
@@ -9,31 +10,11 @@ const generalStyleCurry = generalStyle(componentProperties)
 generalStyleCurry<CubePicture>(
   {
     component: 'cubePicture',
-    cName: '图片魔方',
+    title: '图片魔方',
     group: GroupEnum['基础组件'],
     sort: 1,
     icon: 'icon-park:waterfalls-v',
-  },
-  {
-    type: CubePictureEnum['一行二个'],
-    imgList: Array(4)
-      .fill({})
-      .map(() => {
-        return { ...commonLink(), src: '' }
-      }),
-    itemRadiusT: 0,
-    itemRadiusB: 0,
-    itemHeight: 120,
-    itemMargin: 0,
-  },
-)
-generalStyleCurry<CubePicture>(
-  {
-    component: 'cubePicture',
-    cName: '图片魔方',
-    group: GroupEnum['基础组件'],
-    sort: 1,
-    icon: 'icon-park:waterfalls-v',
+    configPage: () => import('./cube-picture/config.vue'),
   },
   {
     type: CubePictureEnum['一行二个'],
@@ -52,10 +33,11 @@ generalStyleCurry<CubePicture>(
 generalStyleCurry<Balance>(
   {
     component: 'balance',
-    cName: '我的余额',
+    title: '我的余额',
     group: GroupEnum['基础组件'],
     sort: 2,
     icon: 'icon-park:finance',
+    configPage: () => import('./balance/config.vue'),
   },
   {
     type: 1,
@@ -77,14 +59,14 @@ generalStyleCurry<Balance>(
 
 generalStyleCurry<Integral>(
   {
-    component: 'integral', // 组件名称
-    cName: '我的积分', // 组件中文名称
-    group: GroupEnum['基础组件'], // 组件分组
+    component: 'integral',
+    title: '我的积分',
+    group: GroupEnum['基础组件'],
     sort: 2,
     icon: 'icon-park:financing',
+    configPage: () => import('./integral/config.vue'),
   },
   {
-    // 组件默认样式
     type: 1,
     bgColor: '#ffffff',
     isShowIcon: true,
@@ -104,16 +86,17 @@ generalStyleCurry<Integral>(
 generalStyleCurry<HotPicture>(
   {
     component: 'hotPicture',
-    cName: '图片热区',
+    title: '图片热区',
     group: GroupEnum['基础组件'],
     sort: 1,
     icon: 'icon-park:new-picture',
+    configPage: () => import('./hot-picture/config.vue'),
   },
   {
     src: '',
     hotpots: [
       {
-        id: uuidv4(),
+        id: uuid(),
         link: commonLink(),
         top: 0,
         left: 0,
@@ -127,9 +110,10 @@ generalStyleCurry<HotPicture>(
 generalStyleCurry<Slideshow>(
   {
     component: 'slideshow',
-    cName: '轮播图',
+    title: '轮播图',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:picture-album',
+    configPage: () => import('./slideshow/config.vue'),
   },
   {
     marginT: 0,
@@ -149,9 +133,10 @@ generalStyleCurry<Slideshow>(
 generalStyleCurry<Navigation>(
   {
     component: 'navigation',
-    cName: '导航',
+    title: '导航',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:application-two',
+    configPage: () => import('./navigation/config.vue'),
   },
   {
     type: 1,
@@ -180,9 +165,10 @@ generalStyleCurry<Navigation>(
 generalStyleCurry<Notice>(
   {
     component: 'notice',
-    cName: '公告',
+    title: '公告',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:volume-notice',
+    configPage: () => import('./notice/config.vue'),
   },
   {
     bgColor: '#ffffff',
@@ -202,9 +188,10 @@ generalStyleCurry<Notice>(
 generalStyleCurry<Asset>(
   {
     component: 'asset',
-    cName: '资产组件',
+    title: '资产组件',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:strongbox',
+    configPage: () => import('./asset/config.vue'),
   },
   {
     btnBgColor: '#333',
@@ -222,9 +209,10 @@ generalStyleCurry<Asset>(
 generalStyleCurry<Vip>(
   {
     component: 'vip',
-    cName: '会员信息',
+    title: '会员信息',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:vip-one',
+    configPage: () => import('./vip/config.vue'),
   },
   {
     bgColor: '#fff',
@@ -250,9 +238,10 @@ generalStyleCurry<Vip>(
 generalStyleCurry<Divider>(
   {
     component: 'divider',
-    cName: '辅助分割',
+    title: '辅助分割',
     group: GroupEnum['辅助组件'],
     icon: 'icon-park:division',
+    configPage: () => import('./divider/config.vue'),
   },
   {
     type: 1,
@@ -269,9 +258,10 @@ generalStyleCurry<Divider>(
 generalStyleCurry<User>(
   {
     component: 'user',
-    cName: '用户信息',
+    title: '用户信息',
     group: GroupEnum['基础组件'],
     icon: 'icon-park:user-positioning',
+    configPage: () => import('./user/config.vue'),
   },
   {
     bgColor: '#2f88ff',

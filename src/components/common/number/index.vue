@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ref, watch, withDefaults } from 'vue'
 const props = withDefaults(
   defineProps<{
     number: number

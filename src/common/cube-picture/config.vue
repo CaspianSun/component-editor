@@ -28,7 +28,7 @@ const handleUpdateImgSrc = (src: string) => {
 <template>
   <div class="cube-picture-config">
     <div class="container">
-      <CommonTitle title="图片魔方" />
+      <h3>图片魔方</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <CommonCard title="组件设置">

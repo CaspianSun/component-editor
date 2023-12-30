@@ -1,16 +1,16 @@
 import { ref, onMounted, onUnmounted, watch, computed, onBeforeMount } from 'vue'
-import { matchesSelectorToParentElements, getComputedSize, addEvent, removeEvent } from '../../utils/dom'
+import { getComputedSize, addEvent, removeEvent } from '../../utils/dom'
 import type { SetupContext, Ref } from 'vue'
 import { DraggableEmits, DraggableProps } from './draggable'
 
-export type Globals = "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset";
-export type UserSelect = Globals | "-moz-none" | "all" | "auto" | "contain" | "element" | "none" | "text";
+export type Globals = '-moz-initial' | 'inherit' | 'initial' | 'revert' | 'revert-layer' | 'unset'
+export type UserSelect = Globals | '-moz-none' | 'all' | 'auto' | 'contain' | 'element' | 'none' | 'text'
 export type IBounds = Record<string, number>
 export type IMousePosition = Record<string, number>
 
 export function snapToGrid(grid: any[], pendingX: number, pendingY: number, scale = 1) {
-  const deltaX = Math.round((pendingX / scale) / grid[0]) * grid[0]
-  const deltaY = Math.round((pendingY / scale) / grid[1]) * grid[1]
+  const deltaX = Math.round(pendingX / scale / grid[0]) * grid[0]
+  const deltaY = Math.round(pendingY / scale / grid[1]) * grid[1]
   return { deltaX, deltaY }
 }
 
@@ -21,10 +21,10 @@ export function restrictToBounds(value: number, min: number, max: number): numbe
 }
 
 type userSelectNone = {
-  userSelect: UserSelect;
-  MozUserSelect: UserSelect;
-  WebkitUserSelect: UserSelect;
-  MsUserSelect: UserSelect;
+  userSelect: UserSelect
+  MozUserSelect: UserSelect
+  WebkitUserSelect: UserSelect
+  MsUserSelect: UserSelect
 }
 type userSelectAuto = userSelectNone
 
@@ -32,41 +32,34 @@ const events = {
   mouse: {
     start: 'mousedown',
     move: 'mousemove',
-    stop: 'mouseup'
+    stop: 'mouseup',
   },
   touch: {
     start: 'touchstart',
     move: 'touchmove',
-    stop: 'touchend'
-  }
+    stop: 'touchend',
+  },
 }
 
-export const useDraggable = (
-  props: DraggableProps,
-  { emit }: SetupContext<DraggableEmits>,
-  refs: Ref<HTMLElement | undefined>
-) => {
-
-
+export const useDraggable = (props: DraggableProps, { emit }: SetupContext<DraggableEmits>, refs: Ref<HTMLElement | undefined>) => {
   const userSelectNone: userSelectNone = {
     userSelect: 'none',
     MozUserSelect: 'none',
     WebkitUserSelect: 'none',
-    MsUserSelect: 'none'
+    MsUserSelect: 'none',
   }
 
   const userSelectAuto: userSelectAuto = {
     userSelect: 'auto',
     MozUserSelect: 'auto',
     WebkitUserSelect: 'auto',
-    MsUserSelect: 'auto'
+    MsUserSelect: 'auto',
   }
 
   let eventsFor = events.mouse
 
-  const left = ref(props.x)
-  const top = ref(props.y)
-  const zIndex = ref(props.z)
+  const left = ref(0)
+  const top = ref(0)
   const enabled = ref(props.active)
   const dragging = ref(false)
   const right = ref(0)
@@ -78,6 +71,7 @@ export const useDraggable = (
   const parentHeight = ref(0)
   let mouseClickPosition: IMousePosition = {}
   let bounds: IBounds = {}
+
   function resetBoundsAndMouseState() {
     mouseClickPosition = {
       mouseX: 0,
@@ -85,7 +79,7 @@ export const useDraggable = (
       x: 0,
       y: 0,
       w: 0,
-      h: 0
+      h: 0,
     }
 
     bounds = {
@@ -96,7 +90,7 @@ export const useDraggable = (
       minTop: -Infinity,
       maxTop: Infinity,
       minBottom: -Infinity,
-      maxBottom: Infinity
+      maxBottom: Infinity,
     }
   }
   function checkParentSize() {
@@ -111,14 +105,12 @@ export const useDraggable = (
     if (props.parent && refs?.value) {
       const style = window.getComputedStyle(refs.value.parentNode as Element, null)
 
-      return [
-        parseInt(style.getPropertyValue('width'), 10),
-        parseInt(style.getPropertyValue('height'), 10)
-      ]
+      return [parseInt(style.getPropertyValue('width'), 10), parseInt(style.getPropertyValue('height'), 10)]
     }
 
     return [0, 0]
   }
+
   function elementTouchDown(payload: TouchEvent) {
     eventsFor = events.touch
     elementDown(payload)
@@ -129,12 +121,8 @@ export const useDraggable = (
   }
   function elementDown(e: MouseEvent | TouchEvent) {
     if (e instanceof MouseEvent && e.which !== 1) return
-    const target = (e.target) as Element
+    const target = e.target as Element
     if (target && refs?.value && refs.value.contains(target)) {
-      if (
-        props.dragCancel && matchesSelectorToParentElements(target, props.dragCancel, refs.value)
-      ) return dragging.value = false
-
       if (!enabled.value) {
         enabled.value = true
         emit('activated')
@@ -158,7 +146,6 @@ export const useDraggable = (
       if (props.parent) {
         bounds = calcDragLimits()
       }
-
       addEvent(document.documentElement, eventsFor.move, move)
       addEvent(document.documentElement, eventsFor.stop, handleUp)
     }
@@ -174,7 +161,7 @@ export const useDraggable = (
       minTop: top.value % grid[1],
       maxTop: Math.floor((parentHeight.value - height.value - top.value) / grid[1]) * grid[1] + top.value,
       minBottom: bottom.value % grid[1],
-      maxBottom: Math.floor((parentHeight.value - height.value - bottom.value) / grid[1]) * grid[1] + bottom.value
+      maxBottom: Math.floor((parentHeight.value - height.value - bottom.value) / grid[1]) * grid[1] + bottom.value,
     }
   }
 
@@ -235,7 +222,7 @@ export const useDraggable = (
     resetBoundsAndMouseState()
     if (dragging.value) {
       dragging.value = false
-      emit('dragstop', left.value, top.value)
+      emit('dragStop', left.value, top.value)
     }
   }
 
@@ -244,9 +231,8 @@ export const useDraggable = (
   })
 
   onMounted(() => {
-    if (!props.enableNativeDrag && refs?.value) {
-      refs.value.ondragstart = () => false
-    }
+    if (refs?.value) refs.value.ondragstart = () => false
+
     const [pw, ph] = getParentSize()
     parentWidth.value = pw
     parentHeight.value = ph
@@ -275,12 +261,12 @@ export const useDraggable = (
   const style = computed(() => {
     return {
       transform: `translate(${left.value}px, ${top.value}px)`,
-      zIndex: zIndex.value,
-      ...(dragging.value && props.disableUserSelect ? userSelectNone : userSelectAuto)
+      ...(dragging.value && props.disableUserSelect ? userSelectNone : userSelectAuto),
     }
   })
 
-  watch(() => props.active,
+  watch(
+    () => props.active,
     (active) => {
       enabled.value = active
       if (active) {
@@ -288,28 +274,26 @@ export const useDraggable = (
       } else {
         emit('deactivated')
       }
-    })
+    },
+  )
 
-  watch(() => props.z,
-    (value) => {
-      if (Number(value) >= 0 || String(value) === 'auto') {
-        zIndex.value = value
-      }
-    })
-
-  watch(() => props.x,
+  watch(
+    () => props.x,
     (value) => {
       if (dragging.value) return
       if (props.parent) bounds = calcDragLimits()
       moveHorizontally(value)
-    })
+    },
+  )
 
-  watch(() => props.y,
+  watch(
+    () => props.y,
     (value) => {
       if (dragging.value) return
       if (props.parent) bounds = calcDragLimits()
       moveVertically(value)
-    })
+    },
+  )
 
   return {
     enabled,
@@ -317,6 +301,6 @@ export const useDraggable = (
     style,
     resetBoundsAndMouseState,
     elementTouchDown,
-    elementMouseDown
+    elementMouseDown,
   }
 }

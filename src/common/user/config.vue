@@ -34,7 +34,7 @@ const ListConfigRender = listToElement(data.value, list)
 <template>
   <div class="user-config">
     <div class="container">
-      <CommonTitle title="用户信息" />
+      <h3>用户信息</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <ListConfigRender />

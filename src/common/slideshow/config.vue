@@ -26,7 +26,7 @@ const handleAddItem = () => {
 <template>
   <div class="slideshow-config">
     <div class="container">
-      <CommonTitle title="轮播图" />
+      <h3>轮播图</h3>
       <ElTabs v-model="activeTab" stretch>
         <ElTabPane label="内容设置" name="1">
           <CommonCard title="轮播设置">
