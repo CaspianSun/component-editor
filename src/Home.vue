@@ -3,7 +3,8 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import Components from './layout/Components'
 import Config from './layout/Config'
-import Editor from './layout/Editor'
+import Canvas from './layout/Canvas'
+import Panzoom from './layout/Panzoom'
 import Resize from './components/Resize'
 import { usePageSizeStore } from './store'
 import { type OnDrag } from 'gesto'
@@ -101,7 +102,7 @@ onBeforeUnmount(() => {
         width: pageSizeStore.centerWidth + 'px',
       }"
     >
-      <Editor />
+      <Panzoom />
     </div>
     <Resize @change="changeRight" />
     <div

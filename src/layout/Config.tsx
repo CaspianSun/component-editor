@@ -1,8 +1,6 @@
-import { Transition, defineComponent, computed } from 'vue'
+import { Transition, defineComponent, computed, defineAsyncComponent, h } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useDataStore } from '../store'
-import { kebabCase } from 'lodash-es'
-import PageSetupConfig from '../common/page-setup/config.vue'
 
 export const Config = defineComponent({
   setup(props, {}) {
@@ -15,21 +13,17 @@ export const Config = defineComponent({
         return {
           component: 'pageSetup',
           setStyle: {},
+          configPage: () => import('../common/page-setup/config.vue'),
         }
       }
     })
     return () => {
       return (
         <div class={'flex flex-col p-16px h-full'}>
-          <Transition mode='out-in' name='slide-up'>
-            {() => {
-              switch (activeComponent.value.component) {
-                case 'pageSetup':
-                  return <PageSetupConfig />
-                default:
-                  return <div>暂无配置</div>
-              }
-            }}
+          <Transition mode='out-in' name='slid e-up'>
+            {h(defineAsyncComponent(activeComponent.value.configPage), {
+              data: activeComponent.value.setStyle,
+            })}
           </Transition>
         </div>
       )

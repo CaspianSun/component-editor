@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { toRefs } from 'vue'
 const props = defineProps<{
   data: Vip
 }>()

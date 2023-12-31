@@ -173,5 +173,5 @@ declare interface ComponentProperty<T = AllProperty> {
   setStyle: T
   sort?: number
   id?: string
-  configPage: () => import('vue-router').RouteComponent
+  configPage: () => any
 }

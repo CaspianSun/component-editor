@@ -1,5 +1,6 @@
 import { defineComponent } from 'vue'
 import { Plus, Minus, Copy } from '@icon-park/vue-next'
+import { JSX } from 'vue/jsx-runtime'
 
 const renderButton = (icon: JSX.Element, title?: string, click?: () => void) => {
   return (

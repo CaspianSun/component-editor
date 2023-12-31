@@ -3,7 +3,9 @@ import { VueDraggable } from 'vue-draggable-plus'
 import { SortableEvent } from 'sortablejs'
 import { storeToRefs } from 'pinia'
 import { useDataStore } from '@/store/modules/data'
-const { dataStore } = useStore()
+import { Up, DeleteFour, Down } from '@icon-park/vue-next'
+
+const dataStore = useDataStore()
 const { components, pageSetup, activeComponentIndex } = storeToRefs(dataStore)
 
 const onUpdate = (e: SortableEvent) => {
@@ -23,11 +25,10 @@ const deleteComponent = () => {
 </script>
 
 <template>
-  <!-- TODO 显示缩放功能 -->
   <div class="phone">
     <ElScrollbar max-height="100%">
       <div
-        class="container"
+        class="wrapper"
         :style="{
           'background-color': pageSetup.pageBg,
         }"
@@ -40,7 +41,7 @@ const deleteComponent = () => {
             </div>
           </template>
         </div>
-        <section class="content">
+        <div class="content">
           <VueDraggable v-model="components" :animation="150" @update.stop="onUpdate">
             <template v-for="(item, index) in components" :key="item.id">
               <div
@@ -52,24 +53,24 @@ const deleteComponent = () => {
                 <template v-if="activeComponentIndex === index">
                   <div class="controls">
                     <div v-if="activeComponentIndex !== 0" class="controls-item" @click.stop="dataStore.adjustComponentOrder('up')">
-                      <ElIcon><IEpArrowUp /></ElIcon>
+                      <Up size="20" />
                     </div>
                     <div class="controls-item" @click.stop="deleteComponent">
-                      <ElIcon><IEpDelete /></ElIcon>
+                      <DeleteFour size="20" />
                     </div>
                     <div
                       v-if="activeComponentIndex !== components.length - 1"
                       class="controls-item"
                       @click.stop="dataStore.adjustComponentOrder('down')"
                     >
-                      <ElIcon><IEpArrowDown /></ElIcon>
+                      <Down size="20" />
                     </div>
                   </div>
                 </template>
               </div>
             </template>
           </VueDraggable>
-        </section>
+        </div>
       </div>
     </ElScrollbar>
   </div>
@@ -88,11 +89,11 @@ const deleteComponent = () => {
   -ms-user-select: none;
   user-select: none;
 
-  .container {
+  .wrapper {
     width: 375px;
     min-height: 760px;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
-    margin: 45px auto;
+    margin: 45px 60px;
     position: relative;
     overflow-x: visible;
 

@@ -3,16 +3,6 @@ import { CornerDownLeft, CornerDownRight, Refresh } from '@icon-park/vue-next'
 import { useDataStore } from '../store'
 
 const dataStore = useDataStore()
-watch(
-  () => dataStore.stackIndex,
-  (va) => {
-    console.log('stackIndex', va)
-  },
-  {
-    deep: true,
-    immediate: true,
-  },
-)
 const buttonList = [
   {
     title: '撤销',
