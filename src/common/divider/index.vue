@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="divider">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         height: data.height + 'px',
         marginTop: data.marginT + 'px',
@@ -46,27 +45,25 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.divider {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    .empty {
+  .empty {
+    width: 100%;
+    height: 100%;
+  }
+  .line {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .solid {
       width: 100%;
-      height: 100%;
+      border: 1px solid #000;
     }
-    .line {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .solid {
-        width: 100%;
-        border: 1px solid #000;
-      }
-      .dotted {
-        width: 100%;
-        border: 1px dashed #000;
-      }
+    .dotted {
+      width: 100%;
+      border: 1px dashed #000;
     }
   }
 }

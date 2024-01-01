@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="one-picture">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
@@ -44,38 +43,35 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.one-picture {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    overflow: hidden;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .hotpots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    .hotpot {
+      position: absolute;
+      cursor: pointer;
+    }
+  }
+  .empty {
+    flex: 1;
+    height: 200px;
+    background-color: #f5f7fa;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    .hotpots {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 20;
-      .hotpot {
-        position: absolute;
-        cursor: pointer;
-      }
-    }
-    .empty {
-      flex: 1;
-      height: 200px;
-      background-color: #f5f7fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .icon {
-        font-size: 60px;
-        color: #c6c6c6;
-      }
+    .icon {
+      font-size: 60px;
+      color: #c6c6c6;
     }
   }
 }

@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="balance">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         background: data.bgColor,
         marginTop: data.marginT + 'px',
@@ -65,17 +64,15 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.balance {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    overflow: hidden;
-    .bottom {
-      .left {
-        &-text {
-          font-size: 25px;
-          font-weight: 500;
-        }
+  overflow: hidden;
+  .bottom {
+    .left {
+      &-text {
+        font-size: 25px;
+        font-weight: 500;
       }
     }
   }

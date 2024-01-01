@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="asset">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
@@ -75,28 +74,26 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.asset {
+.wrapper {
+  overflow: hidden;
   position: relative;
   z-index: 10;
-  .container {
-    overflow: hidden;
-    .row {
-      .item {
-        padding: 15px 10px 15px 15px;
+  .row {
+    .item {
+      padding: 15px 10px 15px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      &-top {
+        align-items: center;
         display: flex;
-        flex-direction: column;
         justify-content: space-between;
-        &-top {
-          align-items: center;
-          display: flex;
-          justify-content: space-between;
-        }
-        &-bottom {
-          margin-top: 5px;
-          width: 100%;
-          display: flex;
-          align-items: center;
-        }
+      }
+      &-bottom {
+        margin-top: 5px;
+        width: 100%;
+        display: flex;
+        align-items: center;
       }
     }
   }

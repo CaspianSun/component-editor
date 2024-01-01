@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="navigation">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         background: data.bgColor,
         marginTop: data.marginT + 'px',
@@ -102,68 +101,66 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.navigation {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    .title {
-      padding: 10px 15px 0;
-      font-size: 15px;
-      font-weight: 600;
-      color: #333;
-      font-family:
-        PingFangSC-Medium,
-        PingFang SC;
-    }
-    .column {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      padding: 10px 15px;
+  .title {
+    padding: 10px 15px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    font-family:
+      PingFangSC-Medium,
+      PingFang SC;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 15px;
 
-      .list {
-        width: 100%;
+    .list {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      .left {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
         align-items: center;
-        padding: 10px 0;
-        .left {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-        }
-        .right {
-          color: #999;
-        }
-        &:last-child {
-          border-bottom: none !important;
-        }
+      }
+      .right {
+        color: #999;
+      }
+      &:last-child {
+        border-bottom: none !important;
       }
     }
-    .row {
-      width: 100%;
+  }
+  .row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 15px 0;
+    van-icon {
+      margin-bottom: 5px;
+    }
+    .list {
       display: flex;
-      flex-wrap: wrap;
-      padding: 0 0 15px 0;
-      van-icon {
-        margin-bottom: 5px;
-      }
-      .list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 15px 0 0;
-        p {
-          font-size: 12px;
-          margin-top: 5px;
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          text-align: center;
-          box-sizing: border-box;
-        }
+      flex-direction: column;
+      align-items: center;
+      margin: 15px 0 0;
+      p {
+        font-size: 12px;
+        margin-top: 5px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
+        box-sizing: border-box;
       }
     }
   }

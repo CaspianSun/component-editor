@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="slideshow">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
@@ -39,30 +38,28 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.slideshow {
+.wrapper {
   position: relative;
   z-index: 5;
-  .container {
-    overflow: hidden;
+  overflow: hidden;
 
-    .item {
-      background-color: #f5f7fa;
-      font-size: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .empty {
-      flex: 1;
-      height: 100%;
-      background-color: #f5f7fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .icon {
-        font-size: 60px;
-        color: #c6c6c6;
-      }
+  .item {
+    background-color: #f5f7fa;
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .empty {
+    flex: 1;
+    height: 100%;
+    background-color: #f5f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      font-size: 60px;
+      color: #c6c6c6;
     }
   }
 }

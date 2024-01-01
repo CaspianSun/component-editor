@@ -37,7 +37,6 @@ export default defineConfig({
       'abs-full': 'absolute inset-0',
       'flex-center': 'flex items-center justify-center',
       'abs-center': 'absolute top-50% left-50% translate--50%',
-      container: 'w-a',
     },
   ],
   transformers: [transformerVariantGroup()],

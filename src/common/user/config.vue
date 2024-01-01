@@ -32,23 +32,21 @@ const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
-  <div class="user-config">
-    <div class="container">
-      <h3>用户信息</h3>
-      <ElTabs v-model="activeTab" stretch>
-        <ElTabPane label="内容设置" name="1">
-          <ListConfigRender />
-        </ElTabPane>
-        <ElTabPane label="样式设置" name="2">
-          <CommonCard>
-            <CommonCell label="间距">
-              <CommonNumber v-model:number="data.spacing" :max="50" :min="0"></CommonNumber>
-            </CommonCell>
-            <CommonRender />
-          </CommonCard>
-        </ElTabPane>
-      </ElTabs>
-    </div>
+  <div class="wrapper">
+    <h3>用户信息</h3>
+    <ElTabs v-model="activeTab" stretch>
+      <ElTabPane label="内容设置" name="1">
+        <ListConfigRender />
+      </ElTabPane>
+      <ElTabPane label="样式设置" name="2">
+        <CommonCard>
+          <CommonCell label="间距">
+            <CommonNumber v-model:number="data.spacing" :max="50" :min="0"></CommonNumber>
+          </CommonCell>
+          <CommonRender />
+        </CommonCard>
+      </ElTabPane>
+    </ElTabs>
   </div>
 </template>
 

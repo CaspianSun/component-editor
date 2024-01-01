@@ -14,9 +14,8 @@ const twoItemWidth = computed(() => {
 </script>
 
 <template>
-  <div class="cube-picture">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
@@ -188,29 +187,27 @@ const twoItemWidth = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.cube-picture {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    overflow: hidden;
-    .row {
-      width: 100%;
-      &-item {
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        position: relative;
-        &::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          border: 1px dashed #efefef;
-        }
+  overflow: hidden;
+  .row {
+    width: 100%;
+    &-item {
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px dashed #efefef;
       }
     }
   }

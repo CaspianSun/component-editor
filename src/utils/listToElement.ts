@@ -38,15 +38,17 @@ interface ControlShow<T> {
   item: Array<ControlShow<T> | ControlShowItem<T>>
 }
 
-type ControlShowItem<T> =
-  | {
-    method: ControlShowItemMethod.equality | ControlShowItemMethod.inequality
-    value: [keyof T, unknown]
-  }
-  | {
-    method: ControlShowItemMethod.exist | ControlShowItemMethod.nonExistent
-    value: keyof T
-  }
+interface EqualControlShowItem<T> {
+  method: ControlShowItemMethod.equality | ControlShowItemMethod.inequality
+  value: [keyof T, unknown]
+}
+
+interface ExistControlShowItem<T> {
+  method: ControlShowItemMethod.exist | ControlShowItemMethod.nonExistent
+  value: keyof T
+}
+
+type ControlShowItem<T> = EqualControlShowItem<T> | ExistControlShowItem<T>
 
 export enum ControlShowMethod {
   and,

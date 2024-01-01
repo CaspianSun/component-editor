@@ -8,9 +8,8 @@ const format = () => ''
 </script>
 
 <template>
-  <div class="vip">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
@@ -68,69 +67,67 @@ const format = () => ''
 </template>
 
 <style lang="scss" scoped>
-.vip {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    overflow: hidden;
-    .row {
-      padding: 10px 15px;
-      width: 100%;
-      height: 100px;
+  overflow: hidden;
+  .row {
+    padding: 10px 15px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #fff;
+    &-left {
+      margin-right: 10px;
+      width: 60px;
       display: flex;
-      background-color: #fff;
-      &-left {
-        margin-right: 10px;
-        width: 60px;
+      align-items: center;
+    }
+    &-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      &-top {
         display: flex;
         align-items: center;
-      }
-      &-right {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        &-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .name {
-            font-size: 16px;
-            font-weight: 600;
-            .level {
-              padding: 0 6px;
-              font-size: 10px;
-              margin-left: 10px;
-              font-weight: 400;
-              background-color: #f1cd60;
-              border-radius: 5px 5px 5px 2px;
-            }
-          }
-          .property {
-            font-size: 12px;
-            display: flex;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-            &-item {
-              margin-right: 20px;
-            }
-          }
-          .qrcode {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .text {
-              font-size: 10px;
-              color: #666666;
-            }
+        justify-content: space-between;
+        .name {
+          font-size: 16px;
+          font-weight: 600;
+          .level {
+            padding: 0 6px;
+            font-size: 10px;
+            margin-left: 10px;
+            font-weight: 400;
+            background-color: #f1cd60;
+            border-radius: 5px 5px 5px 2px;
           }
         }
-        &-bottom {
-          .exp {
-            font-size: 10px;
-            display: flex;
-            align-items: center;
+        .property {
+          font-size: 12px;
+          display: flex;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          &-item {
+            margin-right: 20px;
           }
+        }
+        .qrcode {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .text {
+            font-size: 10px;
+            color: #666666;
+          }
+        }
+      }
+      &-bottom {
+        .exp {
+          font-size: 10px;
+          display: flex;
+          align-items: center;
         }
       }
     }

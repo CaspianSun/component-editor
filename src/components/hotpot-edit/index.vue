@@ -77,7 +77,7 @@ const handleClickSave = () => {
 const changeActiveIndex = (index: number) => {
   activeIndex.value = index
 }
-const containerRef = ref<HTMLElement | null>(null)
+const wrapperRef = ref<HTMLElement | null>(null)
 
 defineExpose({
   initHotpotEdit,
@@ -96,15 +96,15 @@ defineExpose({
     @close="handleClickClose"
   >
     <div
-      ref="containerRef"
-      class="container"
+      ref="wrapperRef"
+      class="wrapper"
       :style="{
         width: `${imageWidth * 2}px`,
       }"
     >
       <template v-for="(item, index) in hotpots" :key="index">
         <VueDraggableResizable
-          v-if="imgLoaded && containerRef"
+          v-if="imgLoaded && wrapperRef"
           :active="activeIndex == index"
           class-name-draggable="item"
           :draggable="true"
@@ -145,7 +145,7 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-.container {
+.wrapper {
   width: 750px;
   margin: 0 auto;
   height: auto;

@@ -21,9 +21,8 @@ const property = [
 </script>
 
 <template>
-  <div class="user">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         marginBottom: data.marginB + 'px',
         marginLeft: data.marginLR + 'px',
@@ -97,106 +96,104 @@ const property = [
 </template>
 
 <style lang="scss" scoped>
-.user {
+.wrapper {
   position: relative;
   z-index: 10;
-  .container {
-    .bg {
-      height: 200px;
-      overflow: hidden;
+  .bg {
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .box {
+    position: relative;
+    z-index: 100;
+    margin-top: -45px;
+    padding: 10px 15px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #fff;
+    &-left {
+      margin-right: 10px;
+      width: 60px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      .img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
     }
-    .box {
-      position: relative;
-      z-index: 100;
-      margin-top: -45px;
-      padding: 10px 15px;
-      width: 100%;
-      height: 100px;
+    &-right {
+      flex: 1;
       display: flex;
-      background-color: #fff;
-      &-left {
-        margin-right: 10px;
-        width: 60px;
+      flex-direction: column;
+      justify-content: space-around;
+      &-top {
         display: flex;
         align-items: center;
-      }
-      &-right {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        &-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .name {
-            font-size: 16px;
-            font-weight: 600;
-            .level {
-              padding: 0 6px;
-              font-size: 10px;
-              margin-left: 10px;
-              font-weight: 400;
-              background-color: #f1cd60;
-              border-radius: 5px 5px 5px 2px;
-            }
+        justify-content: space-between;
+        .name {
+          font-size: 16px;
+          font-weight: 600;
+          .level {
+            padding: 0 6px;
+            font-size: 10px;
+            margin-left: 10px;
+            font-weight: 400;
+            background-color: #f1cd60;
+            border-radius: 5px 5px 5px 2px;
           }
-          .vip {
-            margin-top: 4px;
+        }
+        .vip {
+          margin-top: 4px;
+          font-size: 12px;
+          color: #666666;
+        }
+        .qr-code {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .text {
             font-size: 12px;
             color: #666666;
           }
-          .qr-code {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .text {
-              font-size: 12px;
-              color: #666666;
-            }
-          }
         }
-        &-bottom {
-          .exp {
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-          }
+      }
+      &-bottom {
+        .exp {
+          font-size: 10px;
+          display: flex;
+          align-items: center;
         }
       }
     }
-    .property {
-      position: relative;
-      z-index: 100;
-      padding: 10px 15px;
-      width: 100%;
-      height: 100px;
+  }
+  .property {
+    position: relative;
+    z-index: 100;
+    padding: 10px 15px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #fff;
+    .item {
+      flex: 1;
       display: flex;
-      background-color: #fff;
-      .item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        .number {
-          font-size: 18px;
-          font-weight: 600;
-          color: #f1cd60;
-        }
-        .text {
-          font-size: 14px;
-          margin-top: 4px;
-          color: #666666;
-        }
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .number {
+        font-size: 18px;
+        font-weight: 600;
+        color: #f1cd60;
+      }
+      .text {
+        font-size: 14px;
+        margin-top: 4px;
+        color: #666666;
       }
     }
   }

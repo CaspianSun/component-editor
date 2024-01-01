@@ -26,31 +26,31 @@ const deleteComponent = () => {
 
 <template>
   <div class="phone">
-    <ElScrollbar max-height="100%">
-      <div
-        class="wrapper"
-        :style="{
-          'background-color': pageSetup.pageBg,
-        }"
-      >
-        <div class="header">
-          <img src="@/assets/images/phoneTop.png" />
-          <template v-if="pageSetup.tabbarStyle == 1">
-            <div class="header-title">
-              {{ pageSetup.title }}
-            </div>
-          </template>
-        </div>
-        <div class="content">
-          <VueDraggable v-model="components" :animation="150" @update.stop="onUpdate">
-            <template v-for="(item, index) in components" :key="item.id">
-              <div
-                class="cursor-move drag-item"
-                :class="activeComponentIndex === index ? 'active' : ''"
-                @click="handleSelectComponents(index)"
-              >
-                <component :is="item.component" :data="item.setStyle" :index="item.id" />
-                <template v-if="activeComponentIndex === index">
+    <div
+      class="box"
+      :style="{
+        'background-color': pageSetup.pageBg,
+      }"
+    >
+      <div class="header">
+        <img src="@/assets/images/phoneTop.png" />
+        <template v-if="pageSetup.tabbarStyle == 1">
+          <div class="header-title">
+            {{ pageSetup.title }}
+          </div>
+        </template>
+      </div>
+      <div class="content">
+        <VueDraggable v-model="components" :animation="150" @update.stop="onUpdate">
+          <template v-for="(item, index) in components" :key="item.id">
+            <div
+              class="cursor-move drag-item"
+              :class="activeComponentIndex === index ? 'active' : ''"
+              @click="handleSelectComponents(index)"
+            >
+              <component :is="item.component" :data="item.setStyle" :index="item.id" />
+              <template v-if="activeComponentIndex === index">
+                <div class="fixed right--20px">
                   <div class="controls">
                     <div v-if="activeComponentIndex !== 0" class="controls-item" @click.stop="dataStore.adjustComponentOrder('up')">
                       <Up size="20" />
@@ -66,13 +66,13 @@ const deleteComponent = () => {
                       <Down size="20" />
                     </div>
                   </div>
-                </template>
-              </div>
-            </template>
-          </VueDraggable>
-        </div>
+                </div>
+              </template>
+            </div>
+          </template>
+        </VueDraggable>
       </div>
-    </ElScrollbar>
+    </div>
   </div>
 </template>
 
@@ -89,11 +89,11 @@ const deleteComponent = () => {
   -ms-user-select: none;
   user-select: none;
 
-  .wrapper {
+  .box {
     width: 375px;
     min-height: 760px;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
-    margin: 45px 60px;
+    margin: 45px 0;
     position: relative;
     overflow-x: visible;
 
@@ -103,7 +103,6 @@ const deleteComponent = () => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
       position: relative;
       img {
         pointer-events: none;
@@ -158,15 +157,14 @@ const deleteComponent = () => {
           border: 1px dashed #155bd4;
         }
         .controls {
+          width: 40px;
           position: absolute;
-          right: -60px;
-          top: 50%;
-          transform: translateY(-50%);
           display: flex;
           flex-direction: column;
           align-items: center;
           background-color: #fff;
           border-radius: 4px;
+          z-index: 100;
           &-item {
             padding: 10px 15px;
           }

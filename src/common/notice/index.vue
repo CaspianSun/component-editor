@@ -7,9 +7,8 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="notice">
+  <div class="wrapper">
     <div
-      class="container"
       :style="{
         background: data.bgColor,
         marginTop: data.marginT + 'px',
@@ -61,28 +60,27 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.notice {
+.wrapper {
+  height: auto;
   position: relative;
   z-index: 10;
-  .container {
-    overflow: hidden;
-    .left {
-      margin-right: 10px;
-      display: flex;
-      align-items: center;
-      .left-text {
-        font-weight: bold;
-        flex-shrink: 0;
-        padding: 0px 3px;
-        border-radius: 5px;
-        font-size: 14px;
-      }
+  overflow: hidden;
+  .left {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    .left-text {
+      font-weight: bold;
+      flex-shrink: 0;
+      padding: 0px 3px;
+      border-radius: 5px;
+      font-size: 14px;
     }
+  }
 
-    .notice-swipe {
-      height: 40px;
-      line-height: 40px;
-    }
+  .notice-swipe {
+    height: 40px;
+    line-height: 40px;
   }
 }
 </style>
