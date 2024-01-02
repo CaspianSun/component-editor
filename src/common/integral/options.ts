@@ -1,4 +1,4 @@
-import { List, ControlShowItemMethod } from '@/utils/listToElement'
+import { List, ControlShowItemMethod } from '/@/utils/listToElement'
 
 export const list: List<Integral>[] = [
   {

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { NoticeBar, Icon, Swipe, SwipeItem } from 'vant'
 const props = defineProps<{
   data: Notice
 }>()
@@ -13,13 +14,13 @@ const { data } = toRefs(props)
         background: data.bgColor,
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
         borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
       }"
     >
       <template v-if="data.type == 1">
-        <VanNoticeBar :background="data.bgColor" :color="data.leftTextColor">
+        <NoticeBar :background="data.bgColor" :color="data.leftTextColor">
           <template #left-icon>
             <div class="left">
               <template v-if="data.leftType === 1">
@@ -35,13 +36,13 @@ const { data } = toRefs(props)
               </template>
               <template v-if="data.leftType === 2">
                 <template v-if="data.leftIcon">
-                  <VanIcon :name="data.leftIcon" :size="22" />
+                  <Icon :name="data.leftIcon" :size="22" />
                 </template>
-                <template v-else><VanIcon name="bullhorn-o" :size="22" /></template>
+                <template v-else><Icon name="bullhorn-o" :size="22" /></template>
               </template>
             </div>
           </template>
-          <VanSwipe
+          <Swipe
             :autoplay="data.delay * 1000"
             class="notice-swipe"
             :show-indicators="false"
@@ -50,10 +51,10 @@ const { data } = toRefs(props)
             }"
             vertical
           >
-            <VanSwipeItem>公告1</VanSwipeItem>
-            <VanSwipeItem>公告2</VanSwipeItem>
-          </VanSwipe>
-        </VanNoticeBar>
+            <SwipeItem>公告1</SwipeItem>
+            <SwipeItem>公告2</SwipeItem>
+          </Swipe>
+        </NoticeBar>
       </template>
     </div>
   </div>

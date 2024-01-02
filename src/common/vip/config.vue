@@ -1,21 +1,19 @@
 <script lang="ts" setup>
-import { toRefs, ref, watch } from 'vue'
+import { ElMessage, ElAvatar, ElButton, ElForm, ElFormItem, ElColorPicker, ElIcon, ElCheckbox, ElInput } from 'element-plus'
+import { toRefs, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
-import { createCommonElement } from '@/utils/commonElement'
-import { listToElement } from '@/utils/listToElement'
+import { CommonConfig } from '../../components/CommonConfig'
+import { listToElement } from '/@/utils/listToElement'
 import { list } from './options'
-import { ElMessage } from 'element-plus'
+
 const props = defineProps<{
   data: Vip
 }>()
 const { data } = toRefs(props)
-const activeTab = ref('1')
-const CommonRender = createCommonElement(data.value)
 const ListConfigRender = listToElement(data.value, list)
-
 watch(
   data.value.propertyArr,
-  (newValue, oldValue) => {
+  (newValue) => {
     const newArr = newValue.filter((v) => v.checked)
     if (newArr.length > 2) {
       data.value.propertyArr[data.value.propertyArr.length - 1].checked = false
@@ -30,63 +28,50 @@ watch(
 </script>
 
 <template>
-  <div class="wrapper">
-    <h3>资产组件</h3>
-    <ElTabs v-model="activeTab" stretch>
-      <ElTabPane label="内容设置" name="1">
-        <CommonCard title="资产配置">
-          <CommonCell>
-            <div class="property">
-              <VueDraggable v-model="data.propertyArr" :animation="150">
-                <template v-for="(item, index) in data.propertyArr" :key="index">
-                  <div class="item">
-                    <div class="mover">
-                      <ElIcon :size="30"><IEpOperation /></ElIcon>
-                    </div>
-                    <ElCheckbox v-model="item.checked" style="margin-right: 10px">
-                      <ElInput v-model="item.name" maxlength="4" placeholder="请输入名称" show-word-limit />
-                    </ElCheckbox>
-                  </div>
-                </template>
-              </VueDraggable>
+  <CommonConfig title="资产组件" :data="data">
+    <h4>资产配置</h4>
+    <div class="property">
+      <VueDraggable v-model="data.propertyArr" :animation="150">
+        <template v-for="(item, index) in data.propertyArr" :key="index">
+          <div class="item">
+            <div class="mover">
+              <ElIcon :size="30"><IEpOperation /></ElIcon>
             </div>
-          </CommonCell>
-          <CommonCell label="文字颜色">
-            <ElColorPicker v-model="data.propertyTextColor" />
-          </CommonCell>
-          <CommonCell label="数值颜色">
-            <ElColorPicker v-model="data.propertyNumberColor" />
-          </CommonCell>
-        </CommonCard>
-        <ListConfigRender />
-        <CommonCard>
-          <div class="list">
-            <div class="row">
-              <div class="row-left">
-                <ElAvatar :size="50" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
-              </div>
-              <div class="row-center">
-                <div class="name" :style="`color:${data.welcomeColor}`">
-                  {{ data.welcomeText }}
-                </div>
-                <div class="text" :style="`color:${data.subTitleColor}`">
-                  {{ data.subTitleText }}
-                </div>
-              </div>
-              <div class="row-right">
-                <el-button>{{ data.loginBtnText }}</el-button>
-              </div>
-            </div>
+            <ElCheckbox v-model="item.checked" style="margin-right: 10px">
+              <ElInput v-model="item.name" maxlength="4" placeholder="请输入名称" show-word-limit />
+            </ElCheckbox>
           </div>
-        </CommonCard>
-      </ElTabPane>
-      <ElTabPane label="样式设置" name="2">
-        <CommonCard>
-          <CommonRender />
-        </CommonCard>
-      </ElTabPane>
-    </ElTabs>
-  </div>
+        </template>
+      </VueDraggable>
+    </div>
+    <ElForm>
+      <ElFormItem label="文字颜色">
+        <ElColorPicker v-model="data.propertyTextColor" />
+      </ElFormItem>
+      <ElFormItem label="文字大小">
+        <ElColorPicker v-model="data.propertyNumberColor" />
+      </ElFormItem>
+    </ElForm>
+    <ListConfigRender />
+    <div class="list">
+      <div class="row">
+        <div class="row-left">
+          <ElAvatar :size="50" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
+        </div>
+        <div class="row-center">
+          <div class="name" :style="`color:${data.welcomeColor}`">
+            {{ data.welcomeText }}
+          </div>
+          <div class="text" :style="`color:${data.subTitleColor}`">
+            {{ data.subTitleText }}
+          </div>
+        </div>
+        <div class="row-right">
+          <ElButton>{{ data.loginBtnText }}</ElButton>
+        </div>
+      </div>
+    </div>
+  </CommonConfig>
 </template>
 
 <style lang="scss" scoped>

@@ -1,15 +1,14 @@
 <script lang="ts" setup>
 import { toRefs, ref } from 'vue'
-import { List, listToElement } from '@/utils/listToElement'
-import { createCommonElement } from '@/utils/commonElement'
-import CommonCell from '@/components/common/cell/index.vue'
-import CommonNumber from '@/components/common/number/index.vue'
+import { ElFormItem } from 'element-plus'
+import { SliderNumber } from '/@/components/SliderNumber'
+import { CommonConfig } from '../../components/CommonConfig'
+import { type List, listToElement } from '/@/utils/listToElement'
+
 const props = defineProps<{
   data: User
 }>()
-const activeTab = ref('1')
 const { data } = toRefs(props)
-const CommonRender = createCommonElement(data.value, ['marginB', 'marginLR', 'radiusT', 'radiusB'])
 const list: List<User>[] = [
   {
     label: '样式设置',
@@ -32,22 +31,14 @@ const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
-  <div class="wrapper">
-    <h3>用户信息</h3>
-    <ElTabs v-model="activeTab" stretch>
-      <ElTabPane label="内容设置" name="1">
-        <ListConfigRender />
-      </ElTabPane>
-      <ElTabPane label="样式设置" name="2">
-        <CommonCard>
-          <CommonCell label="间距">
-            <CommonNumber v-model:number="data.spacing" :max="50" :min="0"></CommonNumber>
-          </CommonCell>
-          <CommonRender />
-        </CommonCard>
-      </ElTabPane>
-    </ElTabs>
-  </div>
+  <CommonConfig title="用户信息" :data="data" :common-list="['marginB', 'marginL', 'marginR', 'radiusT', 'radiusB']">
+    <ListConfigRender />
+    <template #common>
+      <ElFormItem label="间距">
+        <SliderNumber v-model:number="data.spacing" :max="50" :min="0"></SliderNumber>
+      </ElFormItem>
+    </template>
+  </CommonConfig>
 </template>
 
 <style lang="scss" scoped></style>

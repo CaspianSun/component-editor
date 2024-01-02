@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { Image } from 'vant'
 const props = defineProps<{
   data: Navigation
 }>()
@@ -13,8 +14,8 @@ const { data } = toRefs(props)
         background: data.bgColor,
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
         borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
       }"
     >
@@ -33,7 +34,7 @@ const { data } = toRefs(props)
             >
               <div class="left">
                 <template v-if="data.isShowIcon">
-                  <VanImage
+                  <Image
                     :height="data.iconSize"
                     :show-error="false"
                     :show-loading="false"
@@ -71,7 +72,7 @@ const { data } = toRefs(props)
                 width: (data.colNum == 3 ? '33.33' : data.colNum == 4 ? '25' : '20') + '%',
               }"
             >
-              <VanImage
+              <Image
                 :height="data.iconSize"
                 :show-error="false"
                 :show-loading="false"

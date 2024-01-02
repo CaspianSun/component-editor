@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "paths": {
-      "@/*": ["src/*"],
+      "/@/*": ["src/*"],
       "/#/*": ["types/*"]
     }
   },

@@ -73,7 +73,7 @@ declare interface Integral extends Partial<CommonStyle> {
 
 declare interface HotPicture extends Partial<CommonStyle> {
   src: string // 图片链接
-  hotpots: Array<import('@/components/hotpot-edit/index.vue').HotpotsListItem>
+  hotSpot: Array<import('/@/components/HotSpotEdit/index.vue').HotSpotListItem>
 }
 
 declare interface Slideshow extends Partial<CommonStyle> {
@@ -141,21 +141,23 @@ declare interface User extends Partial<CommonStyle> {
 }
 
 declare interface CommonStyle {
-  radiusT: number // 上圆角 0-50
-  radiusB: number // 下圆角 0-50
-  marginT: number // 上边距 0-50
-  marginB: number // 下边距 -100-50
-  marginLR: number // 左右边距 0-50
+  radiusT: number
+  radiusB: number
+  marginT: number
+  marginB: number
+  marginL: number
+  marginR: number
   radiusTRange?: [number, number]
   radiusBRange?: [number, number]
   marginTRange?: [number, number]
   marginBRange?: [number, number]
-  marginLRRange?: [number, number]
+  marginLRange?: [number, number]
+  marginRRange?: [number, number]
 }
 
 declare interface Link {
-  type: import('../enum').LinkEnum // 跳转类型
-  url: string // 跳转地址
+  type: import('../enum').LinkEnum
+  url: string
   urlName: string //
   uuid: string
   appInfo?: {

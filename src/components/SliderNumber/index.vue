@@ -1,31 +1,27 @@
 <script lang="ts" setup>
-import { ref, watch, withDefaults } from 'vue'
+import { computed } from 'vue'
+import { watch, withDefaults } from 'vue'
+import { defineProps, defineEmits } from 'vue'
+
 const props = withDefaults(
   defineProps<{
     number: number
-    label?: string
     max?: number
     min?: number
-    leftSpan?: number
-    rightSpan?: number
   }>(),
   {
     number: 0,
-    label: '',
     max: 50,
     min: 0,
-    leftSpan: 6,
-    rightSpan: 18,
   },
 )
 const emit = defineEmits(['update:number'])
-const number = ref(props.number)
-watch(
-  () => number.value,
-  (val) => {
+const number = computed({
+  get: () => props.number,
+  set: (val) => {
     emit('update:number', val)
   },
-)
+})
 </script>
 
 <template>
@@ -54,6 +50,7 @@ watch(
   display: flex;
   align-items: center;
   width: 100%;
+  margin: 0 10px;
   :deep(.el-input) {
     margin-left: 20px;
     width: 120px;

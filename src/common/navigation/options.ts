@@ -1,4 +1,4 @@
-import { List, ControlShowItemMethod, ControlShowMethod } from '@/utils/listToElement'
+import { List, ControlShowItemMethod, ControlShowMethod } from '/@/utils/listToElement'
 
 export const list: List<Navigation>[] = [
   {

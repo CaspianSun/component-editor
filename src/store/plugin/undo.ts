@@ -1,28 +1,32 @@
 import type { PiniaPluginContext } from 'pinia'
 
-function createStack<T>(current: T) {
-  const stack = [current]
-  let index = stack.length
-  function update() {
-    current = stack[index - 1]
-    return current
+class CreateStack<T> {
+  constructor(current: T) {
+    this.stack = [current]
   }
-  return {
-    push: (value: T) => {
-      stack.length = index
-      stack[index++] = value
-      return update()
-    },
-    undo: () => {
-      if (index > 1) index -= 1
-      return update()
-    },
-    redo: () => {
-      if (index < stack.length) index += 1
-      return update()
-    },
-    index: () => index,
-    length: () => stack.length,
+  public stack: T[]
+  public index = 1
+  push(value: T) {
+    this.stack.length = this.index
+    this.stack[this.index++] = value
+    return this.update()
+  }
+  undo() {
+    if (this.index > 1) this.index -= 1
+    return this.update()
+  }
+  redo() {
+    if (this.index < this.stack.length) this.index += 1
+    return this.update()
+  }
+  update() {
+    return this.stack[this.index - 1]
+  }
+  get current() {
+    return this.stack[this.index - 1]
+  }
+  get length() {
+    return this.stack.length
   }
 }
 
@@ -77,33 +81,33 @@ type PluginOptions = PiniaPluginContext & {
  */
 export function PiniaUndo({ store, options, serializer }: PluginOptions) {
   if (!options.undo || !options.undo.enable) return
-  let stack = createStack(removeOmittedKeys(options, store, serializer))
+  let stack = new CreateStack(removeOmittedKeys(options, store, serializer))
   let preventUpdateOnSubscribe = false
+
   const setIndexLength = () => {
-    store.stackIndex = stack.index()
-    store.stackLength = stack.length()
+    store.stackIndex = stack.index
+    store.stackLength = stack.length
   }
   setIndexLength()
   store.undo = () => {
     preventUpdateOnSubscribe = true
-    store.$patch(stack.undo())
+    store.$patch(serializer?.deserialize(serializer.serialize(stack.undo())))
     setIndexLength()
   }
   store.redo = () => {
     preventUpdateOnSubscribe = true
-    store.$patch(stack.redo())
+    store.$patch(serializer?.deserialize(serializer.serialize(stack.redo())))
     setIndexLength()
   }
   store.resetStack = () => {
-    stack = createStack(removeOmittedKeys(options, store, serializer))
+    stack = new CreateStack(removeOmittedKeys(options, store, serializer))
     setIndexLength()
   }
   store.$subscribe(
     () => {
-      if (preventUpdateOnSubscribe) {
-        preventUpdateOnSubscribe = false
-        return
-      }
+      if (preventUpdateOnSubscribe) return (preventUpdateOnSubscribe = false)
+      const data = removeOmittedKeys(options, store, serializer)
+      if (serializer?.serialize(data) === serializer?.serialize(stack.current)) return
       stack.push(removeOmittedKeys(options, store, serializer))
       setIndexLength()
     },

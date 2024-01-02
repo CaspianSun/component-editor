@@ -10,15 +10,29 @@ export const commonLink = (): Link => {
 }
 
 const commonStyle: CommonStyle = {
-  radiusT: 10, // 上圆角 0-50
-  radiusB: 10, // 下圆角 0-50
-  marginT: 10, // 上边距 0-50
-  marginB: 10, // 下边距 -100-50
-  marginLR: 15, // 左右边距 0-50
+  radiusT: 10,
+  radiusB: 10,
+  marginT: 10,
+  marginB: 10,
+  marginL: 15,
+  marginR: 15,
 }
 
 export const generalStyle = (componentProperties: Map<string, ComponentProperty>) => {
   return <T extends AllProperty>(set: Omit<ComponentProperty<T>, 'setStyle'>, data: T) => {
-    componentProperties.set(set.component, Object.assign({ setStyle: { ...commonStyle, ...data }, sort: 0 }, set))
+    componentProperties.set(
+      set.component,
+      Object.assign(
+        {
+          id: uuid(),
+          setStyle: {
+            ...commonStyle,
+            ...data,
+          },
+          sort: 0,
+        },
+        set,
+      ),
+    )
   }
 }

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { defineProps, toRefs } from 'vue'
+import { Row, Col, Button } from 'vant'
 const props = defineProps<{
   data: Asset
 }>()
@@ -12,13 +13,13 @@ const { data } = toRefs(props)
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
       }"
     >
-      <VanRow class="row" gutter="10">
+      <Row class="row" gutter="10">
         <template v-for="(item, index) in data.itemList" :key="index">
-          <VanCol :span="12">
+          <Col :span="12">
             <div
               class="item"
               :style="{
@@ -40,7 +41,7 @@ const { data } = toRefs(props)
                   {{ item.unit }}
                 </div>
                 <div v-if="item.unit == '元'" class="item-top-btn">
-                  <VanButton
+                  <Button
                     round
                     size="small"
                     :style="{
@@ -50,7 +51,7 @@ const { data } = toRefs(props)
                     }"
                   >
                     <span :style="{ color: data.btnTextColor }">充值</span>
-                  </VanButton>
+                  </Button>
                 </div>
               </div>
               <div class="item-bottom">
@@ -66,9 +67,9 @@ const { data } = toRefs(props)
                 <VanIcon color="#666666" name="arrow" style="margin-top: 1px; margin-left: 2px"></VanIcon>
               </div>
             </div>
-          </VanCol>
+          </Col>
         </template>
-      </VanRow>
+      </Row>
     </div>
   </div>
 </template>

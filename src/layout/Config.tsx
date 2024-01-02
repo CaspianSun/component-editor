@@ -5,25 +5,28 @@ import { useDataStore } from '../store'
 export const Config = defineComponent({
   setup(props, {}) {
     const dataStore = useDataStore()
-    const { components, activeComponentIndex } = storeToRefs(dataStore)
+    const { components, activeComponentIndex, activeId } = storeToRefs(dataStore)
     const activeComponent = computed(() => {
-      if (typeof activeComponentIndex.value == 'number') {
-        return components.value[activeComponentIndex.value]
+      const item = components.value.find((item, index) => item.id == activeId.value)
+      if (typeof activeComponentIndex.value == 'number' && item) {
+        return item
       } else {
-        return {
-          component: 'pageSetup',
-          setStyle: {},
-          configPage: () => import('../common/page-setup/config.vue'),
-        }
+        dataStore.setActiveComponentIndex(null)
+      }
+      return {
+        component: 'pageSetup',
+        setStyle: {},
+        configPage: () => import('../common/page-setup/config.vue'),
       }
     })
     return () => {
       return (
         <div class={'flex flex-col p-16px h-full'}>
           <Transition mode='out-in' name='slid e-up'>
-            {h(defineAsyncComponent(activeComponent.value.configPage), {
-              data: activeComponent.value.setStyle,
-            })}
+            {activeComponent?.value?.configPage &&
+              h(defineAsyncComponent(activeComponent.value.configPage), {
+                data: activeComponent.value.setStyle,
+              })}
           </Transition>
         </div>
       )

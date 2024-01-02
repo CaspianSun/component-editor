@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, toRefs } from 'vue'
+import { toRefs } from 'vue'
 const props = defineProps<{
   data: Divider
 }>()
@@ -7,14 +7,14 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="divider">
     <div
       :style="{
         height: data.height + 'px',
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
       }"
     >
       <template v-if="data.type == 1">
@@ -45,7 +45,7 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
+.divider {
   position: relative;
   z-index: 10;
   .empty {

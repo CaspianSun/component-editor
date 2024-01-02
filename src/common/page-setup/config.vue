@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { ElTabs, ElTabPane, ElInput, ElRadioGroup, ElRadio, ElColorPicker, ElForm, ElFormItem } from 'element-plus'
-import { useDataStore } from '@/store/modules/data'
+import { useDataStore } from '../../store'
 
 const dataStore = useDataStore()
 const { pageSetup } = storeToRefs(dataStore)

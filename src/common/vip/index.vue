@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { Icon, Progress } from 'vant'
 const props = defineProps<{
   data: Vip
 }>()
 const { data } = toRefs(props)
-const format = () => ''
 </script>
 
 <template>
@@ -13,14 +13,14 @@ const format = () => ''
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
         borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
-        marginRight: data.marginLR + 'px',
       }"
     >
       <div class="row">
         <div class="row-left">
-          <VanIcon name="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="55" />
+          <Icon name="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="55" />
         </div>
         <div class="row-right">
           <div class="row-right-top">
@@ -30,7 +30,6 @@ const format = () => ''
                 <span class="level">lv1</span>
               </div>
               <div class="property">
-                <!-- v-if="data.propertyArr.checked('1') != '-1'" -->
                 <div v-for="(item, index) in data.propertyArr" v-show="item.checked" :key="index" class="property-item">
                   <span
                     :style="{
@@ -50,13 +49,13 @@ const format = () => ''
               </div>
             </div>
             <div class="qrcode">
-              <VanIcon name="qr" size="35" />
+              <Icon name="qr" size="35" />
               <div class="text">会员码</div>
             </div>
           </div>
           <div class="row-right-bottom">
             <div class="exp">
-              <VanProgress :percentage="50" :show-pivot="false" style="width: 100px; margin-right: 5px" />
+              <Progress :percentage="50" :show-pivot="false" style="width: 100px; margin-right: 5px" />
               <span style="display: inline-block">500/1000</span>
             </div>
           </div>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { Icon } from 'vant'
 const props = defineProps<{
   data: User
 }>()
@@ -25,16 +26,16 @@ const property = [
     <div
       :style="{
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
       }"
     >
       <div
         class="bg"
         :style="{
           backgroundColor: data.bgImg ? '' : data.bgColor,
-          marginLeft: '-' + data.marginLR + 'px',
-          marginRight: '-' + data.marginLR + 'px',
+          marginLeft: '-' + data.marginL + 'px',
+          marginRight: '-' + data.marginR + 'px',
         }"
       >
         <img v-if="data.bgImg" class="img" :src="data.bgImg" />
@@ -46,7 +47,7 @@ const property = [
         }"
       >
         <div class="box-left">
-          <VanIcon name="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="55" />
+          <Icon name="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="55" />
         </div>
         <div class="box-right">
           <div class="box-right-top">

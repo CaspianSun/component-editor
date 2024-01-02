@@ -94,7 +94,7 @@ generalStyleCurry<HotPicture>(
   },
   {
     src: '',
-    hotpots: [
+    hotSpot: [
       {
         id: uuid(),
         link: commonLink(),
@@ -249,7 +249,8 @@ generalStyleCurry<Divider>(
     lineColor: '#999999',
     lineSize: 1,
     height: 20,
-    marginLR: 0,
+    marginL: 0,
+    marginR: 0,
     marginT: 0,
     marginB: 0,
   },

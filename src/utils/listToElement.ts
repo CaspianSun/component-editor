@@ -1,7 +1,5 @@
 import { h } from 'vue'
-import CommonCard from '@/components/common/card/index.vue'
-import CommonCell from '@/components/common/cell/index.vue'
-import CommonNumber from '@/components/common/number/index.vue'
+import { JSX } from 'vue/jsx-runtime'
 import { ElColorPicker, ElInput, ElInputNumber, ElRadio, ElRadioGroup } from 'element-plus'
 import { match } from 'ts-pattern'
 export interface List<T extends AllProperty> {

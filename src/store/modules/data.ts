@@ -16,6 +16,7 @@ export const useDataStore = defineStore('dataStore', {
   state(): {
     components: ComponentProperty[]
     activeComponentIndex: number | null
+    activeId: string | null
     pageSetup: PageSetup
     pageId: string
     templateId: string
@@ -27,6 +28,7 @@ export const useDataStore = defineStore('dataStore', {
     return {
       components: [],
       activeComponentIndex: null,
+      activeId: null,
       pageSetup: defaultPageSetup(),
       pageId: '',
       templateId: '',
@@ -51,6 +53,7 @@ export const useDataStore = defineStore('dataStore', {
     },
     setActiveComponentIndex(index: number | null) {
       this.activeComponentIndex = index
+      this.activeId = index === null ? null : this.components[index].id || null
     },
     deleteComponent(index: number) {
       this.components.splice(index, 1)
@@ -85,6 +88,6 @@ export const useDataStore = defineStore('dataStore', {
   },
   undo: {
     enable: true,
-    omit: ['activeComponentIndex'],
+    omit: ['activeComponentIndex', 'activeId'],
   },
 })

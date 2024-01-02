@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { Cell, Icon, Button } from 'vant'
 const props = defineProps<{
   data: Integral
 }>()
@@ -13,21 +14,21 @@ const { data } = toRefs(props)
         background: data.bgColor,
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
         borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
       }"
     >
-      <VanCell :border="false" center :style="{ background: data.bgColor }">
+      <Cell :border="false" center :style="{ background: data.bgColor }">
         <template v-if="data.isShowIcon" #icon>
           <template v-if="data.icon">
             <div style="width: 22px; height: 22px; margin-right: 5px">
-              <VanIcon :name="data.icon" size="22" />
+              <Icon :name="data.icon" size="22" />
             </div>
           </template>
           <template v-else>
             <div style="width: 22px; height: 22px; margin-right: 5px">
-              <VanIcon :color="data.titleColor" name="points" size="22" />
+              <Icon :color="data.titleColor" name="points" size="22" />
             </div>
           </template>
         </template>
@@ -40,22 +41,22 @@ const { data } = toRefs(props)
           </div>
         </template>
         <template #right-icon>
-          <VanIcon :color="data.rightIconColor" name="arrow" />
+          <Icon :color="data.rightIconColor" name="arrow" />
         </template>
-      </VanCell>
+      </Cell>
       <template v-if="data.type === 1">
         <div class="bottom">
-          <VanCell center :style="{ background: data.bgColor }">
+          <Cell center :style="{ background: data.bgColor }">
             <template #title>
               <div class="left" :style="{ color: data.textColor }">
                 ¥
                 <text class="left-text">888.88</text>
               </div>
             </template>
-            <VanButton :color="data.btnBgColor" round size="small">
+            <Button :color="data.btnBgColor" round size="small">
               <span :style="{ color: data.btnTextColor }">{{ data.buttonText }}</span>
-            </VanButton>
-          </VanCell>
+            </Button>
+          </Cell>
         </div>
       </template>
     </div>

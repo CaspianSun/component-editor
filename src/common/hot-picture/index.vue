@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { Image, Icon } from 'vant'
 const props = defineProps<{
   data: HotPicture
 }>()
@@ -7,22 +8,23 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="one-picture">
     <div
+      class="wrapper"
       :style="{
         marginTop: data.marginT + 'px',
         marginBottom: data.marginB + 'px',
-        marginLeft: data.marginLR + 'px',
-        marginRight: data.marginLR + 'px',
+        marginLeft: data.marginL + 'px',
+        marginRight: data.marginR + 'px',
         borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
       }"
     >
       <template v-if="data.src">
-        <VanImage fit="contain" :src="data.src" style="width: 100%"></VanImage>
-        <div class="hotpots">
-          <template v-for="(item, index) in data.hotpots" :key="index">
+        <Image fit="contain" :src="data.src" style="width: 100%" />
+        <div class="hot-spot">
+          <template v-for="(item, index) in data.hotSpot" :key="index">
             <div
-              class="hotpot"
+              class="hot-spot-item"
               :style="{
                 top: item.top / 2 + 'px',
                 left: item.left / 2 + 'px',
@@ -35,7 +37,7 @@ const { data } = toRefs(props)
       </template>
       <template v-else>
         <div class="empty">
-          <VanIcon class="icon" name="photo" />
+          <Icon class="icon" name="photo" />
         </div>
       </template>
     </div>
@@ -43,35 +45,38 @@ const { data } = toRefs(props)
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
+.one-picture {
   position: relative;
   z-index: 10;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .hotpots {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 20;
-    .hotpot {
-      position: absolute;
-      cursor: pointer;
-    }
-  }
-  .empty {
-    flex: 1;
-    height: 200px;
-    background-color: #f5f7fa;
+  .wrapper {
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    .icon {
-      font-size: 60px;
-      color: #c6c6c6;
+    position: relative;
+    .hot-spot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      .hot-spot-item {
+        position: absolute;
+        cursor: pointer;
+      }
+    }
+    .empty {
+      flex: 1;
+      height: 200px;
+      background-color: #f5f7fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        font-size: 60px;
+        color: #c6c6c6;
+      }
     }
   }
 }

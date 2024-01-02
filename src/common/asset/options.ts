@@ -1,4 +1,4 @@
-import { List } from '@/utils/listToElement'
+import { List } from '/@/utils/listToElement'
 
 export const list: List<Asset>[] = [
   {
