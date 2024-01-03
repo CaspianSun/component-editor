@@ -8,7 +8,7 @@ import Panzoom, { PanzoomObject } from '@panzoom/panzoom'
 
 export const Canvas = defineComponent({
   setup() {
-    const canvasRef = ref<HTMLElement | null>(null)
+    const canvasRef = ref<HTMLElement>()
     const { height: canvasHeight } = useElementSize(canvasRef)
     const isFirst = ref(true)
     watch(canvasHeight, () => {
@@ -19,8 +19,8 @@ export const Canvas = defineComponent({
         return
       }
     })
-    const child = ref<HTMLElement | null>(null)
-    const canvasPanzoom = ref<PanzoomObject | null>(null)
+    const child = ref<HTMLElement>()
+    const canvasPanzoom = ref<PanzoomObject>()
     function zoomWheel(e: WheelEvent) {
       e.preventDefault()
       if (e.deltaY < 0) canvasPanzoom.value?.zoomIn()

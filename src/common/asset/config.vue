@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { defineProps, toRefs } from 'vue'
-import { ElTabs, ElTabPane, ElInput } from 'element-plus'
+import { toRefs } from 'vue'
+import { ElInput } from 'element-plus'
 import { CommonConfig } from '../../components/CommonConfig'
 import { listToElement } from '/@/utils/listToElement'
 import { list } from './options'

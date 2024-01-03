@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { computed, defineProps, defineEmits, toRefs, ref } from 'vue'
+import { toRefs, computed, ref } from 'vue'
 import { CubePictureEnum } from '../../enum/index'
 import { CommonConfig } from '../../components/CommonConfig'
 import { SliderNumber } from '../../components/SliderNumber'
-import UploadImg from '/@/components/UploadImg/index.vue'
+import UploadImg from '../../components/UploadImg/index.vue'
 import { Row, Col } from 'vant'
 const props = defineProps<{
   data: CubePicture
@@ -12,7 +12,7 @@ const typeLength = Object.keys(CubePictureEnum).length / 2
 const { data } = toRefs(props)
 
 const twoItemWidth = computed(() => {
-  return ((750 - data.value.itemMargin) / 2 - (data.value.marginL || 0) + (data.value.marginR || 0)).toFixed()
+  return ((750 - data.value.itemMargin) / 2 - ((data.value.marginL || 0) + (data.value.marginR || 0))).toFixed()
 })
 
 const activeImgIndex = ref(0)
@@ -44,7 +44,7 @@ const handleUpdateImgSrc = (src: string) => {
                   <div>
                     宽度:
                     {{
-                      ((750 - data.itemMargin * (data.type + 1)) / (data.type + 2) - (data.marginL || 0) * (data.marginR || 0)).toFixed()
+                      ((750 - data.itemMargin * (data.type + 1)) / (data.type + 2) - ((data.marginL || 0) + (data.marginR || 0))).toFixed()
                     }}px
                   </div>
                   <div>高度: {{ data.itemHeight }}px</div>
@@ -147,10 +147,10 @@ const handleUpdateImgSrc = (src: string) => {
     <h4>元素设置</h4>
     <ElForm>
       <ElFormItem label="上圆角">
-        <SliderNumber :max="20" :number="data.marginT" @update:number="data.marginT = $event" />
+        <SliderNumber :max="20" :number="data.itemRadiusT" @update:number="data.itemRadiusT = $event" />
       </ElFormItem>
       <ElFormItem label="下圆角">
-        <SliderNumber :max="20" :number="data.marginB" @update:number="data.marginB = $event" />
+        <SliderNumber :max="20" :number="data.itemRadiusB" @update:number="data.itemRadiusB = $event" />
       </ElFormItem>
       <ElFormItem label="内间距">
         <SliderNumber :max="20" :number="data.itemMargin" @update:number="data.itemMargin = $event" />

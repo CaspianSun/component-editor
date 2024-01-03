@@ -14,19 +14,20 @@ export const Config = defineComponent({
         dataStore.setActiveComponentIndex(null)
       }
       return {
-        component: 'pageSetup',
+        component: 'page-setup',
         setStyle: {},
-        configPage: () => import('../common/page-setup/config.vue'),
       }
     })
     return () => {
       return (
         <div class={'flex flex-col p-16px h-full'}>
           <Transition mode='out-in' name='slid e-up'>
-            {activeComponent?.value?.configPage &&
-              h(defineAsyncComponent(activeComponent.value.configPage), {
+            {h(
+              defineAsyncComponent(() => import(`../common/${activeComponent.value.component}/config.vue`)),
+              {
                 data: activeComponent.value.setStyle,
-              })}
+              },
+            )}
           </Transition>
         </div>
       )

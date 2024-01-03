@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { watch, withDefaults } from 'vue'
-import { defineProps, defineEmits } from 'vue'
+import { withDefaults } from 'vue'
 
 const props = withDefaults(
   defineProps<{

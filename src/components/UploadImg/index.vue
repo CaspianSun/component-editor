@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { CircleCloseFilled, Plus } from '@element-plus/icons-vue'
-import { ElUpload } from 'element-plus'
-import { UploadFile, UploadProps } from 'element-plus/es/components/upload'
+import { ElUpload, ElIcon, ElButton, ElImage, ElDialog, UploadFile, UploadProps } from 'element-plus'
 import { inject, ref } from 'vue'
 const props = withDefaults(
   defineProps<{
@@ -76,16 +75,16 @@ const imgView = () => {
     <div v-if="photo" class="block">
       <div class="img">
         <div style="width: 100%; height: 100%" @click="imgView">
-          <el-image fit="cover" :src="photo" style="width: 100%; height: 100%" />
+          <ElImage fit="cover" :src="photo" style="width: 100%; height: 100%" />
         </div>
         <div class="position">
-          <el-button link plain text @click="delPhoto">
-            <el-icon><circle-close-filled /></el-icon>
-          </el-button>
+          <ElButton link plain text @click="delPhoto">
+            <ElIcon><CircleCloseFilled /></ElIcon>
+          </ElButton>
         </div>
       </div>
     </div>
-    <el-upload
+    <ElUpload
       v-else
       v-loading="loading"
       accept=".jpg,.png"
@@ -98,13 +97,13 @@ const imgView = () => {
       :on-success="handleSucImg"
       :show-file-list="false"
     >
-      <el-icon class="avatar-uploader-icon"><plus /></el-icon>
-    </el-upload>
-    <el-dialog v-model="dialogVisible">
+      <ElIcon class="avatar-uploader-icon"><Plus /></ElIcon>
+    </ElUpload>
+    <ElDialog v-model="dialogVisible">
       <div class="dialogImg">
         <img alt="Preview Image" :src="previewImg" w-full />
       </div>
-    </el-dialog>
+    </ElDialog>
   </div>
 </template>
 

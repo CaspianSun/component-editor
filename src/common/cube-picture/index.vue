@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { toRefs, computed } from 'vue'
-import { CubePictureEnum } from '../../enum/index'
+import { generateStyleObject } from '../style'
+import { CubePictureEnum } from '../../enum'
 import { Row, Col, Image } from 'vant'
 const props = defineProps<{
   data: CubePicture
@@ -16,15 +17,7 @@ const twoItemWidth = computed(() => {
 
 <template>
   <div class="cube-picture">
-    <div
-      class="wrapper"
-      :style="{
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-      }"
-    >
+    <div class="wrapper" :style="generateStyleObject(data)">
       <template v-if="data.type <= CubePictureEnum['一行四个']">
         <Row class="row" :gutter="data.itemMargin">
           <template v-for="index of data.type + 2" :key="index">
@@ -44,7 +37,10 @@ const twoItemWidth = computed(() => {
                     <div>
                       宽度:
                       {{
-                        ((750 - data.itemMargin * (data.type + 1)) / (data.type + 2) - (data.marginL || 0) * (data.marginR || 0)).toFixed()
+                        (
+                          (750 - data.itemMargin * (data.type + 1)) / (data.type + 2) -
+                          ((data.marginL || 0) + (data.marginR || 0))
+                        ).toFixed()
                       }}px
                     </div>
                     <div>高度: {{ data.itemHeight }}px</div>

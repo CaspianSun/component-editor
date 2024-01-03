@@ -1,17 +1,31 @@
 import { defineStore } from 'pinia'
+import { Page } from '../../enum/page'
+
+type PageSetup = {
+  type: Page
+  title?: string
+  pageBg?: string
+  options?: {
+    defaultComponents: ComponentProperty[]
+  }
+}
 
 const defaultPageSetup = () => {
   return {
-    title: '页面名称',
-    detail: '',
-    tabbarStyle: 1,
-    color: '#000000',
+    title: '登陆页',
+    type: Page.Login,
     pageBg: '#F9F9F9',
-    tabbarBg: '#ffffff',
   }
 }
-export type PageSetup = ReturnType<typeof defaultPageSetup>
 
+const defaultPage = [Page.Login]
+const pageList = (): PageSetup[] => {
+  return [
+    {
+      type: Page.Login,
+    },
+  ]
+}
 export const useDataStore = defineStore('dataStore', {
   state(): {
     components: ComponentProperty[]
@@ -19,11 +33,7 @@ export const useDataStore = defineStore('dataStore', {
     activeId: string | null
     pageSetup: PageSetup
     pageId: string
-    templateId: string
-    templateInfo: {
-      name: string
-      introduction: string
-    } | null
+    pageList: PageSetup[]
   } {
     return {
       components: [],
@@ -31,19 +41,17 @@ export const useDataStore = defineStore('dataStore', {
       activeId: null,
       pageSetup: defaultPageSetup(),
       pageId: '',
-      templateId: '',
-      templateInfo: null,
+      pageList: pageList(),
     }
+  },
+  getters: {
+    length(): number {
+      return this.components.length
+    },
   },
   actions: {
     setPageId(id: string) {
       this.pageId = id
-    },
-    setTemplateId(id: string) {
-      this.templateId = id
-    },
-    setTemplateInfo(info: { name: string; introduction: string } | null) {
-      this.templateInfo = info
     },
     setComponents(components: ComponentProperty[]) {
       this.components = components
@@ -81,8 +89,6 @@ export const useDataStore = defineStore('dataStore', {
       this.activeComponentIndex = null
       this.pageSetup = defaultPageSetup()
       this.pageId = ''
-      this.templateId = ''
-      this.templateInfo = null
       this.resetStack()
     },
   },

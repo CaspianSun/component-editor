@@ -4,7 +4,7 @@ import Gesto from 'gesto'
 export const Index = defineComponent({
   emits: ['change'],
   setup(props, { emit }) {
-    const target = ref<HTMLElement | null>(null)
+    const target = ref<HTMLElement>()
     const getso = ref<Gesto | null>(null)
 
     onMounted(() => {

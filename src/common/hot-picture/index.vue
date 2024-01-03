@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
 import { Image, Icon } from 'vant'
+import { generateStyleObject } from '../style'
+
 const props = defineProps<{
   data: HotPicture
 }>()
@@ -9,16 +11,7 @@ const { data } = toRefs(props)
 
 <template>
   <div class="one-picture">
-    <div
-      class="wrapper"
-      :style="{
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-        borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
-      }"
-    >
+    <div class="wrapper" :style="generateStyleObject(data)">
       <template v-if="data.src">
         <Image fit="contain" :src="data.src" style="width: 100%" />
         <div class="hot-spot">

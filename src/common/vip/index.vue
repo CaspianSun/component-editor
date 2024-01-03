@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
 import { Icon, Progress } from 'vant'
+import { generateStyleObject } from '../style'
+
 const props = defineProps<{
   data: Vip
 }>()
@@ -9,15 +11,7 @@ const { data } = toRefs(props)
 
 <template>
   <div class="wrapper">
-    <div
-      :style="{
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-        borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
-      }"
-    >
+    <div :style="generateStyleObject(data)">
       <div class="row">
         <div class="row-left">
           <Icon name="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="55" />

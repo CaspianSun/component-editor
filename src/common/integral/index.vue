@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
 import { Cell, Icon, Button } from 'vant'
+import { generateStyleObject } from '../style'
+
 const props = defineProps<{
   data: Integral
 }>()
@@ -9,16 +11,7 @@ const { data } = toRefs(props)
 
 <template>
   <div class="wrapper">
-    <div
-      :style="{
-        background: data.bgColor,
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-        borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
-      }"
-    >
+    <div :style="generateStyleObject(data)">
       <Cell :border="false" center :style="{ background: data.bgColor }">
         <template v-if="data.isShowIcon" #icon>
           <template v-if="data.icon">

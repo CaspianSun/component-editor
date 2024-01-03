@@ -168,12 +168,15 @@ declare interface Link {
 }
 
 declare interface ComponentProperty<T = AllProperty> {
+  /** 文件夹 */
   component: string
+  /** 组件名称 */
   title: string
-  icon?: string | JSX.Element
+  /** 组件分组 */
   group: import('../enum').GroupEnum
+  /** 组件配置 */
   setStyle: T
-  sort?: number
   id?: string
-  configPage: () => any
+  icon?: string | JSX.Element
+  sort?: number
 }

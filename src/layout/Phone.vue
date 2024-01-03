@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import { defineAsyncComponent, onMounted } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { SortableEvent } from 'sortablejs'
 import { storeToRefs } from 'pinia'
 import { useDataStore } from '../store'
-import { Up, DeleteFour, Down } from '@icon-park/vue-next'
 
 withDefaults(
   defineProps<{
@@ -25,72 +25,50 @@ const onUpdate = (e: SortableEvent) => {
 const handleSelectComponents = (index: number) => {
   dataStore.setActiveComponentIndex(index)
 }
-const deleteComponent = () => {
-  if (activeComponentIndex.value !== null) {
-    dataStore.deleteComponent(activeComponentIndex.value)
+
+onMounted(() => {
+  const content = document.querySelector('.content')
+  if (content) {
+    content.addEventListener('wheel', (e) => {
+      e.stopPropagation()
+    })
   }
-}
-const onClone = (...args: any[]) => {
-  console.log(args)
-}
-const onAdd = (...args: any[]) => {
-  console.log(args)
-}
+})
 </script>
 
 <template>
   <div class="phone">
     <div
-      class="box"
+      class="box rd-30px overflow-hidden"
       :style="{
         'background-color': pageSetup.pageBg,
       }"
     >
       <div class="header">
-        <img src="../assets/images/phoneTop.png" />
-        <template v-if="pageSetup.tabbarStyle == 1">
-          <div class="header-title">
-            {{ pageSetup.title }}
-          </div>
-        </template>
+        <img src="../assets/images/top.png" />
+        <div class="header-title relative c-black z-1000">
+          {{ pageSetup.title }}
+        </div>
       </div>
       <div class="content">
-        <VueDraggable
-          v-model="components"
-          class="flex-1"
-          group="components"
-          :animation="150"
-          @update.stop="onUpdate"
-          @clone="onClone"
-          @add="onAdd"
-        >
+        <VueDraggable v-model="components" class="flex-1" group="components" :animation="150" @update.stop="onUpdate">
           <template v-for="(item, index) in components" :key="item.id">
             <div
               class="cursor-move drag-item"
               :class="activeComponentIndex === index ? 'active' : ''"
               @click="handleSelectComponents(index)"
             >
-              <component :is="item.component" :data="item.setStyle" :index="item.id" />
-              <template v-if="activeComponentIndex === index">
-                <div class="controls">
-                  <div v-if="activeComponentIndex !== 0" class="controls-item" @click.stop="dataStore.adjustComponentOrder('up')">
-                    <Up size="20" />
-                  </div>
-                  <div class="controls-item" @click.stop="deleteComponent">
-                    <DeleteFour size="20" />
-                  </div>
-                  <div
-                    v-if="activeComponentIndex !== components.length - 1"
-                    class="controls-item"
-                    @click.stop="dataStore.adjustComponentOrder('down')"
-                  >
-                    <Down size="20" />
-                  </div>
-                </div>
-              </template>
+              <component
+                :is="defineAsyncComponent(() => import(`../common/${item.component}/index.vue`))"
+                :data="item.setStyle"
+                :index="item.id"
+              />
             </div>
           </template>
         </VueDraggable>
+      </div>
+      <div class="absolute bottom-8px left-50% transform-translate-x--50% z-100">
+        <img class="h-6px" src="../assets/images/block.png" />
       </div>
     </div>
   </div>
@@ -111,7 +89,7 @@ const onAdd = (...args: any[]) => {
 
   .box {
     width: 375px;
-    min-height: 760px;
+    height: 812px;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
     margin: 45px 0;
     position: relative;
@@ -150,11 +128,16 @@ const onAdd = (...args: any[]) => {
       flex: 1;
       display: flex;
       height: 100%;
+      overflow-y: auto;
+      overflow-x: visible;
       box-sizing: border-box;
       cursor: pointer;
       position: relative;
       background-repeat: no-repeat;
       background-size: 100% 100%;
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       .drag-item {
         position: relative;
@@ -180,22 +163,6 @@ const onAdd = (...args: any[]) => {
         }
         &:hover::after {
           border: 1px dashed #155bd4;
-        }
-        .controls {
-          width: 40px;
-          position: absolute;
-          top: 50%;
-          right: -50px;
-          transform: translateY(-50%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          background-color: #fff;
-          border-radius: 4px;
-          z-index: 100;
-          &-item {
-            padding: 10px 15px;
-          }
         }
       }
     }

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { generateStyleObject } from '../style'
 const props = defineProps<{
   data: Divider
 }>()
@@ -10,11 +11,8 @@ const { data } = toRefs(props)
   <div class="divider">
     <div
       :style="{
+        ...generateStyleObject(data),
         height: data.height + 'px',
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
       }"
     >
       <template v-if="data.type == 1">

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { defineProps, toRefs } from 'vue'
-import { Row, Col, Button } from 'vant'
+import { toRefs } from 'vue'
+import { Row, Col, Button, Icon } from 'vant'
+import { generateStyleObject } from '../style'
 const props = defineProps<{
   data: Asset
 }>()
@@ -9,14 +10,7 @@ const { data } = toRefs(props)
 
 <template>
   <div class="wrapper">
-    <div
-      :style="{
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-      }"
-    >
+    <div :style="generateStyleObject(data)">
       <Row class="row" gutter="10">
         <template v-for="(item, index) in data.itemList" :key="index">
           <Col :span="12">
@@ -64,7 +58,7 @@ const { data } = toRefs(props)
                 >
                   {{ item.name }}
                 </span>
-                <VanIcon color="#666666" name="arrow" style="margin-top: 1px; margin-left: 2px"></VanIcon>
+                <Icon color="#666666" name="arrow" style="margin-top: 1px; margin-left: 2px"></Icon>
               </div>
             </div>
           </Col>

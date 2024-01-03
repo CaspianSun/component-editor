@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
 import { Swipe, SwipeItem, Image, Icon } from 'vant'
+import { generateStyleObject } from '../style'
+
 const props = defineProps<{
   data: Slideshow
 }>()
@@ -9,16 +11,7 @@ const { data } = toRefs(props)
 
 <template>
   <div class="slideshow">
-    <div
-      class="wrapper"
-      :style="{
-        marginTop: data.marginT + 'px',
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-        borderRadius: `${data.radiusT}px ${data.radiusT}px ${data.radiusB}px ${data.radiusB}px`,
-      }"
-    >
+    <div class="wrapper" :style="generateStyleObject(data)">
       <Swipe :autoplay="data.delay * 1000">
         <template v-for="(item, index) in data.imgList" :key="index">
           <SwipeItem>

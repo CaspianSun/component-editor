@@ -9,12 +9,10 @@ const generalStyleCurry = generalStyle(componentProperties)
 
 generalStyleCurry<CubePicture>(
   {
-    component: 'cubePicture',
+    component: 'cube-picture',
     title: '图片魔方',
     group: GroupEnum['基础组件'],
     sort: 1,
-    icon: 'icon-park:waterfalls-v',
-    configPage: () => import('./cube-picture/config.vue'),
   },
   {
     type: CubePictureEnum['一行二个'],
@@ -36,8 +34,6 @@ generalStyleCurry<Balance>(
     title: '我的余额',
     group: GroupEnum['基础组件'],
     sort: 2,
-    icon: 'icon-park:finance',
-    configPage: () => import('./balance/config.vue'),
   },
   {
     type: 1,
@@ -63,8 +59,6 @@ generalStyleCurry<Integral>(
     title: '我的积分',
     group: GroupEnum['基础组件'],
     sort: 2,
-    icon: 'icon-park:financing',
-    configPage: () => import('./integral/config.vue'),
   },
   {
     type: 1,
@@ -85,12 +79,10 @@ generalStyleCurry<Integral>(
 
 generalStyleCurry<HotPicture>(
   {
-    component: 'hotPicture',
+    component: 'hot-picture',
     title: '图片热区',
     group: GroupEnum['基础组件'],
     sort: 1,
-    icon: 'icon-park:new-picture',
-    configPage: () => import('./hot-picture/config.vue'),
   },
   {
     src: '',
@@ -112,8 +104,6 @@ generalStyleCurry<Slideshow>(
     component: 'slideshow',
     title: '轮播图',
     group: GroupEnum['基础组件'],
-    icon: 'icon-park:picture-album',
-    configPage: () => import('./slideshow/config.vue'),
   },
   {
     marginT: 0,
@@ -135,8 +125,6 @@ generalStyleCurry<Navigation>(
     component: 'navigation',
     title: '导航',
     group: GroupEnum['基础组件'],
-    icon: 'icon-park:application-two',
-    configPage: () => import('./navigation/config.vue'),
   },
   {
     type: 1,
@@ -167,8 +155,6 @@ generalStyleCurry<Notice>(
     component: 'notice',
     title: '公告',
     group: GroupEnum['基础组件'],
-    icon: 'icon-park:volume-notice',
-    configPage: () => import('./notice/config.vue'),
   },
   {
     bgColor: '#ffffff',
@@ -190,8 +176,6 @@ generalStyleCurry<Asset>(
     component: 'asset',
     title: '资产组件',
     group: GroupEnum['基础组件'],
-    icon: 'icon-park:strongbox',
-    configPage: () => import('./asset/config.vue'),
   },
   {
     btnBgColor: '#333',
@@ -211,8 +195,6 @@ generalStyleCurry<Vip>(
     component: 'vip',
     title: '会员信息',
     group: GroupEnum['基础组件'],
-    icon: 'icon-park:vip-one',
-    configPage: () => import('./vip/config.vue'),
   },
   {
     bgColor: '#fff',
@@ -240,8 +222,6 @@ generalStyleCurry<Divider>(
     component: 'divider',
     title: '辅助分割',
     group: GroupEnum['辅助组件'],
-    icon: 'icon-park:division',
-    configPage: () => import('./divider/config.vue'),
   },
   {
     type: 1,
@@ -261,8 +241,6 @@ generalStyleCurry<User>(
     component: 'user',
     title: '用户信息',
     group: GroupEnum['基础组件'],
-    icon: 'icon-park:user-positioning',
-    configPage: () => import('./user/config.vue'),
   },
   {
     bgColor: '#2f88ff',

@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
 import { Icon } from 'vant'
+import { generateStyleObject } from '../style'
+
 const props = defineProps<{
   data: User
 }>()
@@ -23,13 +25,7 @@ const property = [
 
 <template>
   <div class="wrapper">
-    <div
-      :style="{
-        marginBottom: data.marginB + 'px',
-        marginLeft: data.marginL + 'px',
-        marginRight: data.marginR + 'px',
-      }"
-    >
+    <div :style="generateStyleObject(data)">
       <div
         class="bg"
         :style="{
