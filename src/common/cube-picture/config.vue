@@ -5,6 +5,8 @@ import { CommonConfig } from '../../components/CommonConfig'
 import { SliderNumber } from '../../components/SliderNumber'
 import UploadImg from '../../components/UploadImg/index.vue'
 import { Row, Col } from 'vant'
+import { ElRadioGroup, ElRadio, ElForm, ElFormItem } from 'element-plus'
+
 const props = defineProps<{
   data: CubePicture
 }>()

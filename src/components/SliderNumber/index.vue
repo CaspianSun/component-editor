@@ -26,21 +26,7 @@ const number = computed({
 <template>
   <div class="cell">
     <ElSlider v-model="number" :max="props.max" :min="props.min" size="small" />
-    <ElInput
-      :max="props.max"
-      :min="props.min"
-      :model-value="number"
-      size="small"
-      type="number"
-      @input="
-        (val: string) => {
-          number = Number(val) > props.max ? props.max : Number(val)
-          number = Number(val) < props.min ? props.min : Number(val)
-        }
-      "
-    >
-      <template #append>px</template>
-    </ElInput>
+    <el-input-number v-model="number" :max="props.max" :min="props.min" controls-position="right" />
   </div>
 </template>
 

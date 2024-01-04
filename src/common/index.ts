@@ -1,13 +1,14 @@
+import { ComponentProperty, commonLink } from '../utils'
 import { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum } from '../enum'
-import { generalStyle, commonLink } from '../utils'
-export { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum }
+export { GroupEnum, CubePictureEnum, LinkEnum }
 import { v4 as uuid } from 'uuid'
 
-const componentProperties: Map<string, ComponentProperty> = new Map()
+const componentProperties = new ComponentProperty()
+export const { componentConfigMap, componentInstanceMap, configInstanceMap } = componentProperties
+componentProperties.addConfigInstance('page-setup')
+const addComponent = componentProperties.addComponent.bind(componentProperties)
 
-const generalStyleCurry = generalStyle(componentProperties)
-
-generalStyleCurry<CubePicture>(
+addComponent<CubePicture>(
   {
     component: 'cube-picture',
     title: '图片魔方',
@@ -28,7 +29,7 @@ generalStyleCurry<CubePicture>(
   },
 )
 
-generalStyleCurry<Balance>(
+addComponent<Balance>(
   {
     component: 'balance',
     title: '我的余额',
@@ -53,7 +54,7 @@ generalStyleCurry<Balance>(
   },
 )
 
-generalStyleCurry<Integral>(
+addComponent<Integral>(
   {
     component: 'integral',
     title: '我的积分',
@@ -77,7 +78,7 @@ generalStyleCurry<Integral>(
   },
 )
 
-generalStyleCurry<HotPicture>(
+addComponent<HotPicture>(
   {
     component: 'hot-picture',
     title: '图片热区',
@@ -99,7 +100,7 @@ generalStyleCurry<HotPicture>(
   },
 )
 
-generalStyleCurry<Slideshow>(
+addComponent<Slideshow>(
   {
     component: 'slideshow',
     title: '轮播图',
@@ -120,7 +121,7 @@ generalStyleCurry<Slideshow>(
   },
 )
 
-generalStyleCurry<Navigation>(
+addComponent<Navigation>(
   {
     component: 'navigation',
     title: '导航',
@@ -150,7 +151,7 @@ generalStyleCurry<Navigation>(
   },
 )
 
-generalStyleCurry<Notice>(
+addComponent<Notice>(
   {
     component: 'notice',
     title: '公告',
@@ -171,7 +172,7 @@ generalStyleCurry<Notice>(
   },
 )
 
-generalStyleCurry<Asset>(
+addComponent<Asset>(
   {
     component: 'asset',
     title: '资产组件',
@@ -190,7 +191,7 @@ generalStyleCurry<Asset>(
   },
 )
 
-generalStyleCurry<Vip>(
+addComponent<Vip>(
   {
     component: 'vip',
     title: '会员信息',
@@ -217,7 +218,7 @@ generalStyleCurry<Vip>(
   },
 )
 
-generalStyleCurry<Divider>(
+addComponent<Divider>(
   {
     component: 'divider',
     title: '辅助分割',
@@ -236,7 +237,7 @@ generalStyleCurry<Divider>(
   },
 )
 
-generalStyleCurry<User>(
+addComponent<User>(
   {
     component: 'user',
     title: '用户信息',
@@ -252,5 +253,3 @@ generalStyleCurry<User>(
     numSize: 18,
   },
 )
-
-export default componentProperties

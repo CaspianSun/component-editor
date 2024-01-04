@@ -1,18 +1,11 @@
 <script lang="ts" setup>
-import { defineAsyncComponent, onMounted } from 'vue'
+import { withDefaults, onMounted } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { SortableEvent } from 'sortablejs'
 import { storeToRefs } from 'pinia'
 import { useDataStore } from '../store'
+import { componentInstanceMap } from '../common'
 
-withDefaults(
-  defineProps<{
-    scale: number
-  }>(),
-  {
-    scale: 1,
-  },
-)
 const dataStore = useDataStore()
 const { components, pageSetup, activeComponentIndex } = storeToRefs(dataStore)
 
@@ -51,20 +44,24 @@ onMounted(() => {
         </div>
       </div>
       <div class="content">
-        <VueDraggable v-model="components" class="flex-1" group="components" :animation="150" @update.stop="onUpdate">
-          <template v-for="(item, index) in components" :key="item.id">
-            <div
-              class="cursor-move drag-item"
-              :class="activeComponentIndex === index ? 'active' : ''"
-              @click="handleSelectComponents(index)"
-            >
-              <component
-                :is="defineAsyncComponent(() => import(`../common/${item.component}/index.vue`))"
-                :data="item.setStyle"
-                :index="item.id"
-              />
-            </div>
-          </template>
+        <VueDraggable
+          v-model="components"
+          :disabled="pageSetup.options?.disableAdd"
+          :animation="150"
+          group="components"
+          class="flex-1 w-100%"
+          @update="onUpdate"
+        >
+          <div
+            v-for="(item, index) in components"
+            :id="item.id"
+            :key="item.id"
+            class="cursor-move drag-item"
+            :class="activeComponentIndex === index ? 'active' : ''"
+            @click="handleSelectComponents(index)"
+          >
+            <component :is="componentInstanceMap.get(item.component)?.value" :id="item.id" :data="item.setStyle" />
+          </div>
         </VueDraggable>
       </div>
       <div class="absolute bottom-8px left-50% transform-translate-x--50% z-100">
@@ -76,8 +73,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .phone {
-  flex: 1;
-  height: 100%;
+  position: absolute;
   background: #f7f8fa;
   moz-user-select: -moz-none;
   -moz-user-select: none;
@@ -86,12 +82,17 @@ onMounted(() => {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  width: 0;
+  height: 0;
 
   .box {
+    position: absolute;
+    top: -431px;
+    left: -187px;
     width: 375px;
     height: 812px;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
-    margin: 45px 0;
+    margin: 25px 0;
     position: relative;
     overflow-x: visible;
     display: flex;

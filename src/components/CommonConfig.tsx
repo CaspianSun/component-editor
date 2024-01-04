@@ -1,6 +1,6 @@
 import { toRefs, ref } from 'vue'
 import { PropType, defineComponent } from 'vue'
-import { ElTabs, ElTabPane, ElForm, ElFormItem } from 'element-plus'
+import { ElTabs, ElTabPane, ElForm, ElFormItem, ElScrollbar } from 'element-plus'
 import { SliderNumber } from './SliderNumber'
 
 export type CommonNumberKeys = {
@@ -82,30 +82,28 @@ export const CommonConfig = defineComponent({
     ]
     return () => {
       return (
-        <div class='wrapper'>
+        <div class='h-full flex flex-col'>
           <h3>{props.title}</h3>
           {props.showCommon ? (
-            <div>
-              <ElTabs v-model={[activeTab.value]} stretch>
-                <ElTabPane label={props.tabPaneTitle} name='1'>
-                  {slots.default?.()}
-                </ElTabPane>
-                <ElTabPane label='样式设置' name='2'>
-                  <ElForm>
-                    {commonNumbers.map((item) => {
-                      return (
-                        <ElFormItem label={item.label} v-show={item.show}>
-                          <SliderNumber v-model:number={[props.data[item.prop]]} max={item.range?.[1] || 50} min={item.range?.[0] || 0} />
-                        </ElFormItem>
-                      )
-                    })}
-                    {slots.common?.()}
-                  </ElForm>
-                </ElTabPane>
-              </ElTabs>
-            </div>
+            <ElTabs v-model={[activeTab.value]} stretch class={'overflow-hidden flex-1 h-full'}>
+              <ElTabPane label={props.tabPaneTitle} name='1'>
+                <ElScrollbar>{slots.default?.()}</ElScrollbar>
+              </ElTabPane>
+              <ElTabPane label='样式设置' name='2'>
+                <ElForm>
+                  {commonNumbers.map((item) => {
+                    return (
+                      <ElFormItem label={item.label} v-show={item.show}>
+                        <SliderNumber v-model:number={[props.data[item.prop]]} max={item.range?.[1] || 50} min={item.range?.[0] || 0} />
+                      </ElFormItem>
+                    )
+                  })}
+                  {slots.common?.()}
+                </ElForm>
+              </ElTabPane>
+            </ElTabs>
           ) : (
-            <div>{slots.default?.()}</div>
+            <div class={'flex-1 full overflow-hidden'}>{slots.default?.()}</div>
           )}
         </div>
       )

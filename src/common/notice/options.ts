@@ -1,4 +1,4 @@
-import { List, ControlShowItemMethod } from '/@/utils/listToElement'
+import { List, ControlShowItemMethod } from '../../utils/listToElement'
 
 export const list: List<Notice>[] = [
   {
@@ -44,7 +44,7 @@ export const list: List<Notice>[] = [
         label: '文字',
         type: 'ElInput',
         prop: 'leftText',
-        config: { maxlength: 4 },
+        config: { maxLength: 4 },
         control: { method: ControlShowItemMethod.equality, value: ['leftType', 1] },
       },
       {
@@ -59,12 +59,12 @@ export const list: List<Notice>[] = [
         prop: 'leftBgColor',
         control: { method: ControlShowItemMethod.equality, value: ['leftType', 1] },
       },
-      {
-        label: '图标',
-        type: 'CSelectImg',
-        prop: 'leftIcon',
-        control: { method: ControlShowItemMethod.equality, value: ['leftType', 2] },
-      },
+      // {
+      //   label: '图标',
+      //   type: 'CSelectImg',
+      //   prop: 'leftIcon',
+      //   control: { method: ControlShowItemMethod.equality, value: ['leftType', 2] },
+      // },
     ],
   },
 ]

@@ -6,7 +6,8 @@ type PageSetup = {
   title?: string
   pageBg?: string
   options?: {
-    defaultComponents: ComponentProperty[]
+    defaultComponents?: ComponentConfig[]
+    disableAdd?: boolean
   }
 }
 
@@ -15,6 +16,12 @@ const defaultPageSetup = () => {
     title: '登陆页',
     type: Page.Login,
     pageBg: '#F9F9F9',
+    options: {
+      // defaultComponents: [
+      //   'login'
+      // ],
+      // disableAdd: true,
+    },
   }
 }
 
@@ -28,9 +35,9 @@ const pageList = (): PageSetup[] => {
 }
 export const useDataStore = defineStore('dataStore', {
   state(): {
-    components: ComponentProperty[]
+    components: ComponentConfig[]
     activeComponentIndex: number | null
-    activeId: string | null
+    activeComponentId: string | null
     pageSetup: PageSetup
     pageId: string
     pageList: PageSetup[]
@@ -38,7 +45,7 @@ export const useDataStore = defineStore('dataStore', {
     return {
       components: [],
       activeComponentIndex: null,
-      activeId: null,
+      activeComponentId: null,
       pageSetup: defaultPageSetup(),
       pageId: '',
       pageList: pageList(),
@@ -53,7 +60,7 @@ export const useDataStore = defineStore('dataStore', {
     setPageId(id: string) {
       this.pageId = id
     },
-    setComponents(components: ComponentProperty[]) {
+    setComponents(components: ComponentConfig[]) {
       this.components = components
     },
     setPageSetup(pageSetup: PageSetup) {
@@ -61,7 +68,7 @@ export const useDataStore = defineStore('dataStore', {
     },
     setActiveComponentIndex(index: number | null) {
       this.activeComponentIndex = index
-      this.activeId = index === null ? null : this.components[index].id || null
+      this.activeComponentId = index === null ? null : this.components[index].id || null
     },
     deleteComponent(index: number) {
       this.components.splice(index, 1)
@@ -94,6 +101,6 @@ export const useDataStore = defineStore('dataStore', {
   },
   undo: {
     enable: true,
-    omit: ['activeComponentIndex', 'activeId'],
+    omit: ['activeComponentIndex', 'activeComponentId'],
   },
 })

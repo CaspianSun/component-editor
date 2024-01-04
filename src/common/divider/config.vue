@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { ElForm, ElFormItem, ElRadioGroup, ElRadioButton, ElColorPicker } from 'element-plus'
 import { CommonConfig } from '../../components/CommonConfig'
 import { SliderNumber } from '../../components/SliderNumber'
 const props = defineProps<{
@@ -19,7 +20,6 @@ const { data } = toRefs(props)
         </ElRadioGroup>
       </ElFormItem>
       <!-- <ElFormItem label="样式设置">
-
       </ElFormItem> -->
       <template v-if="data.type === 1">
         <ElFormItem label="背景颜色">

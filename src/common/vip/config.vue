@@ -3,7 +3,7 @@ import { ElMessage, ElAvatar, ElButton, ElForm, ElFormItem, ElColorPicker, ElIco
 import { toRefs, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { CommonConfig } from '../../components/CommonConfig'
-import { listToElement } from '/@/utils/listToElement'
+import { listToElement } from '../../utils/listToElement'
 import { list } from './options'
 
 const props = defineProps<{

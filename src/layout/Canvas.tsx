@@ -27,7 +27,7 @@ export const Canvas = defineComponent({
       else canvasPanzoom.value?.zoomOut()
     }
     const setStartScale = () => {
-      const scaleHeight = canvasHeight.value / child.value!.offsetHeight
+      const scaleHeight = canvasHeight.value / 862
       canvasPanzoom.value?.setOptions({
         startScale: scaleHeight,
       })

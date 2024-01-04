@@ -1,4 +1,4 @@
-import { List, ControlShowItemMethod } from '/@/utils/listToElement'
+import { List, ControlShowItemMethod } from '../../utils/listToElement'
 
 export const list: List<Balance>[] = [
   {
@@ -27,17 +27,17 @@ export const list: List<Balance>[] = [
           { label: '不显示', value: false },
         ],
       },
-      {
-        label: '选择图标',
-        type: 'CSelectImg',
-        prop: 'icon',
-        control: { method: ControlShowItemMethod.equality, value: ['isShowIcon', true] },
-      },
+      // {
+      //   label: '选择图标',
+      //   type: 'CSelectImg',
+      //   prop: 'icon',
+      //   control: { method: ControlShowItemMethod.equality, value: ['isShowIcon', true] },
+      // },
       {
         label: '标题',
         type: 'ElInput',
         prop: 'title',
-        config: { maxlength: 8 },
+        config: { maxLength: 8 },
       },
       {
         label: '标题文字颜色',
@@ -63,7 +63,7 @@ export const list: List<Balance>[] = [
         label: '按钮文字',
         type: 'ElInput',
         prop: 'buttonText',
-        config: { maxlength: 4 },
+        config: { maxLength: 4 },
         control: { method: ControlShowItemMethod.equality, value: ['type', 1] },
       },
       {

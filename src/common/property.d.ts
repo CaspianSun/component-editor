@@ -167,7 +167,7 @@ declare interface Link {
   }
 }
 
-declare interface ComponentProperty<T = AllProperty> {
+declare interface ComponentConfig<T = AllProperty> {
   /** 文件夹 */
   component: string
   /** 组件名称 */

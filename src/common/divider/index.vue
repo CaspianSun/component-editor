@@ -18,26 +18,28 @@ const { data } = toRefs(props)
       <template v-if="data.type == 1">
         <div class="empty" :style="{ backgroundColor: data.bgColor }"></div>
       </template>
-      <div class="line">
-        <template v-if="data.type == 2">
-          <div
-            class="solid"
-            :style="{
-              borderColor: data.lineColor,
-              borderWidth: data.lineSize + 'px',
-            }"
-          ></div>
-        </template>
-        <template v-if="data.type == 3">
-          <div
-            class="dotted"
-            :style="{
-              borderColor: data.lineColor,
-              borderWidth: data.lineSize + 'px',
-            }"
-          ></div>
-        </template>
-      </div>
+      <template v-if="[2, 3].includes(data.type)">
+        <div class="line">
+          <template v-if="data.type == 2">
+            <div
+              class="solid"
+              :style="{
+                borderColor: data.lineColor,
+                borderWidth: data.lineSize + 'px',
+              }"
+            ></div>
+          </template>
+          <template v-if="data.type == 3">
+            <div
+              class="dotted"
+              :style="{
+                borderColor: data.lineColor,
+                borderWidth: data.lineSize + 'px',
+              }"
+            ></div>
+          </template>
+        </div>
+      </template>
     </div>
   </div>
 </template>

@@ -4,12 +4,12 @@ import { v4 as uuid } from 'uuid'
 import { ElCollapse, ElCollapseItem, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import { useDataStore } from '../store'
-import componentProperty, { GroupEnum } from '../common/index'
+import { GroupEnum, componentConfigMap } from '../common/index'
 import { VueDraggable } from 'vue-draggable-plus'
 
 export const Components = defineComponent({
-  setup(props, ctx) {
-    interface ComponentItem extends Pick<ComponentProperty, 'icon' | 'component'> {
+  setup() {
+    interface ComponentItem extends Pick<ComponentConfig, 'icon' | 'component'> {
       title: string
     }
 
@@ -18,13 +18,14 @@ export const Components = defineComponent({
       componentsList: ComponentItem[]
     }
     const dataStore = useDataStore()
-    const { components } = storeToRefs(dataStore)
+    const { components, pageSetup } = storeToRefs(dataStore)
     const activeNames = ref([1, 2, 3])
-    const data = Array.from(componentProperty.values())
+    const data = Array.from(componentConfigMap.values())
       .sort((a, b) => {
         return (a.sort ?? 0) - (b.sort ?? 0)
       })
       .reduce((acc, cur) => {
+        if (cur.group === GroupEnum['隐藏组件']) return acc
         const groupName = GroupEnum[cur.group]
         const groupIndex = acc.findIndex((item) => item.title === groupName)
         if (groupIndex === -1) {
@@ -41,8 +42,11 @@ export const Components = defineComponent({
         return acc
       }, [] as DataItem[])
 
-    const handleClick = (item: ComponentItem) => {
-      const component = componentProperty.get(item.component)
+    const handleAdd = (item: ComponentItem, type: 'click' | 'drag' = 'click') => {
+      if (pageSetup.value.options?.disableAdd) {
+        return false
+      }
+      const component = componentConfigMap.get(item.component)
       if (component?.component == 'user' && components.value.findIndex((item) => item.component == 'user') !== -1) {
         ElMessage({
           message: `${item.title}组件只能添加一个`,
@@ -53,7 +57,11 @@ export const Components = defineComponent({
       if (component) {
         const newComponent = cloneDeep(component)
         newComponent.id = uuid()
-        components.value.push(newComponent)
+        if (type === 'click') {
+          components.value.push(newComponent)
+        } else {
+          return newComponent
+        }
       } else {
         ElMessage({
           message: `组件 ${item.title} 不存在`,
@@ -62,26 +70,6 @@ export const Components = defineComponent({
       }
     }
 
-    const clone = (original: ComponentItem) => {
-      const component = componentProperty.get(original.component)
-      if (component?.component == 'user' && components.value.findIndex((item) => item.component == 'user') !== -1) {
-        ElMessage({
-          message: `${original.title}组件只能添加一个`,
-          type: 'info',
-        })
-        return
-      }
-      if (component) {
-        const newComponent = cloneDeep(component)
-        newComponent.id = uuid()
-        return newComponent
-      } else {
-        ElMessage({
-          message: `组件 ${original.title} 不存在`,
-          type: 'error',
-        })
-      }
-    }
     return () => {
       return (
         <div class={'p-16px bg-#fff'}>
@@ -98,7 +86,7 @@ export const Components = defineComponent({
                           animation={150}
                           group={{ name: 'components', pull: 'clone', put: false }}
                           sort={false}
-                          clone={clone}
+                          clone={(e) => handleAdd(e, 'drag')}
                           class={'grid grid-cols-[repeat(auto-fill,85px)] justify-center w-full'}
                         >
                           {items.componentsList.map((item) => {
@@ -107,7 +95,7 @@ export const Components = defineComponent({
                                 class={
                                   'cursor-move w-70px mx-a mt-5px mb-10px h-70px relative cursor-pointer rd-5px bg-#fff flex-center flex-col b-1px b-solid b-#ebeef5 hover:b-#409eff'
                                 }
-                                onClick={() => handleClick(item)}
+                                onClick={() => handleAdd(item)}
                               >
                                 <p>{item.title}</p>
                               </div>

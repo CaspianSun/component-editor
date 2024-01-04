@@ -35,3 +35,14 @@ ol {
 h3 {
   margin-bottom: 15px;
 }
+h4 {
+  margin-bottom: 10px;
+}
+
+.el-tabs {
+  display: flex;
+  flex-direction: column;
+  .el-tab-pane {
+    height: 100%;
+  }
+}

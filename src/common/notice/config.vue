@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { toRefs, ref } from 'vue'
-import { listToElement } from '/@/utils/listToElement'
+import { listToElement } from '../../utils/listToElement'
 import { CommonConfig } from '../../components/CommonConfig'
 import { list } from './options'
 const props = defineProps<{

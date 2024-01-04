@@ -1,4 +1,6 @@
 import { v4 as uuid } from 'uuid'
+import { JSX } from 'vue/jsx-runtime'
+import { shallowRef, defineAsyncComponent } from 'vue'
 
 export const commonLink = (): Link => {
   return {
@@ -18,9 +20,15 @@ const commonStyle: CommonStyle = {
   marginR: 15,
 }
 
-export const generalStyle = (componentProperties: Map<string, ComponentProperty>) => {
-  return <T extends AllProperty>(set: Omit<ComponentProperty<T>, 'setStyle'>, data: T) => {
-    componentProperties.set(
+export class ComponentProperty {
+  constructor() {}
+
+  componentConfigMap = new Map<string, ComponentConfig>()
+  componentInstanceMap = new Map<string, import('vue').ShallowRef<any>>()
+  configInstanceMap = new Map<string, import('vue').ShallowRef<any>>()
+
+  addComponent<T extends AllProperty>(set: Omit<ComponentConfig, 'setStyle'>, data: T) {
+    this.componentConfigMap.set(
       set.component,
       Object.assign(
         {
@@ -34,5 +42,13 @@ export const generalStyle = (componentProperties: Map<string, ComponentProperty>
         set,
       ),
     )
+    this.addComponentInstance(set.component)
+    this.addConfigInstance(set.component)
+  }
+  addComponentInstance(components: ComponentConfig['component']) {
+    this.componentInstanceMap.set(components, shallowRef(defineAsyncComponent(() => import(`../common/${components}/index.vue`))))
+  }
+  addConfigInstance(components: ComponentConfig['component']) {
+    this.configInstanceMap.set(components, shallowRef(defineAsyncComponent(() => import(`../common/${components}/config.vue`))))
   }
 }

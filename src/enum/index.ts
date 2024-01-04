@@ -1,4 +1,5 @@
 export enum GroupEnum {
+  '隐藏组件' = 0,
   '基础组件' = 1,
   '辅助组件' = 2,
 }

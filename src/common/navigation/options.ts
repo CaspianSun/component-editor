@@ -1,4 +1,4 @@
-import { List, ControlShowItemMethod, ControlShowMethod } from '/@/utils/listToElement'
+import { List, ControlShowItemMethod, ControlShowMethod } from '../../utils/listToElement'
 
 export const list: List<Navigation>[] = [
   {
@@ -17,12 +17,12 @@ export const list: List<Navigation>[] = [
         label: '标题文字',
         type: 'ElInput',
         prop: 'title',
-        config: { maxlength: 6 },
+        config: { maxLength: 6 },
         control: { method: ControlShowItemMethod.exist, value: 'isShowTitle' },
       },
       {
         label: '标题字号',
-        type: 'CNumber',
+        type: 'ElNumber',
         prop: 'titleSize',
         config: { min: 10, max: 30 },
         control: { method: ControlShowItemMethod.exist, value: 'isShowTitle' },
@@ -70,7 +70,7 @@ export const list: List<Navigation>[] = [
       },
       {
         label: '图标圆角',
-        type: 'CNumber',
+        type: 'ElNumber',
         prop: 'iconRadius',
         config: { min: 0, max: 50 },
         control: {
@@ -83,7 +83,7 @@ export const list: List<Navigation>[] = [
       },
       {
         label: '图标大小',
-        type: 'CNumber',
+        type: 'ElNumber',
         prop: 'iconSize',
         config: { min: 25, max: 45 },
         control: {
@@ -105,7 +105,7 @@ export const list: List<Navigation>[] = [
         ],
         control: { method: ControlShowItemMethod.equality, value: ['type', 1] },
       },
-      { label: '文字字号', type: 'CNumber', prop: 'fontSize', config: { min: 10, max: 20 } },
+      { label: '文字字号', type: 'ElNumber', prop: 'fontSize', config: { min: 10, max: 20 } },
       {
         label: '文字加粗',
         type: 'ElRadio',
