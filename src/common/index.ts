@@ -1,5 +1,5 @@
 import { ComponentProperty, commonLink } from '../utils'
-import { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum } from '../enum'
+import { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum, CubeIconEnum } from '../enum'
 export { GroupEnum, CubePictureEnum, LinkEnum }
 import { v4 as uuid } from 'uuid'
 
@@ -7,6 +7,30 @@ const componentProperties = new ComponentProperty()
 export const { componentConfigMap, componentInstanceMap, configInstanceMap } = componentProperties
 componentProperties.addConfigInstance('page-setup')
 const addComponent = componentProperties.addComponent.bind(componentProperties)
+
+addComponent<CubeIcon>(
+  {
+    component: 'cube-icon',
+    title: '宫格模块',
+    group: GroupEnum['基础组件'],
+  },
+  {
+    bg: '',
+    type: CubeIconEnum['七宫格'],
+    option: [
+      {
+        icon: '',
+        text: '名称',
+        textSize: 16,
+        textColor: '#000000',
+        spacing: 0,
+      },
+    ],
+    marginT: 40,
+    marginTRange: [0, 200],
+    marginBRange: [0, 200],
+  },
+)
 
 addComponent<CubePicture>(
   {
@@ -169,25 +193,6 @@ addComponent<Notice>(
     leftBgColor: '#ffffff',
     radiusBRange: [0, 20],
     radiusTRange: [0, 20],
-  },
-)
-
-addComponent<Asset>(
-  {
-    component: 'asset',
-    title: '资产组件',
-    group: GroupEnum['基础组件'],
-  },
-  {
-    btnBgColor: '#333',
-    btnTextColor: '#fff',
-    bgColor: '#fff',
-    fontSize: 14,
-    itemList: [
-      { ...commonLink(), unit: '元', name: '我的余额' },
-      { ...commonLink(), unit: '分', name: '我的积分' },
-      { ...commonLink(), unit: '张', name: '我的优惠券' },
-    ],
   },
 )
 

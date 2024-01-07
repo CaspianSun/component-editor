@@ -24,3 +24,10 @@ export enum AssetEnum {
   '积分',
   '优惠券',
 }
+
+export enum CubeIconEnum {
+  '九宫格',
+  '七宫格',
+  '五宫格',
+  '十宫格',
+}

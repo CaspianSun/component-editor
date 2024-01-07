@@ -4,13 +4,27 @@ declare type AllProperty =
   | Notice
   | HotPicture
   | Integral
-  | Asset
   | Balance
   | Divider
   | CubePicture
   | Vip
   | User
   | PageSetup
+  | CubeIcon
+
+declare interface CubeIcon extends Partial<CommonStyle> {
+  bg?: string // 背景颜色
+  type: import('../enum').CubeIconEnum
+  option: Array<{
+    icon: string // 图标
+    text: string // 文字
+    textSize: number
+    textColor: string
+    spacing: number
+    bg?: string
+    link?: Link
+  }>
+}
 
 declare interface CubePicture extends Partial<CommonStyle> {
   type: import('../enum').CubePictureEnum
@@ -37,19 +51,6 @@ declare interface Balance extends Partial<CommonStyle> {
   btnBgColor: string // 按钮背景颜色
   rightIconColor: string // 右侧图标颜色
   link: Link
-}
-
-declare interface Asset extends Partial<CommonStyle> {
-  btnBgColor: string
-  btnTextColor: string
-  fontSize: number
-  bgColor: string
-  itemList: Array<
-    {
-      name: string
-      unit: string
-    } & Link
-  >
 }
 
 declare interface Vip extends Partial<CommonStyle> {
