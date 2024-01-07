@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
-import { v4 as uuid } from 'uuid'
 import { CloseOne, Plus } from '@icon-park/vue-next'
 import { ElInputNumber, ElForm, ElButton, ElIcon } from 'element-plus'
 import { CommonConfig } from '../../components/CommonConfig'
 import { SliderNumber } from '../../components/SliderNumber'
 import UploadImg from '/@/components/UploadImg/index.vue'
+import { LinkSelect } from '../../components/LinkSelect'
 
 const props = defineProps<{
   data: Slideshow
@@ -17,10 +17,6 @@ const handleDeleteItem = (index: number) => {
 const handleAddItem = () => {
   data.value.imgList.push({
     src: '',
-    type: 1,
-    url: '',
-    urlName: '',
-    uuid: uuid(),
   })
 }
 </script>
@@ -52,10 +48,10 @@ const handleAddItem = () => {
               />
             </div>
             <div class="list-item-right">
-              <!-- <CommonSelectLink :link="item" /> -->
+              <LinkSelect v-model="item.link" />
             </div>
             <div class="delete" @click.stop="handleDeleteItem(index)">
-              <ElIcon><CloseOne theme="filled" /></ElIcon>
+              <CloseOne theme="filled" />
             </div>
           </div>
         </template>
@@ -83,7 +79,7 @@ const handleAddItem = () => {
   }
 }
 .list {
-  &-item {
+  .list-item {
     display: flex;
     align-items: center;
     background-color: #f5f7fa;
@@ -91,8 +87,9 @@ const handleAddItem = () => {
     padding: 10px;
     margin-bottom: 15px;
     position: relative;
-    &-right {
+    .list-item-right {
       flex: 1;
+      margin-left: 10px;
     }
     &:hover {
       .delete {
@@ -104,12 +101,7 @@ const handleAddItem = () => {
       top: 0;
       right: 0;
       display: none;
-      .el-icon {
-        font-size: 18px;
-        border-radius: 50%;
-        padding: 2px;
-        cursor: pointer;
-      }
+      cursor: pointer;
     }
   }
 }

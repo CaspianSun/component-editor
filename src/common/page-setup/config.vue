@@ -1,30 +1,42 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { ElTabs, ElTabPane, ElInput, ElColorPicker, ElForm, ElFormItem } from 'element-plus'
-import { useDataStore } from '../../store'
+import { usePageStore } from '../../store'
+import { CommonConfig } from '../../components/CommonConfig'
+import { Schema, ElementRender } from '../../utils/listToElement'
 
-const dataStore = useDataStore()
-const { pageSetup } = storeToRefs(dataStore)
-const activeTab = ref('1')
+const pageStore = usePageStore()
+const { activePage } = storeToRefs(pageStore)
+
+const schema: Schema<PageSetup>[] = [
+  {
+    item: [
+      {
+        label: '页面名称',
+        prop: 'title',
+        type: 'ElInput',
+        config: {
+          maxLength: 10,
+        },
+      },
+      {
+        label: '页面背景色',
+        prop: 'pageBg',
+        type: 'ElColor',
+      },
+      {
+        label: '页面背景图',
+        prop: 'pageBgImg',
+        type: 'SelectImage',
+      },
+    ],
+  },
+]
 </script>
 
 <template>
-  <div class="page-setup-container">
-    <h3>页面设置</h3>
-    <ElTabs v-model="activeTab" stretch>
-      <ElTabPane label="内容设置" name="1">
-        <ElForm>
-          <ElFormItem label="页面名称">
-            <ElInput v-model="pageSetup.title" maxlength="10" show-word-limit type="text" />
-          </ElFormItem>
-          <ElFormItem label="页面背景色">
-            <ElColorPicker v-model="pageSetup.pageBg" />
-          </ElFormItem>
-        </ElForm>
-      </ElTabPane>
-    </ElTabs>
-  </div>
+  <CommonConfig title="页面设置" :show-common="false">
+    <ElementRender :data="activePage" :schema="schema"></ElementRender>
+  </CommonConfig>
 </template>
 
 <style lang="scss" scoped></style>

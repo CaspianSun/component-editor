@@ -1,22 +1,17 @@
 <script lang="ts" setup>
-import { withDefaults, onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
-import { SortableEvent } from 'sortablejs'
 import { storeToRefs } from 'pinia'
-import { useDataStore } from '../store'
+import { useDataStore, usePageStore } from '../store'
 import { componentInstanceMap } from '../common'
 
 const dataStore = useDataStore()
-const { components, pageSetup, activeComponentIndex } = storeToRefs(dataStore)
+const { components, activeComponentId } = storeToRefs(dataStore)
+const pageStore = usePageStore()
+const activePage = computed(() => pageStore.activePage)
 
-const onUpdate = (e: SortableEvent) => {
-  if (e.newIndex !== undefined && e.oldIndex !== undefined) {
-    if (e.newIndex === e.oldIndex) return
-    dataStore.setActiveComponentIndex(e.newIndex)
-  }
-}
-const handleSelectComponents = (index: number) => {
-  dataStore.setActiveComponentIndex(index)
+const handleSelectComponents = (id: string | undefined) => {
+  dataStore.setActiveComponentId(id)
 }
 
 onMounted(() => {
@@ -31,36 +26,38 @@ onMounted(() => {
 
 <template>
   <div class="phone">
-    <div
-      class="box rd-30px overflow-hidden"
-      :style="{
-        'background-color': pageSetup.pageBg,
-      }"
-    >
+    <div class="box rd-29px overflow-hidden">
       <div class="header">
         <img src="../assets/images/top.png" />
         <div class="header-title relative c-black z-1000">
-          {{ pageSetup.title }}
+          {{ activePage.title }}
         </div>
       </div>
-      <div class="content">
+      <div
+        class="content"
+        :style="{
+          backgroundColor: activePage.pageBg,
+          backgroundImage: activePage.pageBgImg ? `url(${activePage.pageBgImg})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+        }"
+      >
         <VueDraggable
           v-model="components"
-          :disabled="pageSetup.options?.disableAdd"
+          :disabled="activePage.options?.disableAdd || false"
           :animation="150"
           group="components"
-          class="flex-1 w-100%"
-          @update="onUpdate"
+          class="flex-1 w-full h-full"
         >
           <div
-            v-for="(item, index) in components"
+            v-for="item in components"
             :id="item.id"
             :key="item.id"
             class="cursor-move drag-item"
-            :class="activeComponentIndex === index ? 'active' : ''"
-            @click="handleSelectComponents(index)"
+            :class="activeComponentId === item.id ? 'active' : ''"
+            @click="handleSelectComponents(item.id)"
           >
-            <component :is="componentInstanceMap.get(item.component)?.value" :id="item.id" :data="item.setStyle" />
+            <component :is="componentInstanceMap.get(item.component)?.value" :id="item.id" :data="item.setStyle" :editable="true" />
           </div>
         </VueDraggable>
       </div>
@@ -135,7 +132,6 @@ onMounted(() => {
       cursor: pointer;
       position: relative;
       background-repeat: no-repeat;
-      background-size: 100% 100%;
       &::-webkit-scrollbar {
         display: none;
       }

@@ -33,10 +33,9 @@ const addHotSpot = () => {
     left: 0,
     top: 0,
     link: {
-      uuid: uuid(),
       type: 1,
       url: '',
-      urlName: '',
+      name: '',
     },
   })
   activeIndex.value = hotSpot.value.length - 1
@@ -128,7 +127,7 @@ defineExpose({
           </div>
           <div class="drag-item">
             <div class="link" @click="handleSelectLink(item.link)">
-              <span v-if="item.link.url">{{ LinkEnum[item.link.type] }}-{{ item.link.urlName }}</span>
+              <span v-if="item.link.url">{{ LinkEnum[item.link.type] }}-{{ item.link.name }}</span>
               <span v-else>选择链接</span>
             </div>
           </div>

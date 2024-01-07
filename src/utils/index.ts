@@ -1,23 +1,21 @@
 import { v4 as uuid } from 'uuid'
-import { JSX } from 'vue/jsx-runtime'
 import { shallowRef, defineAsyncComponent } from 'vue'
 
 export const commonLink = (): Link => {
   return {
     url: '',
     type: 0,
-    urlName: '',
-    uuid: uuid(),
+    name: '',
   }
 }
 
 const commonStyle: CommonStyle = {
-  radiusT: 10,
-  radiusB: 10,
-  marginT: 10,
-  marginB: 10,
-  marginL: 15,
-  marginR: 15,
+  radiusT: 0,
+  radiusB: 0,
+  marginT: 0,
+  marginB: 0,
+  marginL: 0,
+  marginR: 0,
 }
 
 export class ComponentProperty {
@@ -27,7 +25,7 @@ export class ComponentProperty {
   componentInstanceMap = new Map<string, import('vue').ShallowRef<any>>()
   configInstanceMap = new Map<string, import('vue').ShallowRef<any>>()
 
-  addComponent<T extends AllProperty>(set: Omit<ComponentConfig, 'setStyle'>, data: T) {
+  addComponent<T extends AllProperty>(set: Omit<ComponentConfig<T>, 'setStyle'>, data: T) {
     this.componentConfigMap.set(
       set.component,
       Object.assign(
@@ -35,7 +33,7 @@ export class ComponentProperty {
           id: uuid(),
           setStyle: {
             ...commonStyle,
-            ...data,
+            ...Object.assign({}, data),
           },
           sort: 0,
         },

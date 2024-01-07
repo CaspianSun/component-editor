@@ -1,16 +1,21 @@
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, onBeforeMount, provide } from 'vue'
 import { storeToRefs } from 'pinia'
 import Components from './layout/Components'
 import Config from './layout/Config'
 import { Canvas } from './layout/Canvas'
 import Resize from './components/Resize'
-import { usePageSizeStore } from './store'
+import { useDataStore, usePageSizeStore, usePageStore } from './store'
 import { type OnDrag } from 'gesto'
+import { LinkSelectDialog } from './components/LinkSelect/'
+import { getPageModulesApi } from './api'
 
 const el = ref<HTMLElement>()
+const linkSelectDialogRef = ref<InstanceType<typeof LinkSelectDialog>>()
 const { min, leftWidth, rightWidth } = storeToRefs(usePageSizeStore())
 const pageSizeStore = usePageSizeStore()
+const pageStore = usePageStore()
+const dataStore = useDataStore()
 
 const getCenterWidth = (clientWidth: number, l = 0, r = 0) => {
   let right = r > 0 ? r : 0
@@ -51,6 +56,28 @@ const resizerObserver = new ResizeObserver((entries) => {
   }
 })
 
+const getPageModules = async () => {
+  const { result } = await getPageModulesApi()
+  if (result.rows.length > 0) {
+    pageStore.setPages(
+      result.rows.map((item) => {
+        return {
+          ...((item.jsonPage as unknown as PageSetup) || {}),
+          id: item.id,
+        }
+      }),
+    )
+    const components = result.rows.find((item) => item.type === pageStore.activePageType)
+    dataStore.setComponents((components?.jsonData as unknown as ComponentConfig<AllProperty>[]) || [])
+    dataStore.resetStack()
+  } else {
+    pageStore.setDefaultComponents()
+  }
+}
+onBeforeMount(() => {
+  getPageModules()
+})
+
 onMounted(() => {
   if (el.value) resizerObserver.observe(el.value)
 })
@@ -84,12 +111,14 @@ const changeRight = ({ deltaX }: OnDrag) => {
 onBeforeUnmount(() => {
   resizerObserver.disconnect()
 })
+provide('openLinkSelect', () => linkSelectDialogRef.value?.open())
 </script>
 
 <template>
   <div ref="el" class="page-config-container full flex">
     <div
       :style="{
+        minWidth: pageSizeStore.min.leftWidth + 'px',
         width: pageSizeStore.leftWidth + 'px',
       }"
     >
@@ -106,11 +135,13 @@ onBeforeUnmount(() => {
     <Resize @change="changeRight" />
     <div
       :style="{
+        minWidth: pageSizeStore.min.rightWidth + 'px',
         width: pageSizeStore.rightWidth + 'px',
       }"
     >
       <Config />
     </div>
+    <LinkSelectDialog ref="linkSelectDialogRef"></LinkSelectDialog>
   </div>
 </template>
 
@@ -118,5 +149,14 @@ onBeforeUnmount(() => {
 .page-config-container {
   padding: 0 !important;
   overflow: hidden;
+}
+:deep() {
+  .el-tabs {
+    display: flex;
+    flex-direction: column;
+    .el-tab-pane {
+      height: 100%;
+    }
+  }
 }
 </style>

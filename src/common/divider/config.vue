@@ -19,8 +19,6 @@ const { data } = toRefs(props)
           <ElRadioButton :label="3">虚线</ElRadioButton>
         </ElRadioGroup>
       </ElFormItem>
-      <!-- <ElFormItem label="样式设置">
-      </ElFormItem> -->
       <template v-if="data.type === 1">
         <ElFormItem label="背景颜色">
           <ElColorPicker v-model="data.bgColor" />

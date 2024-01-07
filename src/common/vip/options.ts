@@ -1,6 +1,6 @@
-import { List } from '../../utils/listToElement'
+import { Schema } from '../../utils/listToElement'
 
-export const list: List<Vip>[] = [
+export const schema: Schema<Vip>[] = [
   {
     label: '未登录背景设置',
     item: [

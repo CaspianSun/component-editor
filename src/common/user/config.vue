@@ -3,13 +3,13 @@ import { toRefs } from 'vue'
 import { ElFormItem } from 'element-plus'
 import { SliderNumber } from '/@/components/SliderNumber'
 import { CommonConfig } from '../../components/CommonConfig'
-import { type List, listToElement } from '../../utils/listToElement'
+import { type Schema, ElementRender } from '../../utils/listToElement'
 
 const props = defineProps<{
   data: User
 }>()
 const { data } = toRefs(props)
-const list: List<User>[] = [
+const schema: Schema<User>[] = [
   {
     label: '样式设置',
     item: [
@@ -27,12 +27,11 @@ const list: List<User>[] = [
     ],
   },
 ]
-const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
   <CommonConfig title="用户信息" :data="data" :common-list="['marginB', 'marginL', 'marginR', 'radiusT', 'radiusB']">
-    <ListConfigRender />
+    <ElementRender :data="data" :schema="schema" />
     <template #common>
       <ElFormItem label="间距">
         <SliderNumber v-model:number="data.spacing" :max="50" :min="0"></SliderNumber>

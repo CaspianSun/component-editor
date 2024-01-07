@@ -1,78 +1,39 @@
 import { defineStore } from 'pinia'
-import { Page } from '../../enum/page'
+import { usePageStore } from './page'
 
-type PageSetup = {
-  type: Page
-  title?: string
-  pageBg?: string
-  options?: {
-    defaultComponents?: ComponentConfig[]
-    disableAdd?: boolean
-  }
-}
-
-const defaultPageSetup = () => {
-  return {
-    title: '登陆页',
-    type: Page.Login,
-    pageBg: '#F9F9F9',
-    options: {
-      // defaultComponents: [
-      //   'login'
-      // ],
-      // disableAdd: true,
-    },
-  }
-}
-
-const defaultPage = [Page.Login]
-const pageList = (): PageSetup[] => {
-  return [
-    {
-      type: Page.Login,
-    },
-  ]
-}
-export const useDataStore = defineStore('dataStore', {
+export const useDataStore = defineStore('data-store', {
   state(): {
     components: ComponentConfig[]
     activeComponentIndex: number | null
     activeComponentId: string | null
-    pageSetup: PageSetup
-    pageId: string
-    pageList: PageSetup[]
   } {
     return {
       components: [],
       activeComponentIndex: null,
       activeComponentId: null,
-      pageSetup: defaultPageSetup(),
-      pageId: '',
-      pageList: pageList(),
     }
   },
   getters: {
     length(): number {
       return this.components.length
     },
+    activeComponent(): ComponentConfig | null {
+      if (this.activeComponentId === null) return null
+      return this.components.find((item) => item.id === this.activeComponentId) || null
+    },
   },
   actions: {
-    setPageId(id: string) {
-      this.pageId = id
-    },
+    fetchData() {},
     setComponents(components: ComponentConfig[]) {
       this.components = components
     },
-    setPageSetup(pageSetup: PageSetup) {
-      this.pageSetup = pageSetup
-    },
-    setActiveComponentIndex(index: number | null) {
-      this.activeComponentIndex = index
-      this.activeComponentId = index === null ? null : this.components[index].id || null
+    setActiveComponentId(id: string | undefined | null) {
+      this.activeComponentId = id || null
+      this.activeComponentIndex = id === null ? null : this.components.findIndex((item) => item.id === id)
     },
     deleteComponent(index: number) {
       this.components.splice(index, 1)
-      this.setActiveComponentIndex(null)
+      this.setActiveComponentId(null)
     },
     adjustComponentOrder(direction: 'up' | 'down') {
       if (this.activeComponentIndex === null) return
@@ -82,21 +43,20 @@ export const useDataStore = defineStore('dataStore', {
         const temp = this.components[index - 1]
         this.components[index - 1] = this.components[index]
         this.components[index] = temp
-        this.setActiveComponentIndex(index - 1)
+        this.setActiveComponentId(this.components[index].id)
       } else {
         if (index === this.components.length - 1) return
         const temp = this.components[index + 1]
         this.components[index + 1] = this.components[index]
         this.components[index] = temp
-        this.setActiveComponentIndex(index + 1)
+        this.setActiveComponentId(this.components[index].id)
       }
     },
     reset() {
+      const pageStore = usePageStore()
       this.components = []
       this.activeComponentIndex = null
-      this.pageSetup = defaultPageSetup()
-      this.pageId = ''
-      this.resetStack()
+      pageStore.setDefaultComponents()
     },
   },
   undo: {

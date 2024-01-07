@@ -1,23 +1,36 @@
 import { ElColorPicker, ElInput, ElInputNumber, ElRadio, ElRadioGroup, ElForm, ElFormItem } from 'element-plus'
 import { match } from 'ts-pattern'
 import { SliderNumber } from '../components/SliderNumber'
+import UploadImg from '/@/components/UploadImg/index.vue'
+import { LinkSelect } from '../components/LinkSelect'
+import { FunctionalComponent } from 'vue'
 
-export interface List<T extends AllProperty> {
-  label: string
-  item: ListItem<T>[]
+export interface Schema<T extends AllProperty> {
+  label?: string
+  item: SchemaItem<T>[]
   leftSpan?: number
   rightSpan?: number
 }
 // TODO 未完成，根据type类型，对应不同的config
-type ListItem<T> = {
+type SchemaItem<T> = {
   label: string
   prop: keyof T
-  type: 'ElInput' | 'ElNumber' | 'ElRadio' | 'ElColor' | 'SliderNumber'
+  type: 'ElInput' | 'ElNumber' | 'ElRadio' | 'ElColor' | 'SliderNumber' | 'SelectImage' | 'linkSelect'
   leftSpan?: number
   rightSpan?: number
-  config?: (ElInputConfig | NumberConfig | ElRadioConfig[]) | undefined
+  config?: ElInputConfig | NumberConfig | ElRadioConfig[] | ElColorConfig | SelectImageConfig
   control?: ControlShow<T> | ControlShowItem<T>
 }
+
+interface ElColorConfig {
+  showAlpha?: boolean
+}
+
+interface SelectImageConfig {
+  width?: number
+  height?: number
+}
+
 interface ElInputConfig {
   maxLength?: number
 }
@@ -49,25 +62,34 @@ interface ExistControlShowItem<T> {
 type ControlShowItem<T> = EqualControlShowItem<T> | ExistControlShowItem<T>
 
 export enum ControlShowMethod {
+  /** 与 */
   and,
+  /** 或 */
   or,
 }
 export enum ControlShowItemMethod {
+  /** 相等 */
   equality = 2,
+  /** 不相等 */
   inequality,
+  /** 存在 */
   exist,
+  /** 不存在 */
   nonExistent,
 }
 
-export function listToElement<T extends AllProperty>(data: T, list: List<T>[]) {
+export const ElementRender: FunctionalComponent<{
+  data: AllProperty
+  schema: Schema<any>[]
+}> = (props) => {
   return (
     <>
-      {list.map((listItem) => {
+      {props.schema.map((listItem) => {
         return (
           <ElForm>
-            <h4>{listItem.label}</h4>
+            {listItem.label && <h4>{listItem.label}</h4>}
             {listItem.item.map((item) => {
-              return handleControlShow(data, item.control) ? generateDynamicItem(data, listItem, item) : <div></div>
+              return handleControlShow(props.data, item.control) ? generateDynamicItem(props.data, listItem, item) : <div></div>
             })}
           </ElForm>
         )
@@ -88,7 +110,7 @@ function handleControlShow<T extends AllProperty>(data: T, control: ControlShow<
     .otherwise(() => true)
 }
 
-function generateDynamicItem<T extends AllProperty>(data: T, list: List<T>, item: ListItem<T>) {
+function generateDynamicItem<T extends AllProperty>(data: T, list: Schema<T>, item: SchemaItem<T>) {
   return (
     <ElFormItem label={item.label}>
       {match(item)
@@ -105,15 +127,35 @@ function generateDynamicItem<T extends AllProperty>(data: T, list: List<T>, item
           )
         })
         .with({ type: 'ElColor' }, (res) => {
-          return <ElColorPicker v-model={[data[item.prop]]}></ElColorPicker>
+          const config = res.config as ElColorConfig | undefined
+          return <ElColorPicker v-model={[data[item.prop]]} show-alpha={config?.showAlpha}></ElColorPicker>
         })
         .with({ type: 'ElNumber' }, (res) => {
-          const config = item.config as NumberConfig
+          const config = res.config as NumberConfig | undefined
           return <ElInputNumber v-model={[data[item.prop]]} min={config?.min} max={config?.max} style={'width:150px'}></ElInputNumber>
         })
         .with({ type: 'SliderNumber' }, (res) => {
-          const config = item.config as NumberConfig
+          const config = res.config as NumberConfig | undefined
           return <SliderNumber v-model={[data[item.prop], 'number']} min={config?.min} max={config?.max}></SliderNumber>
+        })
+        .with({ type: 'SelectImage' }, (res) => {
+          const config = res.config as SelectImageConfig | undefined
+          return (
+            <UploadImg
+              photo={data[item.prop] as string | null | undefined}
+              onSetPicture={(url: string) => {
+                ;(data[item.prop] as string | null | undefined) = url
+              }}
+              onDelPicture={() => {
+                ;(data[item.prop] as string | null | undefined) = null
+              }}
+              width={config?.width || 100}
+              height={config?.height || 100}
+            ></UploadImg>
+          )
+        })
+        .with({ type: 'linkSelect' }, (res) => {
+          return <LinkSelect v-model={[data[item.prop]]}></LinkSelect>
         })
         .otherwise(() => (
           <div></div>

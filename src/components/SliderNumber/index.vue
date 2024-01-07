@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { ElSlider, ElInputNumber } from 'element-plus'
 import { withDefaults } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    number: number
+    number?: number
     max?: number
     min?: number
   }>(),
@@ -26,7 +27,7 @@ const number = computed({
 <template>
   <div class="cell">
     <ElSlider v-model="number" :max="props.max" :min="props.min" size="small" />
-    <el-input-number v-model="number" :max="props.max" :min="props.min" controls-position="right" />
+    <ElInputNumber v-model="number" :max="props.max" :min="props.min" controls-position="right" />
   </div>
 </template>
 
@@ -37,8 +38,8 @@ const number = computed({
   width: 100%;
   margin: 0 10px;
   :deep(.el-input) {
-    margin-left: 20px;
-    width: 120px;
+    margin-left: 15px;
+    width: 85px;
     .el-input-group__append {
       padding: 0 10px;
     }

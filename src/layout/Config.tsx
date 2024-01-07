@@ -1,19 +1,21 @@
-import { Transition, defineComponent, computed, defineAsyncComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useDataStore } from '../store'
 import { configInstanceMap } from '../common'
+import { v4 as uuid } from 'uuid'
 
 export const Config = defineComponent({
   setup() {
     const dataStore = useDataStore()
-    const { components, activeComponentIndex, activeComponentId } = storeToRefs(dataStore)
+    const { activeComponentId } = storeToRefs(dataStore)
     const activeComponent = computed(() => {
-      const item = components.value.find((item, index) => item.id == activeComponentId.value)
-      if (typeof activeComponentIndex.value == 'number' && item) return item
-      else dataStore.setActiveComponentIndex(null)
+      const item = dataStore.activeComponent
+      if (typeof activeComponentId.value == 'string' && item) return item
+      else dataStore.setActiveComponentId(null)
       return {
         component: 'page-setup',
         setStyle: {},
+        id: uuid(),
       }
     })
     const Config = computed(() => {
@@ -21,10 +23,8 @@ export const Config = defineComponent({
     })
     return () => {
       return (
-        <div class={'p-16px h-full overflow-hidden'}>
-          <Transition mode='out-in' name='slid e-up'>
-            <Config.value data={activeComponent.value.setStyle}></Config.value>
-          </Transition>
+        <div class={`h-full`}>
+          <Config.value key={activeComponent.value.id} data={activeComponent.value.setStyle}></Config.value>
         </div>
       )
     }

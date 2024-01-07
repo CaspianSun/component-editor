@@ -3,14 +3,13 @@ import { ElMessage, ElAvatar, ElButton, ElForm, ElFormItem, ElColorPicker, ElIco
 import { toRefs, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { CommonConfig } from '../../components/CommonConfig'
-import { listToElement } from '../../utils/listToElement'
-import { list } from './options'
+import { ElementRender } from '../../utils/listToElement'
+import { schema } from './options'
 
 const props = defineProps<{
   data: Vip
 }>()
 const { data } = toRefs(props)
-const ListConfigRender = listToElement(data.value, list)
 watch(
   data.value.propertyArr,
   (newValue) => {
@@ -52,7 +51,7 @@ watch(
         <ElColorPicker v-model="data.propertyNumberColor" />
       </ElFormItem>
     </ElForm>
-    <ListConfigRender />
+    <ElementRender :schema="schema" :data="data" />
     <div class="list">
       <div class="row">
         <div class="row-left">

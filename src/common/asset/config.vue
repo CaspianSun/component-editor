@@ -2,20 +2,19 @@
 import { toRefs } from 'vue'
 import { ElInput } from 'element-plus'
 import { CommonConfig } from '../../components/CommonConfig'
-import { listToElement } from '../../utils/listToElement'
+import { ElementRender } from '../../utils/listToElement'
 import { ElForm, ElFormItem } from 'element-plus'
-import { list } from './options'
+import { schema } from './options'
 
 const props = defineProps<{
   data: Asset
 }>()
 const { data } = toRefs(props)
-const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
   <CommonConfig title="资产组件" :data="data">
-    <ListConfigRender />
+    <ElementRender :schema="schema" :data="data" />
     <h4>组件内容</h4>
     <div class="list">
       <template v-for="(item, index) in data.itemList" :key="index">

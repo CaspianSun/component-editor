@@ -1,18 +1,17 @@
 <script lang="ts" setup>
 import { toRefs, ref } from 'vue'
-import { listToElement } from '../../utils/listToElement'
+import { ElementRender } from '../../utils/listToElement'
 import { CommonConfig } from '../../components/CommonConfig'
-import { list } from './options'
+import { schema } from './options'
 const props = defineProps<{
   data: Notice
 }>()
 const { data } = toRefs(props)
-const ListConfigRender = listToElement(data.value, list)
 </script>
 
 <template>
   <CommonConfig title="图文导航" :data="data">
-    <ListConfigRender />
+    <ElementRender :schema="schema" :data="data" />
   </CommonConfig>
 </template>
 

@@ -1,6 +1,6 @@
-import { List, ControlShowItemMethod, ControlShowMethod } from '../../utils/listToElement'
+import { Schema, ControlShowItemMethod, ControlShowMethod } from '../../utils/listToElement'
 
-export const list: List<Navigation>[] = [
+export const schema: Schema<Navigation>[] = [
   {
     label: '组件设置',
     item: [

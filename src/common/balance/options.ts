@@ -1,6 +1,6 @@
-import { List, ControlShowItemMethod } from '../../utils/listToElement'
+import { Schema, ControlShowItemMethod } from '../../utils/listToElement'
 
-export const list: List<Balance>[] = [
+export const schema: Schema<Balance>[] = [
   {
     label: '组件设置',
     item: [
@@ -27,12 +27,12 @@ export const list: List<Balance>[] = [
           { label: '不显示', value: false },
         ],
       },
-      // {
-      //   label: '选择图标',
-      //   type: 'CSelectImg',
-      //   prop: 'icon',
-      //   control: { method: ControlShowItemMethod.equality, value: ['isShowIcon', true] },
-      // },
+      {
+        label: '选择图标',
+        type: 'SelectImage',
+        prop: 'icon',
+        control: { method: ControlShowItemMethod.equality, value: ['isShowIcon', true] },
+      },
       {
         label: '标题',
         type: 'ElInput',

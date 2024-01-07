@@ -3,8 +3,9 @@ import { toRefs, computed, ref } from 'vue'
 import { CubePictureEnum } from '../../enum/index'
 import { CommonConfig } from '../../components/CommonConfig'
 import { SliderNumber } from '../../components/SliderNumber'
-import UploadImg from '../../components/UploadImg/index.vue'
+import UploadImg from '/@/components/UploadImg/index.vue'
 import { Row, Col } from 'vant'
+import { LinkSelect } from '../../components/LinkSelect'
 import { ElRadioGroup, ElRadio, ElForm, ElFormItem } from 'element-plus'
 
 const props = defineProps<{
@@ -133,7 +134,6 @@ const handleUpdateImgSrc = (src: string) => {
     <div class="item">
       <div class="item-left">
         <UploadImg
-          :key="data.imgList[activeImgIndex].uuid"
           :width="100"
           :height="100"
           background-color="#fff"
@@ -143,7 +143,7 @@ const handleUpdateImgSrc = (src: string) => {
         />
       </div>
       <div class="item-right">
-        <!-- <CommonSelectLink :key="data.imgList[activeImgIndex].uuid" :link="data.imgList[activeImgIndex]" /> -->
+        <LinkSelect v-model="data.imgList[activeImgIndex].link" />
       </div>
     </div>
     <h4>元素设置</h4>
@@ -166,10 +166,9 @@ const handleUpdateImgSrc = (src: string) => {
 
 <style lang="scss" scoped>
 .wrapper {
-  margin-top: 20px;
   .row {
     width: 100%;
-    &-item {
+    .row-item {
       height: 120px;
       display: flex;
       justify-content: center;
@@ -202,8 +201,9 @@ const handleUpdateImgSrc = (src: string) => {
   position: relative;
   display: flex;
   align-items: center;
-  &-right {
+  .item-right {
     flex: 1;
+    margin-left: 10px;
   }
   &:hover {
     .delete {

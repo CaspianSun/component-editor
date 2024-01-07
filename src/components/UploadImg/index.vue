@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { CircleCloseFilled, Plus } from '@element-plus/icons-vue'
-import { ElUpload, ElIcon, ElButton, ElImage, ElDialog, UploadFile, UploadProps } from 'element-plus'
+import { ElUpload, ElIcon, ElButton, ElImage, ElDialog, UploadFile, UploadProps, ElMessage } from 'element-plus'
 import { inject, ref } from 'vue'
 const props = withDefaults(
   defineProps<{
     photo: string | null
     fileMaxSize?: number
     ossAddress?: string
-    width: number
-    height: number
-    backgroundColor: string
+    width?: number
+    height?: number
+    backgroundColor?: string
   }>(),
   {
     photo: '',
@@ -21,7 +21,6 @@ const props = withDefaults(
   },
 )
 
-const $baseMessage: any = inject('$baseMessage')
 const loading = ref(false)
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -43,11 +42,11 @@ const beforeUpload = (file: any) => {
   const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
   const isLt = file.size / 1024 / 1024 < props.fileMaxSize
   if (!isJPG) {
-    $baseMessage('上传图片文件只能是 JPG或PNG 格式!', 'error', 'vab-hey-message-error')
+    ElMessage.error('上传图片文件只能是 JPG或PNG 格式!')
     loading.value = false
   }
   if (!isLt) {
-    $baseMessage(`上传图片文件大小不能超过 ${props.fileMaxSize}MB!`, 'error', 'vab-hey-message-error')
+    ElMessage.error(`上传图片文件大小不能超过 ${props.fileMaxSize}MB!`)
     loading.value = false
     return isJPG && isLt
   }

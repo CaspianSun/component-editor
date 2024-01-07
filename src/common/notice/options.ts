@@ -1,6 +1,6 @@
-import { List, ControlShowItemMethod } from '../../utils/listToElement'
+import { Schema, ControlShowItemMethod } from '../../utils/listToElement'
 
-export const list: List<Notice>[] = [
+export const schema: Schema<Notice>[] = [
   {
     label: '组件设置',
     item: [
@@ -59,12 +59,12 @@ export const list: List<Notice>[] = [
         prop: 'leftBgColor',
         control: { method: ControlShowItemMethod.equality, value: ['leftType', 1] },
       },
-      // {
-      //   label: '图标',
-      //   type: 'CSelectImg',
-      //   prop: 'leftIcon',
-      //   control: { method: ControlShowItemMethod.equality, value: ['leftType', 2] },
-      // },
+      {
+        label: '图标',
+        type: 'SelectImage',
+        prop: 'leftIcon',
+        control: { method: ControlShowItemMethod.equality, value: ['leftType', 2] },
+      },
     ],
   },
 ]

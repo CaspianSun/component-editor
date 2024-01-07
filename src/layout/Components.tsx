@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { v4 as uuid } from 'uuid'
 import { ElCollapse, ElCollapseItem, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import { useDataStore } from '../store'
+import { useDataStore, usePageStore } from '../store'
 import { GroupEnum, componentConfigMap } from '../common/index'
 import { VueDraggable } from 'vue-draggable-plus'
 
@@ -18,14 +18,15 @@ export const Components = defineComponent({
       componentsList: ComponentItem[]
     }
     const dataStore = useDataStore()
-    const { components, pageSetup } = storeToRefs(dataStore)
+    const pageStore = usePageStore()
+    const { components } = storeToRefs(dataStore)
     const activeNames = ref([1, 2, 3])
     const data = Array.from(componentConfigMap.values())
       .sort((a, b) => {
         return (a.sort ?? 0) - (b.sort ?? 0)
       })
       .reduce((acc, cur) => {
-        if (cur.group === GroupEnum['隐藏组件']) return acc
+        if (cur.group === GroupEnum['隐藏']) return acc
         const groupName = GroupEnum[cur.group]
         const groupIndex = acc.findIndex((item) => item.title === groupName)
         if (groupIndex === -1) {
@@ -43,16 +44,13 @@ export const Components = defineComponent({
       }, [] as DataItem[])
 
     const handleAdd = (item: ComponentItem, type: 'click' | 'drag' = 'click') => {
-      if (pageSetup.value.options?.disableAdd) {
-        return false
-      }
+      if (pageStore.activePage?.options?.disableAdd) return false
       const component = componentConfigMap.get(item.component)
       if (component?.component == 'user' && components.value.findIndex((item) => item.component == 'user') !== -1) {
-        ElMessage({
+        return ElMessage({
           message: `${item.title}组件只能添加一个`,
           type: 'info',
         })
-        return
       }
       if (component) {
         const newComponent = cloneDeep(component)
@@ -97,7 +95,7 @@ export const Components = defineComponent({
                                 }
                                 onClick={() => handleAdd(item)}
                               >
-                                <p>{item.title}</p>
+                                <span>{item.title}</span>
                               </div>
                             )
                           })}

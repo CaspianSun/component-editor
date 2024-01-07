@@ -1,0 +1,52 @@
+.el-message {
+  @mixin hey-message {
+    padding: 15px;
+    background-color: var(--el-color-white);
+    border-color: var(--el-color-white);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+
+    .el-message__content {
+      color: var(--el-color-grey);
+    }
+
+    .el-icon-close {
+      color: var(--el-color-grey);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &--info {
+    @include hey-message;
+
+    i {
+      color: var(--el-color-grey);
+    }
+  }
+
+  &--success {
+    @include hey-message;
+
+    i {
+      color: var(--el-color-success);
+    }
+  }
+
+  &--warning {
+    @include hey-message;
+
+    i {
+      color: var(--el-color-warning);
+    }
+  }
+
+  &--error {
+    @include hey-message;
+
+    i {
+      color: var(--el-color-error);
+    }
+  }
+}

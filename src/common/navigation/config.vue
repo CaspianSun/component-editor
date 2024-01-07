@@ -3,33 +3,33 @@ import { toRefs } from 'vue'
 import { v4 as uuid } from 'uuid'
 import { Plus, CloseOne } from '@icon-park/vue-next'
 import { ElButton, ElIcon, ElForm, ElInput, ElFormItem } from 'element-plus'
-import { listToElement } from '../../utils/listToElement'
+import { ElementRender } from '../../utils/listToElement'
 import { CommonConfig } from '../../components/CommonConfig'
-import { list } from './options'
+import { schema } from './options'
 
 const props = defineProps<{
   data: Navigation
 }>()
 const { data } = toRefs(props)
-const ListConfigRender = listToElement(data.value, list)
 const handleDeleteItem = (index: number) => {
   data.value.imgList.splice(index, 1)
 }
 const handleAddItem = () => {
   data.value.imgList.push({
     src: '',
-    type: 1,
-    url: '',
-    urlName: '',
     name: `导航${data.value.imgList.length + 1}`,
-    uuid: uuid(),
+    link: {
+      name: '',
+      type: 1,
+      url: '',
+    },
   })
 }
 </script>
 
 <template>
   <CommonConfig title="图文导航" :data="data">
-    <ListConfigRender />
+    <ElementRender :schema="schema" :data="data" />
     <h4>设置</h4>
     <div class="list">
       <template v-for="(item, index) in data.imgList" :key="item.uuid">

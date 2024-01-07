@@ -1,12 +1,23 @@
-declare type AllProperty = Slideshow | Navigation | Notice | HotPicture | Integral | Asset | Balance | Divider | CubePicture | Vip | User
+declare type AllProperty =
+  | Slideshow
+  | Navigation
+  | Notice
+  | HotPicture
+  | Integral
+  | Asset
+  | Balance
+  | Divider
+  | CubePicture
+  | Vip
+  | User
+  | PageSetup
 
 declare interface CubePicture extends Partial<CommonStyle> {
   type: import('../enum').CubePictureEnum
-  imgList: Array<
-    {
-      src: string
-    } & Link
-  >
+  imgList: Array<{
+    src: string
+    link?: Link
+  }>
   itemRadiusT: number // 元素上圆角 0-50
   itemRadiusB: number // 元素下圆角 0-50
   itemHeight: number // 图片高度 120-375px
@@ -79,11 +90,10 @@ declare interface HotPicture extends Partial<CommonStyle> {
 declare interface Slideshow extends Partial<CommonStyle> {
   height: number // 轮播图高度 1-500px
   delay: number // 轮播间隔 1-10s
-  imgList: Array<
-    {
-      src: string
-    } & Link
-  >
+  imgList: Array<{
+    src: string
+    link?: Link
+  }>
 }
 
 declare interface Navigation extends Partial<CommonStyle> {
@@ -102,12 +112,11 @@ declare interface Navigation extends Partial<CommonStyle> {
   iconSize: number //图标大小 0-50px
   isShowIcon: boolean //是否显示图标
   isShowBorderBottom: boolean //是否显示下边框
-  imgList: Array<
-    {
-      src: string
-      name: string
-    } & Link
-  >
+  imgList: Array<{
+    src: string
+    name: string
+    link?: Link
+  }>
 }
 
 declare interface Notice extends Partial<CommonStyle> {
@@ -140,6 +149,19 @@ declare interface User extends Partial<CommonStyle> {
   textSize: number // 文字大小 10-30px
 }
 
+declare interface PageSetup {
+  id?: number
+  type: import('../enum/page').Page
+  title?: string
+  pageBg?: string
+  pageBgImg?: string
+  isDefault?: boolean
+  options?: {
+    defaultComponents?: string[]
+    disableAdd?: boolean
+  }
+}
+
 declare interface CommonStyle {
   radiusT: number
   radiusB: number
@@ -158,13 +180,7 @@ declare interface CommonStyle {
 declare interface Link {
   type: import('../enum').LinkEnum
   url: string
-  urlName: string //
-  uuid: string
-  appInfo?: {
-    page: string
-    appid: string
-    name: string
-  }
+  name: string
 }
 
 declare interface ComponentConfig<T = AllProperty> {
