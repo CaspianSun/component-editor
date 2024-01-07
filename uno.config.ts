@@ -1,4 +1,5 @@
-import { defineConfig, transformerVariantGroup } from 'unocss'
+import { defineConfig } from 'unocss'
+import transformerVariantGroup from '@unocss/transformer-variant-group'
 import { presetUno } from 'unocss'
 import type { Preset } from '@unocss/core'
 

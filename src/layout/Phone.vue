@@ -26,7 +26,7 @@ onMounted(() => {
 
 <template>
   <div class="phone">
-    <div class="box rd-29px overflow-hidden">
+    <div class="box rd-30px overflow-hidden">
       <div class="header">
         <img src="../assets/images/top.png" />
         <div class="header-title relative c-black z-1000">

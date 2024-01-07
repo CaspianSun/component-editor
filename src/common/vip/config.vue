@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ElMessage, ElAvatar, ElButton, ElForm, ElFormItem, ElColorPicker, ElIcon, ElCheckbox, ElInput } from 'element-plus'
+import { Drag } from '@icon-park/vue-next'
 import { toRefs, watch } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import { CommonConfig } from '../../components/CommonConfig'
@@ -30,12 +31,10 @@ watch(
   <CommonConfig title="资产组件" :data="data">
     <h4>资产配置</h4>
     <div class="property">
-      <VueDraggable v-model="data.propertyArr" :animation="150">
+      <VueDraggable v-model="data.propertyArr" :animation="150" handle=".mover">
         <template v-for="(item, index) in data.propertyArr" :key="index">
           <div class="item">
-            <div class="mover">
-              <ElIcon :size="30"><IEpOperation /></ElIcon>
-            </div>
+            <Drag class="mover"></Drag>
             <ElCheckbox v-model="item.checked" style="margin-right: 10px">
               <ElInput v-model="item.name" maxlength="4" placeholder="请输入名称" show-word-limit />
             </ElCheckbox>
@@ -74,77 +73,73 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
-  .property {
-    .item {
+.property {
+  .item {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: center;
+    .mover {
+      cursor: move;
+      margin-right: 10px;
+    }
+    .box-item {
       display: flex;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 1px 11px;
       margin-left: -80px;
-      margin-top: 12px;
-
-      .mover {
-        width: 30px;
-        cursor: move;
-        margin-right: 10px;
-      }
-      .box-item {
-        display: flex;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 1px 11px;
-        margin-left: -80px;
-        :deep(.el-input__wrapper) {
-          box-shadow: 0 0 0 0px !important;
-          width: 180px;
-        }
+      :deep(.el-input__wrapper) {
+        box-shadow: 0 0 0 0px !important;
+        width: 180px;
       }
     }
   }
-  .list {
-    background-color: #f7f8fa;
-    height: 120px;
-    display: flex;
+}
+.list {
+  background-color: #f7f8fa;
+  height: 120px;
+  display: flex;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  .row {
+    padding: 10px 15px;
+    height: 90px;
     border-radius: 10px;
-    justify-content: center;
-    align-items: center;
-    .row {
-      padding: 10px 20px;
-      width: 90%;
-      height: 90px;
-      border-radius: 10px;
+    display: flex;
+    background-color: #fff;
+    transform: scale(0.9);
+    &-left {
+      width: 50px;
+      margin-right: 10px;
       display: flex;
-      background-color: #fff;
-      transform: scale(0.9);
-      &-left {
-        width: 20%;
-        display: flex;
-        align-items: center;
+      align-items: center;
+    }
+    &-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .name {
+        font-size: 14px;
+        font-weight: 600;
       }
-      &-center {
-        width: 55%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        .name {
-          font-size: 14px;
-          font-weight: 600;
-        }
-        .text {
-          font-size: 12px;
-          font-weight: 400;
-          margin-top: 6px;
-        }
+      .text {
+        font-size: 12px;
+        color: #999;
+        font-weight: 400;
+        margin-top: 4px;
       }
-      &-right {
-        width: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        :deep(.el-button) {
-          background-color: rgb(51, 51, 51);
-          color: #fff;
-          border-radius: 20px;
-          font-size: 12px;
-        }
+    }
+    &-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      :deep(.el-button) {
+        background-color: rgb(51, 51, 51);
+        color: #fff;
+        border-radius: 20px;
+        font-size: 12px;
       }
     }
   }

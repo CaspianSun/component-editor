@@ -11,7 +11,12 @@ const { data } = toRefs(props)
 
 <template>
   <div class="wrapper">
-    <div :style="generateStyleObject(data)">
+    <div
+      :style="{
+        backgroundColor: data.bgColor,
+        ...generateStyleObject(data),
+      }"
+    >
       <div v-if="data.isShowTitle" class="title" :style="{ fontSize: data.titleSize + 'px', color: data.titleColor }">
         {{ data.title }}
       </div>

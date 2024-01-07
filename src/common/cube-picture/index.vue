@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { toRefs, computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { generateStyleObject } from '../style'
 import { CubePictureEnum } from '../../enum'
 import { Row, Col, Image } from 'vant'
 const props = defineProps<{
+  editable: boolean
   data: CubePicture
 }>()
 const { data } = toRefs(props)
@@ -24,6 +25,7 @@ const twoItemWidth = computed(() => {
             <Col :span="24 / (data.type + 2)">
               <div
                 class="row-item"
+                :class="editable ? 'editable' : ''"
                 :style="{
                   height: data.itemHeight + 'px',
                   borderRadius: itemBorderRadius,
@@ -57,6 +59,7 @@ const twoItemWidth = computed(() => {
             <Col :span="12">
               <div
                 class="row-item"
+                :class="editable ? 'editable' : ''"
                 :style="{
                   height: data.itemHeight + 'px',
                   marginBottom: index < 3 ? data.itemMargin + 'px' : 0,
@@ -85,6 +88,7 @@ const twoItemWidth = computed(() => {
           <Col :span="12">
             <div
               class="row-item"
+              :class="editable ? 'editable' : ''"
               style="height: 100%"
               :style="{
                 borderRadius: itemBorderRadius,
@@ -108,6 +112,7 @@ const twoItemWidth = computed(() => {
             <template v-for="index of 2" :key="index">
               <div
                 class="row-item"
+                :class="editable ? 'editable' : ''"
                 :style="{
                   height: data.itemHeight + 'px',
                   marginBottom: index == 1 ? data.itemMargin + 'px' : 0,
@@ -135,6 +140,7 @@ const twoItemWidth = computed(() => {
         <div class="row">
           <div
             class="row-item"
+            :class="editable ? 'editable' : ''"
             :style="{
               height: data.itemHeight + 'px',
               marginBottom: data.itemMargin + 'px',
@@ -148,7 +154,7 @@ const twoItemWidth = computed(() => {
               <div class="empty">
                 <div>
                   宽度:
-                  {{ (750 - (data.marginL || 0) * (data.marginR || 0)).toFixed() }}px
+                  {{ (750 - (data.marginL || 0) + (data.marginR || 0)).toFixed() }}px
                 </div>
                 <div>高度: {{ data.itemHeight }}px</div>
               </div>
@@ -159,6 +165,7 @@ const twoItemWidth = computed(() => {
               <Col :span="12">
                 <div
                   class="row-item"
+                  :class="editable ? 'editable' : ''"
                   :style="{
                     height: data.itemHeight + 'px',
                     borderRadius: itemBorderRadius,
@@ -194,21 +201,21 @@ const twoItemWidth = computed(() => {
     overflow: hidden;
     .row {
       width: 100%;
-      &-item {
+      .row-item {
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #fff;
+        background-color: transparent;
         position: relative;
-        &::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          border: 1px dashed #efefef;
+        &.editable {
+          &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px dashed #000;
+            border-radius: v-bind(itemBorderRadius);
+          }
         }
       }
     }

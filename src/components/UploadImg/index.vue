@@ -17,7 +17,7 @@ const props = withDefaults(
     ossAddress: 'admin',
     width: 135,
     height: 135,
-    backgroundColor: 'transparent',
+    backgroundColor: '#fff',
   },
 )
 

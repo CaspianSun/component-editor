@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
-import { v4 as uuid } from 'uuid'
 import { Plus, CloseOne } from '@icon-park/vue-next'
 import { ElButton, ElIcon, ElForm, ElInput, ElFormItem } from 'element-plus'
 import { ElementRender } from '../../utils/listToElement'
 import { CommonConfig } from '../../components/CommonConfig'
 import { schema } from './options'
+import { UploadImg } from '../../components/UploadImg'
+import { LinkSelect } from '../../components/LinkSelect'
 
 const props = defineProps<{
   data: Navigation
@@ -35,11 +36,15 @@ const handleAddItem = () => {
       <template v-for="(item, index) in data.imgList" :key="item.uuid">
         <div class="list-item">
           <ElForm>
-            <ElFormItem label="图标"></ElFormItem>
+            <ElFormItem label="图标">
+              <UploadImg :photo="item.src" :width="50" :height="50" @set-picture="item.src = $event" @del-picture="item.src = ''" />
+            </ElFormItem>
             <ElFormItem label="导航名称">
               <ElInput v-model="item.name" maxlength="5" show-word-limit type="text" />
             </ElFormItem>
-            <ElFormItem label="跳转链接"></ElFormItem>
+            <ElFormItem label="跳转链接">
+              <LinkSelect v-model="item.link"></LinkSelect>
+            </ElFormItem>
           </ElForm>
           <div class="delete" @click.stop="handleDeleteItem(index)">
             <ElIcon><CloseOne theme="filled" /></ElIcon>

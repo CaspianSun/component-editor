@@ -21,7 +21,7 @@ const { data } = toRefs(props)
       </ElFormItem>
       <template v-if="data.type === 1">
         <ElFormItem label="背景颜色">
-          <ElColorPicker v-model="data.bgColor" />
+          <ElColorPicker v-model="data.bgColor" show-alpha color-format="rgb" />
         </ElFormItem>
       </template>
       <template v-else>

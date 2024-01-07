@@ -14,7 +14,7 @@ const schema: Schema<User>[] = [
     label: '样式设置',
     item: [
       { label: '背景色', type: 'ElColor', prop: 'bgColor' },
-      { label: '背景图片', type: 'SliderNumber', prop: 'bgImg' },
+      { label: '背景图片', type: 'SelectImage', prop: 'bgImg' },
     ],
   },
   {

@@ -11,7 +11,7 @@ const { data } = toRefs(props)
 
 <template>
   <div class="wrapper">
-    <div :style="generateStyleObject(data)">
+    <div :style="generateStyleObject(data)" style="overflow: hidden">
       <div class="row">
         <div class="row-left">
           <Icon name="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="55" />

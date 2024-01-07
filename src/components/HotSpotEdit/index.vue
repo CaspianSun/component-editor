@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineExpose, ref } from 'vue'
+import { ref } from 'vue'
 import { v4 as uuid } from 'uuid'
 import VueDraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'

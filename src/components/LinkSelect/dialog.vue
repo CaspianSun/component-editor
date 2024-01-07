@@ -12,7 +12,6 @@ const activePage = ref<Page>()
 const resolveFn = ref<(...args: any[]) => void>()
 const rejectFn = ref<(...args: any[]) => void>()
 const open = () => {
-  console.log('open')
   return new Promise<Page>((resolve, reject) => {
     visible.value = true
     resolveFn.value = resolve
