@@ -13,17 +13,17 @@ const schema: Schema<User>[] = [
   {
     label: '样式设置',
     item: [
-      { label: '背景色', type: 'ElColor', prop: 'bgColor' },
+      { label: '背景色', type: 'ColorPicker', prop: 'bgColor' },
       { label: '背景图片', type: 'SelectImage', prop: 'bgImg' },
     ],
   },
   {
     label: '资产设置',
     item: [
-      { label: '数值大小', type: 'ElNumber', prop: 'numSize', config: { max: 20, min: 10 } },
-      { label: '数值颜色', type: 'ElColor', prop: 'numColor' },
-      { label: '文字大小', type: 'ElNumber', prop: 'textSize', config: { max: 20, min: 10 } },
-      { label: '文字颜色', type: 'ElColor', prop: 'textColor' },
+      { label: '数值大小', type: 'SliderNumber', prop: 'numSize', config: { max: 20, min: 10 } },
+      { label: '数值颜色', type: 'ColorPicker', prop: 'numColor' },
+      { label: '文字大小', type: 'SliderNumber', prop: 'textSize', config: { max: 20, min: 10 } },
+      { label: '文字颜色', type: 'ColorPicker', prop: 'textColor' },
     ],
   },
 ]

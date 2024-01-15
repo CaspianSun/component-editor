@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { onMounted, computed } from 'vue'
-import { VueDraggable } from 'vue-draggable-plus'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useDataStore, usePageStore } from '../store'
+import { onMounted, withDefaults } from 'vue'
+import { VueDraggable } from 'vue-draggable-plus'
 import { componentInstanceMap } from '../common'
+import { useDataStore, usePageStore } from '../store'
 
 const dataStore = useDataStore()
 const { components, activeComponentId } = storeToRefs(dataStore)
@@ -13,6 +14,9 @@ const activePage = computed(() => pageStore.activePage)
 const handleSelectComponents = (id: string | undefined) => {
   dataStore.setActiveComponentId(id)
 }
+
+const height = ref(812 - 88)
+const width = ref(375)
 
 onMounted(() => {
   const content = document.querySelector('.content')
@@ -25,29 +29,42 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="phone">
-    <div class="box rd-30px overflow-hidden">
+  <div
+    class="phone"
+    :style="{
+      '--vh': `${height * 0.01}px`,
+      '--vw': `${width * 0.01}px`,
+    }"
+  >
+    <div
+      class="box rd-30px overflow-hidden bg-#fff"
+      :style="{
+        width: `${width}px`,
+      }"
+    >
       <div class="header">
         <img src="../assets/images/top.png" />
         <div class="header-title relative c-black z-1000">
-          {{ activePage.title }}
+          {{ activePage?.title }}
         </div>
       </div>
       <div
         class="content"
         :style="{
-          backgroundColor: activePage.pageBg,
-          backgroundImage: activePage.pageBgImg ? `url(${activePage.pageBgImg})` : 'none',
+          background: activePage?.pageBgImg ? `url(${activePage.pageBgImg})` : activePage?.pageBg,
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
         }"
       >
         <VueDraggable
           v-model="components"
-          :disabled="activePage.options?.disableAdd || false"
+          :disabled="activePage?.options?.disableAdd || false"
           :animation="150"
           group="components"
-          class="flex-1 w-full h-full"
+          class="flex-1 w-full h-full flex flex-col"
+          :style="{
+            height: `${height}px`,
+          }"
         >
           <div
             v-for="item in components"
@@ -81,15 +98,14 @@ onMounted(() => {
   user-select: none;
   width: 0;
   height: 0;
+  margin: 25px 0;
 
   .box {
     position: absolute;
     top: -431px;
     left: -187px;
-    width: 375px;
-    height: 812px;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
-    margin: 25px 0;
+    margin: 0;
     position: relative;
     overflow-x: visible;
     display: flex;
@@ -160,6 +176,22 @@ onMounted(() => {
         }
         &:hover::after {
           border: 1px dashed #155bd4;
+        }
+        .controls {
+          width: 40px;
+          position: absolute;
+          top: 50%;
+          right: -50px;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #fff;
+          border-radius: 4px;
+          z-index: 100;
+          &-item {
+            padding: 10px 15px;
+          }
         }
       }
     }

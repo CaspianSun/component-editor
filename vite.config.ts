@@ -7,21 +7,23 @@ import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   server: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     proxy: {
       '^/api': 'http://example.com/',
     },
   },
-  plugins: [
-    Vue(),
-    VueJsx(),
-    UnoCSS(),
-    mockDevServerPlugin(),
-  ],
+  plugins: [Vue(), VueJsx(), UnoCSS(), mockDevServerPlugin()],
   resolve: {
     alias: [
       { find: '/@', replacement: resolve(__dirname, 'src/') },
-      { find: '/#', replacement: resolve(__dirname, 'types/') }
-    ]
-  }
+      { find: '/#', replacement: resolve(__dirname, 'types/') },
+    ],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+    },
+  },
 })

@@ -5,17 +5,17 @@ import Components from './layout/Components'
 import Config from './layout/Config'
 import { Canvas } from './layout/Canvas'
 import Resize from './components/Resize'
-import { useDataStore, usePageSizeStore, usePageStore } from './store'
+import { usePageSizeStore, usePageStore } from './store'
 import { type OnDrag } from 'gesto'
-import { LinkSelectDialog } from './components/LinkSelect/'
-import { getPageModulesApi } from './api'
+import { InjectKey, LinkSelectDialog } from './components/LinkSelect/'
+import AddPage from './components/AddPage'
 
 const el = ref<HTMLElement>()
+const addPageRef = ref<InstanceType<typeof AddPage>>()
 const linkSelectDialogRef = ref<InstanceType<typeof LinkSelectDialog>>()
 const { min, leftWidth, rightWidth } = storeToRefs(usePageSizeStore())
 const pageSizeStore = usePageSizeStore()
 const pageStore = usePageStore()
-const dataStore = useDataStore()
 
 const getCenterWidth = (clientWidth: number, l = 0, r = 0) => {
   let right = r > 0 ? r : 0
@@ -56,27 +56,7 @@ const resizerObserver = new ResizeObserver((entries) => {
   }
 })
 
-const getPageModules = async () => {
-  const { result } = await getPageModulesApi()
-  if (result.rows.length > 0) {
-    pageStore.setPages(
-      result.rows.map((item) => {
-        return {
-          ...((item.jsonPage as unknown as PageSetup) || {}),
-          id: item.id,
-        }
-      }),
-    )
-    const components = result.rows.find((item) => item.type === pageStore.activePageType)
-    dataStore.setComponents((components?.jsonData as unknown as ComponentConfig<AllProperty>[]) || [])
-    dataStore.resetStack()
-  } else {
-    pageStore.setDefaultComponents()
-  }
-}
-onBeforeMount(() => {
-  getPageModules()
-})
+onBeforeMount(() => {})
 
 onMounted(() => {
   if (el.value) resizerObserver.observe(el.value)
@@ -110,8 +90,11 @@ const changeRight = ({ deltaX }: OnDrag) => {
 
 onBeforeUnmount(() => {
   resizerObserver.disconnect()
+  pageStore.reset()
 })
-provide('openLinkSelect', () => linkSelectDialogRef.value?.open())
+
+provide(InjectKey, () => linkSelectDialogRef.value!.open())
+provide('openAddPage', () => addPageRef.value?.open())
 </script>
 
 <template>
@@ -142,6 +125,7 @@ provide('openLinkSelect', () => linkSelectDialogRef.value?.open())
       <Config />
     </div>
     <LinkSelectDialog ref="linkSelectDialogRef"></LinkSelectDialog>
+    <AddPage ref="addPageRef"></AddPage>
   </div>
 </template>
 
@@ -149,14 +133,5 @@ provide('openLinkSelect', () => linkSelectDialogRef.value?.open())
 .page-config-container {
   padding: 0 !important;
   overflow: hidden;
-}
-:deep() {
-  .el-tabs {
-    display: flex;
-    flex-direction: column;
-    .el-tab-pane {
-      height: 100%;
-    }
-  }
 }
 </style>

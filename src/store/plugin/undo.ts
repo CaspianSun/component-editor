@@ -22,6 +22,11 @@ class CreateStack<T> {
   update() {
     return this.stack[this.index - 1]
   }
+  changeIndex(index: number) {
+    if (index < 0 || index > this.stack.length) return
+    this.index = index
+    return this.update()
+  }
   get current() {
     return this.stack[this.index - 1]
   }
@@ -34,8 +39,8 @@ type Store = PiniaPluginContext['store']
 type Options = PiniaPluginContext['options']
 
 interface Serializer {
-  serialize: (value: any) => string
-  deserialize: (value: string) => any
+  serialize: (...args: any[]) => string
+  deserialize: (...args: any[]) => any
 }
 
 /**
@@ -87,6 +92,7 @@ export function PiniaUndo({ store, options, serializer }: PluginOptions) {
   const setIndexLength = () => {
     store.stackIndex = stack.index
     store.stackLength = stack.length
+    console.log(store.stackIndex, store.stackLength)
   }
   setIndexLength()
   store.undo = () => {
@@ -101,6 +107,11 @@ export function PiniaUndo({ store, options, serializer }: PluginOptions) {
   }
   store.resetStack = () => {
     stack = new CreateStack(removeOmittedKeys(options, store, serializer))
+    setIndexLength()
+  }
+  store.stackChangeIndex = (index: number) => {
+    preventUpdateOnSubscribe = true
+    store.$patch(serializer?.deserialize(serializer.serialize(stack.changeIndex(index))))
     setIndexLength()
   }
   store.$subscribe(
@@ -137,6 +148,7 @@ declare module 'pinia' {
      */
     stackIndex: number
     stackLength: number
+    stackChangeIndex: (index: number) => void
     undo: () => void
     redo: () => void
     resetStack: () => void

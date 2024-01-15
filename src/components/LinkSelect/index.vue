@@ -2,7 +2,8 @@
 import { inject, defineModel } from 'vue'
 import { ElInput, ElButton } from 'element-plus'
 import { LinkEnum } from '../../enum'
-import { pageNameMap } from '../../enum/page'
+import { Page, pageNameMap } from '../../enum/page'
+import { InjectKey } from '.'
 
 const props = defineProps<{
   modelValue?: Link
@@ -12,14 +13,15 @@ const emit = defineEmits<{
   (event: 'update:modelValue', value: Link): void
 }>()
 
-const openLinkSelect = inject<(...args: any[]) => Promise<string>>('openLinkSelect')
+const openLinkSelect = inject(InjectKey)
 const handleClick = () => {
   openLinkSelect?.()
     .then((res) => {
       emit('update:modelValue', {
         type: LinkEnum['基础页面'],
-        url: res,
-        name: pageNameMap[res as keyof typeof pageNameMap],
+        url: res.type,
+        id: `${res.id}`,
+        name: pageNameMap[res.type],
       })
       console.log(res)
     })
@@ -44,9 +46,17 @@ const handleClick = () => {
 .el-input {
   &.is-disabled {
     :deep() {
-      .el-input__inner {
-        color: #333 !important;
-        -webkit-text-fill-color: #333 !important;
+      .el-input__wrapper {
+        background-color: #fff;
+
+        .el-input__inner {
+          color: #333 !important;
+          -webkit-text-fill-color: #333 !important;
+        }
+      }
+
+      .el-input-group__append {
+        background-color: #fff;
       }
     }
   }

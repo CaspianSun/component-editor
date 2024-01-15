@@ -1,14 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import { shallowRef, defineAsyncComponent } from 'vue'
 
-export const commonLink = (): Link => {
-  return {
-    url: '',
-    type: 0,
-    name: '',
-  }
-}
-
 const commonStyle: CommonStyle = {
   radiusT: 0,
   radiusB: 0,

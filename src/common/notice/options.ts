@@ -1,4 +1,4 @@
-import { Schema, ControlShowItemMethod } from '../../utils/listToElement'
+import { Schema, CompareMethod } from '../../utils/listToElement'
 
 export const schema: Schema<Notice>[] = [
   {
@@ -12,18 +12,18 @@ export const schema: Schema<Notice>[] = [
       },
       {
         label: '滚动间隔',
-        type: 'ElNumber',
+        type: 'SliderNumber',
         prop: 'delay',
         config: { min: 1, max: 10 },
       },
       {
         label: '文字颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'textColor',
       },
       {
         label: '背景颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'bgColor',
       },
     ],
@@ -45,25 +45,25 @@ export const schema: Schema<Notice>[] = [
         type: 'ElInput',
         prop: 'leftText',
         config: { maxLength: 4 },
-        control: { method: ControlShowItemMethod.equality, value: ['leftType', 1] },
+        control: { method: CompareMethod.equality, value: ['leftType', 1] },
       },
       {
         label: '文字颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'leftTextColor',
-        control: { method: ControlShowItemMethod.equality, value: ['leftType', 1] },
+        control: { method: CompareMethod.equality, value: ['leftType', 1] },
       },
       {
         label: '文字背景颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'leftBgColor',
-        control: { method: ControlShowItemMethod.equality, value: ['leftType', 1] },
+        control: { method: CompareMethod.equality, value: ['leftType', 1] },
       },
       {
         label: '图标',
         type: 'SelectImage',
         prop: 'leftIcon',
-        control: { method: ControlShowItemMethod.equality, value: ['leftType', 2] },
+        control: { method: CompareMethod.equality, value: ['leftType', 2] },
       },
     ],
   },

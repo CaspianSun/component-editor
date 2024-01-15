@@ -46,11 +46,12 @@ const renderButton = (item: (typeof buttonList)[0]) => {
 }
 
 export const handleSave = async () => {
-  if (pageStore.activePage.id) {
-    const { result, code } = await updatePageModuleApi(pageStore.activePage.id, {
+  const activePage = pageStore.activePage
+  if (activePage?.id) {
+    const { result, code } = await updatePageModuleApi(activePage.id, {
       jsonData: dataStore.components as unknown as string,
       jsonPage: pageStore.activePage as unknown as string,
-      type: pageStore.activePageType,
+      type: activePage.type,
     })
     if (result[0] > 0) {
       ElMessage.success('保存成功')
@@ -64,7 +65,7 @@ export const handleSave = async () => {
     const { result, code } = await createPageModuleApi({
       jsonData: dataStore.components as unknown as string,
       jsonPage: pageStore.activePage as unknown as string,
-      type: pageStore.activePageType,
+      type: activePage?.type,
     })
     if (code != -1 && result?.id) {
       ElMessage.success('保存成功')
@@ -82,13 +83,13 @@ export const Header = defineComponent({
     return () => {
       return (
         <div class={'h-50px flex bg-#fff px-15px b-b-1px b-b-solid b-b-#ebeef5 select-none'}>
-          <div class={'w-100px'}></div>
+          <div class={'w-170px min-w-0'}></div>
           <div class={'h-full  flex-center flex-1'}>
             {buttonList.map((item) => {
               return renderButton(item)
             })}
           </div>
-          <div class={'w-100px flex flex-row-reverse items-center'}>
+          <div class={'flex flex-row-reverse items-center'}>
             <ElButton size='small' icon={<Save></Save>} type='primary' onClick={handleSave}>
               保存
             </ElButton>

@@ -1,36 +1,91 @@
 <script lang="ts" setup>
-import {} from 'vue'
+import { computed, onMounted, getCurrentInstance, ref } from 'vue'
+
+const parent = ref<{
+  editable?: boolean
+  data?: CubeIcon
+}>()
+const parentEmits = ref<{
+  (event: 'click', data: CubeIcon['option'][0]['link']): void
+}>()
+onMounted(() => {
+  const instance = getCurrentInstance()
+  parent.value = instance!.parent!.props
+  parentEmits.value = instance!.parent!.emit
+})
 const props = defineProps<{
-  editable: boolean
   data?: CubeIcon['option'][0]
 }>()
+
+const setStyle = computed(() => {
+  if (props.data?.setupType == 1) {
+    return Object.assign({}, props.data, {
+      radius: parent.value?.data?.itemRadius,
+      bgColor: parent.value?.data?.itemBgColor,
+      bg: parent.value?.data?.itemBg,
+      textColor: parent.value?.data?.itemTextColor,
+      textSize: parent.value?.data?.itemTextSize,
+      spacing: parent.value?.data?.itemSpacing,
+      bgType: parent.value?.data?.itemBgType,
+      iconSize: parent.value?.data?.itemIconSize,
+    })
+  } else {
+    return props.data
+  }
+})
+
+const spacing = computed(() => {
+  return parent.value?.editable ? `${setStyle.value?.spacing}px` : `${(setStyle.value?.spacing || 0) * 2}rpx`
+})
+
+const titleFontSize = computed(() => {
+  return parent.value?.editable ? `${setStyle.value?.textSize}px` : `${(setStyle.value?.textSize || 0) * 2}rpx`
+})
+
+const iconSize = computed(() => {
+  return parent.value?.editable ? `${setStyle.value?.iconSize}px` : `${(setStyle.value?.iconSize || 0) * 2}rpx`
+})
 </script>
 
 <template>
-  <div class="full overflow-hidden relative">
+  <div
+    class="full overflow-hidden relative"
+    :class="parent?.editable ? 'editable' : ''"
+    :style="{
+      borderRadius: setStyle?.radius + 'px',
+      backgroundColor: setStyle?.bgType == 1 ? setStyle?.bgColor : '',
+    }"
+    @click="() => parentEmits?.('click', setStyle?.link)"
+  >
     <div class="abs-full text-0">
-      <img v-if="data?.bg" :src="data.bg" class="full object-cover" draggable="false" />
+      <img v-if="setStyle?.bg && setStyle?.bgType == 2" :src="setStyle?.bg" class="full object-cover" draggable="false" />
     </div>
-    <div class="full flex-col-center relative cube-item" :class="editable ? 'editable' : ''">
+    <div class="full flex-col-center relative">
       <div
-        v-if="data?.icon"
+        v-if="setStyle?.icon"
         :style="{
-          marginTop: data?.spacing + 'px',
-          marginBottom: data?.spacing + 'px',
+          marginTop: spacing,
+          marginBottom: spacing,
         }"
       >
-        <img :src="data?.icon" class="w-50rpx h-50rpx" />
+        <img
+          :src="setStyle?.icon"
+          :style="{
+            width: iconSize,
+            height: iconSize,
+          }"
+        />
       </div>
       <span
-        v-if="data?.text"
+        v-if="setStyle?.text"
         :style="{
-          color: data?.textColor,
-          fontSize: data?.textSize + 'px',
-          marginTop: data?.spacing + 'px',
-          marginBottom: data?.spacing + 'px',
+          color: setStyle?.textColor,
+          fontSize: titleFontSize,
+          marginTop: spacing,
+          marginBottom: spacing,
         }"
       >
-        {{ data?.text || '' }}
+        {{ setStyle?.text || '' }}
       </span>
     </div>
   </div>
@@ -42,7 +97,6 @@ const props = defineProps<{
     content: '';
     position: absolute;
     inset: 0;
-    border: 1px dashed #000;
   }
 }
 </style>

@@ -1,4 +1,4 @@
-import { Schema, ControlShowItemMethod } from '../../utils/listToElement'
+import { Schema, CompareMethod } from '../../utils/listToElement'
 
 export const schema: Schema<Balance>[] = [
   {
@@ -15,7 +15,7 @@ export const schema: Schema<Balance>[] = [
       },
       {
         label: '背景颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'bgColor',
       },
       {
@@ -31,7 +31,7 @@ export const schema: Schema<Balance>[] = [
         label: '选择图标',
         type: 'SelectImage',
         prop: 'icon',
-        control: { method: ControlShowItemMethod.equality, value: ['isShowIcon', true] },
+        control: { method: CompareMethod.equality, value: ['isShowIcon', true] },
       },
       {
         label: '标题',
@@ -41,7 +41,7 @@ export const schema: Schema<Balance>[] = [
       },
       {
         label: '标题文字颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'titleColor',
       },
     ],
@@ -51,12 +51,12 @@ export const schema: Schema<Balance>[] = [
     item: [
       {
         label: '文字颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'textColor',
       },
       {
         label: '箭头图标颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'rightIconColor',
       },
       {
@@ -64,19 +64,19 @@ export const schema: Schema<Balance>[] = [
         type: 'ElInput',
         prop: 'buttonText',
         config: { maxLength: 4 },
-        control: { method: ControlShowItemMethod.equality, value: ['type', 1] },
+        control: { method: CompareMethod.equality, value: ['type', 1] },
       },
       {
         label: '按钮文字颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'btnTextColor',
-        control: { method: ControlShowItemMethod.equality, value: ['type', 1] },
+        control: { method: CompareMethod.equality, value: ['type', 1] },
       },
       {
         label: '按钮背景颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'btnBgColor',
-        control: { method: ControlShowItemMethod.equality, value: ['type', 1] },
+        control: { method: CompareMethod.equality, value: ['type', 1] },
       },
     ],
   },

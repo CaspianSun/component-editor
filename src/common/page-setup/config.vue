@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
 import { usePageStore } from '../../store'
 import { CommonConfig } from '../../components/CommonConfig'
 import { Schema, ElementRender } from '../../utils/listToElement'
+import { storeToRefs } from 'pinia'
 
 const pageStore = usePageStore()
 const { activePage } = storeToRefs(pageStore)
@@ -21,7 +21,10 @@ const schema: Schema<PageSetup>[] = [
       {
         label: '页面背景色',
         prop: 'pageBg',
-        type: 'ElColor',
+        type: 'ColorPicker',
+        config: {
+          useType: 'both',
+        },
       },
       {
         label: '页面背景图',
@@ -35,7 +38,7 @@ const schema: Schema<PageSetup>[] = [
 
 <template>
   <CommonConfig title="页面设置" :show-common="false">
-    <ElementRender :data="activePage" :schema="schema"></ElementRender>
+    <ElementRender v-if="activePage" :data="activePage" :schema="schema"></ElementRender>
   </CommonConfig>
 </template>
 

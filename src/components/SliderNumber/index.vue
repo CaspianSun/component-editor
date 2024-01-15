@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { ElSlider, ElInputNumber } from 'element-plus'
-import { withDefaults } from 'vue'
+import { computed, withDefaults } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    number?: number
+    number: number
     max?: number
     min?: number
   }>(),

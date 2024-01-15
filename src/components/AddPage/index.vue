@@ -1,14 +1,19 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { ElDialog } from 'element-plus'
+import { ElDialog, ElMessage } from 'element-plus'
 import { pageNameMap, Page } from '../../enum/page'
-import { usePageStore } from '../../store'
+import { usePageStore, useDataStore } from '../../store'
+import { pageList } from '../../store/modules/page'
+import { createPageModuleApi } from '../../api'
 
 const visible = ref(false)
-const open = () => {
+const isFirst = ref(false)
+const open = (first: boolean = false) => {
+  isFirst.value = first
   visible.value = true
 }
 const pageStore = usePageStore()
+const dataStore = useDataStore()
 const activePageList = computed(() => {
   return pageStore.pageList.map((item) => {
     return item.type
@@ -18,19 +23,10 @@ const activePageList = computed(() => {
 defineExpose({
   open,
 })
-console.log()
-
-const defaultList = ref([
-  {
-    type: Page.Login,
-    title: '登录',
-  },
-])
 
 const optionalList = ref(
   Object.keys(pageNameMap)
     .map((key) => {
-      if (defaultList.value.find((item) => item.type === key)) return void 0
       return { type: key, title: pageNameMap[key as keyof typeof pageNameMap] }
     })
     .filter((item) => !!item) as SelectItem[],
@@ -41,49 +37,78 @@ interface SelectItem {
   title: string
 }
 
-const select = ref<SelectItem>()
+const select = ref<SelectItem[]>([])
 
 const handleSelect = (item: SelectItem) => {
-  if (activePageList.value.length >= 9) return
-  if (activePageList.value.includes(item.type)) return
-  select.value = item
+  if (activePageList.value.includes(item.type) && !multipleList.includes(item.type)) return
+  if (select.value.find((i) => i.type === item.type)) {
+    select.value = select.value.filter((i) => i.type !== item.type)
+  } else {
+    if (select.value.length + activePageList.value.length >= 12) return ElMessage.warning('最多可选九个模块')
+    select.value = [...select.value, item]
+  }
 }
-const handleConfirm = () => {
-  if (!select.value) return
-  const pageObject: PageSetup = {
-    ...select.value,
-    pageBg: '#F9F9F9',
+
+const handleFirstConfirm = async () => {
+  const defaultPage = pageList()
+  for (const item of defaultPage) {
+    const data = await pageStore.getDefaultComponents(item.type, item.options?.defaultComponents)
+    const { result } = await createPageModuleApi({
+      jsonData: data as unknown as string,
+      jsonPage: item as unknown as string,
+      type: item.type,
+    })
+    pageStore.pageList.push({
+      ...item,
+      id: result.id,
+    })
+    if (!pageStore.activePageId) {
+      pageStore.activePageId = result.id
+      dataStore.setComponents(data)
+      dataStore.resetStack()
+    }
   }
-  switch (select.value.type) {
-    default:
-      break
+}
+
+const handleConfirm = async () => {
+  if (isFirst.value) {
+    await handleFirstConfirm()
+  } else {
+    if (select.value.length == 0) return ElMessage.warning('请选择页面')
   }
-  pageStore.addPage(pageObject)
-  select.value = void 0
+  for (const item of select.value) {
+    await pageStore.addPage(item)
+  }
+  select.value = []
   visible.value = false
 }
 const handleCancel = () => {
-  select.value = void 0
+  select.value = []
   visible.value = false
 }
+
+const multipleList = [Page.Custom]
 </script>
 
 <template>
-  <ElDialog v-model="visible" title="配置功能页面" width="860">
+  <ElDialog
+    v-model="visible"
+    modal-class="add-page-modal"
+    class="add-page"
+    title="配置功能页面"
+    width="860"
+    :show-close="!isFirst"
+    :close-on-click-modal="false"
+  >
     <div class="flex flex-col p-10px">
       <div class="grid grid-cols-[repeat(auto-fill,160px)] justify-center">
-        <template v-for="item in defaultList" :key="item.type">
-          <div class="w-146px h-76px bg-#7DA3EF flex-center c-#fff mb-13px mx-a">
-            {{ item.title }}
-          </div>
-        </template>
-      </div>
-      <h5>最多可选九个模块</h5>
-      <div class="grid grid-cols-[repeat(auto-fill,160px)] justify-center">
-        <template v-for="item in optionalList" :key="item.type">
+        <template v-for="(item, index) in optionalList" :key="index">
           <div
             class="item"
-            :class="{ active: activePageList.includes(item.type), selected: select?.type === item.type }"
+            :class="{
+              active: activePageList.includes(item.type) && !multipleList.includes(item.type),
+              selected: select.map((item) => item.type).includes(item.type),
+            }"
             @click="() => handleSelect(item)"
           >
             {{ item.title }}
@@ -93,7 +118,7 @@ const handleCancel = () => {
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <ElButton @click="handleCancel">取消</ElButton>
+        <ElButton v-if="!isFirst" @click="handleCancel">取消</ElButton>
         <ElButton type="primary" @click="handleConfirm">确定</ElButton>
       </span>
     </template>
@@ -129,5 +154,14 @@ const handleCancel = () => {
   &:hover {
     @include select;
   }
+}
+</style>
+<style>
+.add-page-modal,
+.add-page-modal > el-overlay-dialog {
+  position: absolute !important;
+}
+.add-page {
+  --el-dialog-margin-top: 5vh;
 }
 </style>

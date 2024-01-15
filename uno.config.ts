@@ -21,9 +21,41 @@ function RpxToPxPlugin(): Preset {
   }
 }
 
+function RewriterDvh(): Preset {
+  return {
+    name: 'rewriter-dvh',
+    enforce: 'pre',
+    postprocess(util) {
+      util.entries.forEach((i) => {
+        const value = i[1]
+        if (typeof value === 'string' && /\b(\d+(\.\d+)?)dvh\b/g.test(value)) {
+          i[1] = value.replace(/\b(\d+(\.\d+)?)dvh\b/g, (_, value) => {
+            const pxValue = parseFloat(value)
+            return `calc(var(--vh) * ${pxValue})`
+          })
+        }
+        if (typeof value === 'string' && /\b(\d+(\.\d+)?)dvw\b/g.test(value)) {
+          i[1] = value.replace(/\b(\d+(\.\d+)?)dvw\b/g, (_, value) => {
+            const pxValue = parseFloat(value)
+            return `calc(var(--vw) * ${pxValue})`
+          })
+        }
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  presets: [presetUno(), RpxToPxPlugin()],
+  presets: [presetUno(), RpxToPxPlugin(), RewriterDvh()],
   rules: [
+    /** vue3-colorpicker组件使用了white类名而被隐藏 */
+    [
+      /^white$/,
+      () => ({
+        opacity: '1',
+        animation: 'none',
+      }),
+    ],
     [
       /^ma-(.+)-(.+)$/,
       ([, a, b]) => ({

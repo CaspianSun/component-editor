@@ -1,14 +1,14 @@
-import { storeToRefs } from 'pinia'
 import { defineComponent } from 'vue'
 import { Plus, Minus, Copy, Up, DeleteFour, Down } from '@icon-park/vue-next'
 import { JSX } from 'vue/jsx-runtime'
-import { useDataStore } from '../store'
+import { usePageStore, useDataStore } from '../store'
+import { storeToRefs } from 'pinia'
 
 const renderButton = (icon: JSX.Element, title?: string, click?: () => void) => {
   return (
     <div
       title={title}
-      class={'bg-#fff flex-center p-5px relative after:(content-empty abs-inset b-1px b-solid b-#eee) hover:after:b-#409eff cursor-pointer'}
+      class={'bg-#fff flex-center p-5px relative after:(content-empty abs-full b-1px b-solid b-#eee) hover:after:b-#409eff cursor-pointer'}
       onClick={click}
     >
       {icon}
@@ -19,6 +19,7 @@ const renderButton = (icon: JSX.Element, title?: string, click?: () => void) => 
 export const Tools = defineComponent({
   emits: ['zoomIn', 'zoomOut', 'reset'],
   setup(props, { emit }) {
+    const pageStore = usePageStore()
     const dataStore = useDataStore()
     const { activeComponentIndex, components } = storeToRefs(dataStore)
     const deleteComponent = () => {
@@ -29,11 +30,18 @@ export const Tools = defineComponent({
         <div class={'absolute right-20px bottom-20px cursor-default'}>
           {activeComponentIndex.value != null && (
             <div class={'mb-10px'}>
-              {activeComponentIndex.value !== 0 &&
-                renderButton(<Up size={20}></Up>, '上移组件', () => dataStore.adjustComponentOrder('up'))}
-              {activeComponentIndex.value !== dataStore.length - 1 &&
-                renderButton(<Down size={20}></Down>, '下移组件', () => dataStore.adjustComponentOrder('down'))}
-              {renderButton(<DeleteFour size={20}></DeleteFour>, '删除组件', () => deleteComponent())}
+              {!dataStore.activeComponent?.disabledMove && !pageStore.activePage?.options?.disableControl && (
+                <>
+                  {activeComponentIndex.value !== 0 &&
+                    renderButton(<Up size={20}></Up>, '上移组件', () => dataStore.adjustComponentOrder('up'))}
+                  {activeComponentIndex.value !== dataStore.length - 1 &&
+                    renderButton(<Down size={20}></Down>, '下移组件', () => dataStore.adjustComponentOrder('down'))}
+                </>
+              )}
+
+              {!dataStore.activeComponent?.disabledDelete &&
+                !pageStore.activePage?.options?.disableDelete &&
+                renderButton(<DeleteFour size={20}></DeleteFour>, '删除组件', () => deleteComponent())}
             </div>
           )}
 

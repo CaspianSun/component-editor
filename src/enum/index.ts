@@ -1,13 +1,19 @@
 export enum GroupEnum {
-  '隐藏' = 0,
-  '基础组件' = 1,
-  '辅助组件' = 2,
+  '隐藏',
+  '基础组件',
+  '辅助组件',
 }
 
 export enum LinkEnum {
   '未配置',
   '基础页面',
   '其他小程序',
+}
+
+export enum AssetEnum {
+  '余额',
+  '积分',
+  '优惠券',
 }
 
 export enum CubePictureEnum {
@@ -19,15 +25,23 @@ export enum CubePictureEnum {
   '一上两下',
 }
 
-export enum AssetEnum {
-  '余额',
-  '积分',
-  '优惠券',
+export enum CubeIconEnum {
+  // '五宫格',
+  '六宫格',
+  '七宫格',
+  '九宫格',
+  '九宫格2',
 }
 
-export enum CubeIconEnum {
-  '九宫格',
-  '七宫格',
-  '五宫格',
-  '十宫格',
+export const CubeIconNumberMap = {
+  // [CubeIconEnum['五宫格']]: 5,
+  [CubeIconEnum['六宫格']]: 6,
+  [CubeIconEnum['七宫格']]: 7,
+  [CubeIconEnum['九宫格']]: 9,
+  [CubeIconEnum['九宫格2']]: 9,
+}
+
+export enum FromDataTypeEnum {
+  '文本框',
+  '下拉框',
 }

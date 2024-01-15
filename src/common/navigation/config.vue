@@ -19,11 +19,6 @@ const handleAddItem = () => {
   data.value.imgList.push({
     src: '',
     name: `导航${data.value.imgList.length + 1}`,
-    link: {
-      name: '',
-      type: 1,
-      url: '',
-    },
   })
 }
 </script>

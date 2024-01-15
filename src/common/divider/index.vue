@@ -18,8 +18,8 @@ const { data } = toRefs(props)
       <template v-if="data.type == 1">
         <div class="empty" :style="{ backgroundColor: data.bgColor }"></div>
       </template>
-      <template v-if="[2, 3].includes(data.type)">
-        <div class="line">
+      <template v-if="data.type == 2 || data.type == 3">
+        <div class="line-style">
           <template v-if="data.type == 2">
             <div
               class="solid"
@@ -52,7 +52,7 @@ const { data } = toRefs(props)
     width: 100%;
     height: 100%;
   }
-  .line {
+  .line-style {
     height: 100%;
     display: flex;
     align-items: center;

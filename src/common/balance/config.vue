@@ -11,7 +11,7 @@ const { data } = toRefs(props)
 </script>
 
 <template>
-  <CommonConfig title="我的积分" :data="data">
+  <CommonConfig title="我的余额" :data="data">
     <ElementRender :schema="schema" :data="data" />
   </CommonConfig>
 </template>

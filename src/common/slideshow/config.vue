@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue'
 import { CloseOne, Plus } from '@icon-park/vue-next'
-import { ElInputNumber, ElForm, ElButton, ElIcon } from 'element-plus'
+import { ElButton, ElIcon } from 'element-plus'
 import { CommonConfig } from '../../components/CommonConfig'
-import { SliderNumber } from '../../components/SliderNumber'
 import UploadImg from '/@/components/UploadImg/index.vue'
 import { LinkSelect } from '../../components/LinkSelect'
+import { Schema, ElementRender } from '../../utils/listToElement'
 
 const props = defineProps<{
   data: Slideshow
@@ -19,20 +19,58 @@ const handleAddItem = () => {
     src: '',
   })
 }
+
+const schema: Schema<Slideshow>[] = [
+  {
+    item: [
+      {
+        prop: 'direction',
+        type: 'ElRadio',
+        label: '滚动方向',
+        config: [
+          {
+            label: '横向',
+            value: 'horizontal',
+          },
+          {
+            label: '纵向',
+            value: 'vertical',
+          },
+        ],
+      },
+      {
+        prop: 'delay',
+        type: 'ElInputNumber',
+        label: '轮播间隔(秒)',
+      },
+      {
+        prop: 'paginationVisible',
+        type: 'ElSwitch',
+        label: '显示分页器',
+      },
+      {
+        prop: 'height',
+        type: 'SliderNumber',
+        label: '高度',
+        config: {
+          max: 500,
+          min: 100,
+        },
+      },
+    ],
+  },
+]
 </script>
 
 <template>
   <CommonConfig title="轮播图" :data="data">
-    <ElForm>
-      <ElFormItem label="轮播间隔(秒)">
-        <ElInputNumber v-model="data.delay" style="width: 150px" />
-      </ElFormItem>
-    </ElForm>
+    <ElementRender :schema="schema" :data="data" />
     <h4>图片列表</h4>
     <div class="flex flex-col w-full">
       <div class="tip">
-        <div>建议图片尺寸宽度750px，高度不限。</div>
-        <div>图片大小不超过500kb。</div>
+        <div>建议图片尺寸 {{ 375 - (data.marginL || 0) - (data.marginR || 0) }} * {{ data.height }}。</div>
+        <div>因不同机型尺寸不一致,真机尺寸有所差异</div>
+        <div>图片大小不超过2Mb。</div>
       </div>
       <div class="list">
         <template v-for="(item, index) in data.imgList" :key="item.uuid">
@@ -61,11 +99,6 @@ const handleAddItem = () => {
       <ElIcon style="margin-right: 5px"><Plus /></ElIcon>
       添加图片
     </ElButton>
-    <template #common>
-      <ElFormItem label="高度">
-        <SliderNumber :max="500" :min="1" :number="data.height" @update:number="data.height = $event" />
-      </ElFormItem>
-    </template>
   </CommonConfig>
 </template>
 

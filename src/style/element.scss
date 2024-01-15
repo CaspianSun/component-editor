@@ -50,3 +50,11 @@
     }
   }
 }
+
+.el-tabs {
+  display: flex;
+  flex-direction: column;
+  .el-tab-pane {
+    height: 100%;
+  }
+}

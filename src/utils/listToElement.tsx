@@ -1,29 +1,47 @@
-import { ElColorPicker, ElInput, ElInputNumber, ElRadio, ElRadioGroup, ElForm, ElFormItem } from 'element-plus'
+import { ElColorPicker, ElInput, ElInputNumber, ElRadio, ElRadioGroup, ElForm, ElFormItem, ElSwitch, ElRadioButton } from 'element-plus'
 import { match } from 'ts-pattern'
 import { SliderNumber } from '../components/SliderNumber'
 import UploadImg from '/@/components/UploadImg/index.vue'
 import { LinkSelect } from '../components/LinkSelect'
 import { FunctionalComponent } from 'vue'
+import { ColorPicker } from 'vue3-colorpicker'
 
-export interface Schema<T extends AllProperty> {
+export interface Schema<T extends Record<string, any>> {
   label?: string
   item: SchemaItem<T>[]
   leftSpan?: number
   rightSpan?: number
 }
+
 // TODO 未完成，根据type类型，对应不同的config
 type SchemaItem<T> = {
   label: string
   prop: keyof T
-  type: 'ElInput' | 'ElNumber' | 'ElRadio' | 'ElColor' | 'SliderNumber' | 'SelectImage' | 'linkSelect'
+  type:
+    | 'ElInput'
+    | 'ElInputNumber'
+    | 'ElSwitch'
+    | 'ElRadio'
+    | 'ElRadioButton'
+    | 'ColorPicker'
+    | 'SliderNumber'
+    | 'SelectImage'
+    | 'linkSelect'
   leftSpan?: number
   rightSpan?: number
-  config?: ElInputConfig | NumberConfig | ElRadioConfig[] | ElColorConfig | SelectImageConfig
+  config?: ElInputConfig | NumberConfig | ElRadioConfig[] | ColorPickerConfig | SelectImageConfig | ElSwitchConfig
   control?: ControlShow<T> | ControlShowItem<T>
 }
 
-interface ElColorConfig {
-  showAlpha?: boolean
+interface ElSwitchConfig {
+  inactiveText?: string
+  activeText?: string
+}
+
+interface ColorPickerConfig {
+  useType?: 'pure' | 'gradient' | 'both'
+  disableAlpha?: boolean
+  format?: InstanceType<typeof ColorPicker>['format']
 }
 
 interface SelectImageConfig {
@@ -45,29 +63,29 @@ interface ElRadioConfig {
 }
 
 interface ControlShow<T> {
-  method: ControlShowMethod
+  method: JudgeMethod
   item: Array<ControlShow<T> | ControlShowItem<T>>
 }
 
 interface EqualControlShowItem<T> {
-  method: ControlShowItemMethod.equality | ControlShowItemMethod.inequality
+  method: CompareMethod.equality | CompareMethod.inequality
   value: [keyof T, unknown]
 }
 
 interface ExistControlShowItem<T> {
-  method: ControlShowItemMethod.exist | ControlShowItemMethod.nonExistent
+  method: CompareMethod.exist | CompareMethod.nonExistent
   value: keyof T
 }
 
 type ControlShowItem<T> = EqualControlShowItem<T> | ExistControlShowItem<T>
 
-export enum ControlShowMethod {
+export enum JudgeMethod {
   /** 与 */
   and,
   /** 或 */
   or,
 }
-export enum ControlShowItemMethod {
+export enum CompareMethod {
   /** 相等 */
   equality = 2,
   /** 不相等 */
@@ -79,7 +97,7 @@ export enum ControlShowItemMethod {
 }
 
 export const ElementRender: FunctionalComponent<{
-  data: AllProperty
+  data: Record<string, any>
   schema: Schema<any>[]
 }> = (props) => {
   return (
@@ -98,19 +116,19 @@ export const ElementRender: FunctionalComponent<{
   )
 }
 
-// // TODO 未完成，由control进行分组
-function handleControlShow<T extends AllProperty>(data: T, control: ControlShow<T> | ControlShowItem<T> | undefined): boolean {
+// TODO 未完成，由control进行分组
+function handleControlShow<T extends Record<string, any>>(data: T, control: ControlShow<T> | ControlShowItem<T> | undefined): boolean {
   return match(control)
-    .with({ method: ControlShowMethod.and }, (res) => res.item.every((v) => handleControlShow(data, v)))
-    .with({ method: ControlShowMethod.or }, (res) => res.item.some((v) => handleControlShow(data, v)))
-    .with({ method: ControlShowItemMethod.equality }, (res) => data[res.value[0]] === res.value[1])
-    .with({ method: ControlShowItemMethod.inequality }, (res) => data[res.value[0]] !== res.value[1])
-    .with({ method: ControlShowItemMethod.exist }, (res) => !!data[res.value])
-    .with({ method: ControlShowItemMethod.nonExistent }, (res) => !data[res.value])
+    .with({ method: JudgeMethod.and }, (res) => res.item.every((v) => handleControlShow(data, v)))
+    .with({ method: JudgeMethod.or }, (res) => res.item.some((v) => handleControlShow(data, v)))
+    .with({ method: CompareMethod.equality }, (res) => data[res.value[0]] === res.value[1])
+    .with({ method: CompareMethod.inequality }, (res) => data[res.value[0]] !== res.value[1])
+    .with({ method: CompareMethod.exist }, (res) => !!data[res.value])
+    .with({ method: CompareMethod.nonExistent }, (res) => !data[res.value])
     .otherwise(() => true)
 }
 
-function generateDynamicItem<T extends AllProperty>(data: T, list: Schema<T>, item: SchemaItem<T>) {
+function generateDynamicItem<T extends Record<string, any>>(data: T, list: Schema<T>, item: SchemaItem<T>) {
   return (
     <ElFormItem label={item.label}>
       {match(item)
@@ -126,11 +144,49 @@ function generateDynamicItem<T extends AllProperty>(data: T, list: Schema<T>, it
             </ElRadioGroup>
           )
         })
-        .with({ type: 'ElColor' }, (res) => {
-          const config = res.config as ElColorConfig | undefined
-          return <ElColorPicker v-model={[data[item.prop]]} show-alpha={config?.showAlpha}></ElColorPicker>
+        .with({ type: 'ElRadioButton' }, (res) => {
+          const config = res.config as ElRadioConfig[] | undefined
+          return (
+            <ElRadioGroup v-model={[data[item.prop]]}>
+              {config?.map((radio) => <ElRadioButton label={radio.value}>{radio.label}</ElRadioButton>)}
+            </ElRadioGroup>
+          )
         })
-        .with({ type: 'ElNumber' }, (res) => {
+        .with({ type: 'ElSwitch' }, (res) => {
+          const config = res.config as ElSwitchConfig | undefined
+          return <ElSwitch v-model={[data[item.prop]]} inactive-text={config?.inactiveText} active-text={config?.activeText}></ElSwitch>
+        })
+        .with({ type: 'ColorPicker' }, (res) => {
+          const config = res.config as ColorPickerConfig | undefined
+          const modelProps: {
+            pureColor?: any
+            gradientColor?: any
+          } = {
+            pureColor: data[item.prop],
+            gradientColor: data[item.prop],
+          }
+          if (config?.useType === 'pure') {
+            delete modelProps.gradientColor
+          }
+          if (config?.useType === 'gradient') {
+            delete modelProps.pureColor
+          }
+          return (
+            <ColorPicker
+              {...modelProps}
+              onUpdate:pureColor={(val) => {
+                ;(data[item.prop] as string | null | undefined) = val
+              }}
+              onUpdate:gradientColor={(val) => {
+                ;(data[item.prop] as string | null | undefined) = val
+              }}
+              useType={config?.useType ? config.useType : 'pure'}
+              format={config?.format ? config.format : 'rgb'}
+              disableAlpha={config?.disableAlpha}
+            ></ColorPicker>
+          )
+        })
+        .with({ type: 'ElInputNumber' }, (res) => {
           const config = res.config as NumberConfig | undefined
           return <ElInputNumber v-model={[data[item.prop]]} min={config?.min} max={config?.max} style={'width:150px'}></ElInputNumber>
         })

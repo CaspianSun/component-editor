@@ -5,7 +5,9 @@ export enum Page {
   Login = 'login',
 }
 
-export const pageNameMap = {
+export const pageNameMap: {
+  [key in Page]: string
+} = {
   [Page.Custom]: '自定义页面',
   [Page.Login]: '登陆',
 }

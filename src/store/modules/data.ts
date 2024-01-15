@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { usePageStore } from './page'
 
 export const useDataStore = defineStore('data-store', {
   state(): {
@@ -23,7 +22,6 @@ export const useDataStore = defineStore('data-store', {
     },
   },
   actions: {
-    fetchData() {},
     setComponents(components: ComponentConfig[]) {
       this.components = components
     },
@@ -43,20 +41,20 @@ export const useDataStore = defineStore('data-store', {
         const temp = this.components[index - 1]
         this.components[index - 1] = this.components[index]
         this.components[index] = temp
-        this.setActiveComponentId(this.components[index].id)
+        this.setActiveComponentId(this.components[index - 1].id)
       } else {
         if (index === this.components.length - 1) return
         const temp = this.components[index + 1]
         this.components[index + 1] = this.components[index]
         this.components[index] = temp
-        this.setActiveComponentId(this.components[index].id)
+        this.setActiveComponentId(this.components[index + 1].id)
       }
     },
     reset() {
-      const pageStore = usePageStore()
       this.components = []
       this.activeComponentIndex = null
-      pageStore.setDefaultComponents()
+      this.stackChangeIndex(1)
+      this.resetStack()
     },
   },
   undo: {

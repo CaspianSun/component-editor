@@ -1,4 +1,4 @@
-import { Schema, ControlShowItemMethod, ControlShowMethod } from '../../utils/listToElement'
+import { Schema, CompareMethod, JudgeMethod } from '../../utils/listToElement'
 
 export const schema: Schema<Navigation>[] = [
   {
@@ -18,22 +18,22 @@ export const schema: Schema<Navigation>[] = [
         type: 'ElInput',
         prop: 'title',
         config: { maxLength: 6 },
-        control: { method: ControlShowItemMethod.exist, value: 'isShowTitle' },
+        control: { method: CompareMethod.exist, value: 'isShowTitle' },
       },
       {
         label: '标题字号',
-        type: 'ElNumber',
+        type: 'SliderNumber',
         prop: 'titleSize',
         config: { min: 10, max: 30 },
-        control: { method: ControlShowItemMethod.exist, value: 'isShowTitle' },
+        control: { method: CompareMethod.exist, value: 'isShowTitle' },
       },
       {
         label: '标题文字颜色',
-        type: 'ElColor',
+        type: 'ColorPicker',
         prop: 'titleColor',
-        control: { method: ControlShowItemMethod.exist, value: 'isShowTitle' },
+        control: { method: CompareMethod.exist, value: 'isShowTitle' },
       },
-      { label: '背景颜色', type: 'ElColor', prop: 'bgColor' },
+      { label: '背景颜色', type: 'ColorPicker', prop: 'bgColor' },
     ],
   },
   {
@@ -56,7 +56,7 @@ export const schema: Schema<Navigation>[] = [
           { label: '显示', value: true },
           { label: '不显示', value: false },
         ],
-        control: { method: ControlShowItemMethod.equality, value: ['type', 2] },
+        control: { method: CompareMethod.equality, value: ['type', 2] },
       },
       {
         label: '下边框',
@@ -66,31 +66,31 @@ export const schema: Schema<Navigation>[] = [
           { label: '显示', value: true },
           { label: '不显示', value: false },
         ],
-        control: { method: ControlShowItemMethod.equality, value: ['type', 2] },
+        control: { method: CompareMethod.equality, value: ['type', 2] },
       },
       {
         label: '图标圆角',
-        type: 'ElNumber',
+        type: 'SliderNumber',
         prop: 'iconRadius',
         config: { min: 0, max: 50 },
         control: {
-          method: ControlShowMethod.or,
+          method: JudgeMethod.or,
           item: [
-            { method: ControlShowItemMethod.inequality, value: ['type', 2] },
-            { method: ControlShowItemMethod.exist, value: 'isShowIcon' },
+            { method: CompareMethod.inequality, value: ['type', 2] },
+            { method: CompareMethod.exist, value: 'isShowIcon' },
           ],
         },
       },
       {
         label: '图标大小',
-        type: 'ElNumber',
+        type: 'SliderNumber',
         prop: 'iconSize',
         config: { min: 25, max: 45 },
         control: {
-          method: ControlShowMethod.or,
+          method: JudgeMethod.or,
           item: [
-            { method: ControlShowItemMethod.inequality, value: ['type', 2] },
-            { method: ControlShowItemMethod.exist, value: 'isShowIcon' },
+            { method: CompareMethod.inequality, value: ['type', 2] },
+            { method: CompareMethod.exist, value: 'isShowIcon' },
           ],
         },
       },
@@ -103,9 +103,9 @@ export const schema: Schema<Navigation>[] = [
           { label: '4列', value: 4 },
           { label: '5列', value: 5 },
         ],
-        control: { method: ControlShowItemMethod.equality, value: ['type', 1] },
+        control: { method: CompareMethod.equality, value: ['type', 1] },
       },
-      { label: '文字字号', type: 'ElNumber', prop: 'fontSize', config: { min: 10, max: 20 } },
+      { label: '文字字号', type: 'SliderNumber', prop: 'fontSize', config: { min: 10, max: 20 } },
       {
         label: '文字加粗',
         type: 'ElRadio',
@@ -115,7 +115,7 @@ export const schema: Schema<Navigation>[] = [
           { label: '否', value: false },
         ],
       },
-      { label: '文字颜色', type: 'ElColor', prop: 'fontColor' },
+      { label: '文字颜色', type: 'ColorPicker', prop: 'fontColor' },
     ],
   },
 ]

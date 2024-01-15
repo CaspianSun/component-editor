@@ -1,0 +1,16 @@
+:root,
+page {
+  --nut-primary-color: #1890ff;
+}
+
+.nut-form {
+  --nut-cell-box-shadow: none;
+  --nut-cell-group-background-color: transparent;
+  .nut-cell-group__wrap {
+    .nut-form-item {
+      margin-bottom: 12px !important;
+      margin-bottom: 24rpx !important;
+      border-radius: 7px !important;
+    }
+  }
+}

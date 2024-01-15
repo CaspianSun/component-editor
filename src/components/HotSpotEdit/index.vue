@@ -1,31 +1,28 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { v4 as uuid } from 'uuid'
 import VueDraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
-import { LinkEnum } from '../../enum'
 import { cloneDeep } from 'lodash-es'
 import { ElMessage, ElDialog, ElButton } from 'element-plus'
 import { CloseOne } from '@icon-park/vue-next'
+import { Page, pageNameMap } from '../../enum/page'
+import { InjectKey } from '../LinkSelect'
 
-const dialogVisible = ref(false)
-
-const handleClickClose = () => {
-  dialogVisible.value = false
-}
 export interface HotSpotListItem {
   id: string
   width: number
   height: number
   left: number
   top: number
-  link: Link
+  link?: Link
 }
 
+const dialogVisible = ref(false)
 const activeIndex = ref(0)
 const imgLoaded = ref(false)
 const addHotSpot = () => {
-  if (hotSpot.value.length >= 10) return
+  if (hotSpot.value.length >= 10) return ElMessage.warning('最多添加10个热区')
   hotSpot.value.push({
     id: uuid(),
     width: 100,
@@ -34,7 +31,7 @@ const addHotSpot = () => {
     top: 0,
     link: {
       type: 1,
-      url: '',
+      url: void 0,
       name: '',
     },
   })
@@ -44,20 +41,39 @@ const src = ref('')
 const hotSpot = ref<HotSpotListItem[]>([])
 const originHotSpot = ref<HotSpotListItem[]>([])
 const imageWidth = ref(375)
-export type Callback = (list: HotSpotListItem[]) => void
-let callbackFun: Callback | null = null
-const initHotSpotEdit = (url: string, list: HotSpotListItem[], width: number, callback: Callback) => {
-  if (!url) return ElMessage.warning('请选择图片')
-  callbackFun = callback
-  originHotSpot.value = list
-  imageWidth.value = width
-  src.value = url
-  hotSpot.value = cloneDeep(list)
-  dialogVisible.value = true
+const resolveFn = ref<(data: HotSpotListItem[]) => void>()
+const initHotSpotEdit = (url: string, list: HotSpotListItem[], width: number) => {
+  return new Promise<HotSpotListItem[]>((resolve, reject) => {
+    if (!url) {
+      ElMessage.warning('请选择图片')
+      return reject()
+    }
+    resolveFn.value = resolve
+    originHotSpot.value = list
+    imageWidth.value = width
+    src.value = url
+    hotSpot.value = cloneDeep(list)
+    dialogVisible.value = true
+  })
 }
-export type InitHotSpotEdit = typeof initHotSpotEdit
 
-const handleSelectLink = (link: Link) => {}
+const openLinkSelect = inject(InjectKey)
+const handleSelectLink = (link?: Link) => {
+  openLinkSelect?.().then((page) => {
+    if (!page) return
+    const newLink = {
+      type: 1,
+      url: page.type,
+      id: `${page.id}`,
+      name: pageNameMap[page.type],
+    }
+    if (link) {
+      Object.assign(link, newLink)
+    } else {
+      hotSpot.value[activeIndex.value].link = newLink
+    }
+  })
+}
 
 const changeHotSpot = (data: { x: number; y: number; w?: number; h?: number }, item: HotSpotListItem) => {
   const newData = {
@@ -70,8 +86,14 @@ const changeHotSpot = (data: { x: number; y: number; w?: number; h?: number }, i
 }
 
 const handleClickSave = () => {
-  callbackFun?.(hotSpot.value)
+  resolveFn.value?.(hotSpot.value)
   dialogVisible.value = false
+}
+const handleClickClose = () => {
+  dialogVisible.value = false
+  resolveFn.value = void 0
+  originHotSpot.value = []
+  hotSpot.value = []
 }
 
 const changeActiveIndex = (index: number) => {
@@ -99,7 +121,7 @@ defineExpose({
       ref="wrapperRef"
       class="wrapper"
       :style="{
-        width: `${imageWidth * 2}px`,
+        width: `${imageWidth}px`,
       }"
     >
       <template v-for="(item, index) in hotSpot" :key="index">
@@ -127,14 +149,13 @@ defineExpose({
           </div>
           <div class="drag-item">
             <div class="link" @click="handleSelectLink(item.link)">
-              <span v-if="item.link.url">{{ LinkEnum[item.link.type] }}-{{ item.link.name }}</span>
+              <span v-if="item.link?.url">{{ item.link.name }}</span>
               <span v-else>选择链接</span>
             </div>
           </div>
         </VueDraggableResizable>
       </template>
-
-      <img :src="src" @load="imgLoaded = true" />
+      <img :src="src" class="img-shadow" @load="imgLoaded = true" />
     </div>
     <div class="bottom">
       <ElButton @click="addHotSpot">添加热区({{ hotSpot.length }}/10)</ElButton>
@@ -180,6 +201,9 @@ defineExpose({
     .link {
       cursor: pointer;
     }
+  }
+  .img-shadow {
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
 }
 .bottom {

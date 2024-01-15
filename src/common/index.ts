@@ -1,7 +1,20 @@
-import { ComponentProperty, commonLink } from '../utils'
-import { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum, CubeIconEnum } from '../enum'
-export { GroupEnum, CubePictureEnum, LinkEnum }
-import { v4 as uuid } from 'uuid'
+import { ComponentProperty } from '../utils'
+import { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum } from '../enum'
+export { GroupEnum, CubePictureEnum, LinkEnum, AssetEnum }
+
+import {
+  BalanceConfig,
+  CubeIconConfig,
+  CubePictureConfig,
+  DividerConfig,
+  HotPictureConfig,
+  IntegralConfig,
+  NavigationConfig,
+  NoticeConfig,
+  SlideshowConfig,
+  UserConfig,
+  VipConfig,
+} from './default'
 
 const componentProperties = new ComponentProperty()
 export const { componentConfigMap, componentInstanceMap, configInstanceMap } = componentProperties
@@ -14,22 +27,7 @@ addComponent<CubeIcon>(
     title: '宫格模块',
     group: GroupEnum['基础组件'],
   },
-  {
-    bg: '',
-    type: CubeIconEnum['七宫格'],
-    option: [
-      {
-        icon: '',
-        text: '名称',
-        textSize: 16,
-        textColor: '#000000',
-        spacing: 0,
-      },
-    ],
-    marginT: 40,
-    marginTRange: [0, 200],
-    marginBRange: [0, 200],
-  },
+  CubeIconConfig,
 )
 
 addComponent<CubePicture>(
@@ -39,18 +37,7 @@ addComponent<CubePicture>(
     group: GroupEnum['基础组件'],
     sort: 1,
   },
-  {
-    type: CubePictureEnum['一行二个'],
-    imgList: Array(4)
-      .fill({})
-      .map(() => {
-        return { ...commonLink(), src: '' }
-      }),
-    itemRadiusT: 0,
-    itemRadiusB: 0,
-    itemHeight: 120,
-    itemMargin: 0,
-  },
+  CubePictureConfig,
 )
 
 addComponent<Balance>(
@@ -60,22 +47,7 @@ addComponent<Balance>(
     group: GroupEnum['基础组件'],
     sort: 2,
   },
-  {
-    type: 1,
-    bgColor: '#ffffff',
-    isShowIcon: true,
-    icon: '',
-    title: '我的余额',
-    titleColor: '#333333',
-    textColor: '#333333',
-    buttonText: '立即充值',
-    btnTextColor: '#ffffff',
-    btnBgColor: '#333333',
-    rightIconColor: '#666666',
-    link: commonLink(),
-    radiusTRange: [0, 40],
-    radiusBRange: [0, 40],
-  },
+  BalanceConfig,
 )
 
 addComponent<Integral>(
@@ -85,21 +57,7 @@ addComponent<Integral>(
     group: GroupEnum['基础组件'],
     sort: 2,
   },
-  {
-    type: 1,
-    bgColor: '#ffffff',
-    isShowIcon: true,
-    icon: '',
-    title: '我的积分',
-    titleColor: '#333333',
-    textColor: '#333333',
-    buttonText: '立即使用',
-    btnTextColor: '#ffffff',
-    btnBgColor: '#333333',
-    rightIconColor: '#666666',
-    radiusTRange: [0, 40],
-    radiusBRange: [0, 40],
-  },
+  IntegralConfig,
 )
 
 addComponent<HotPicture>(
@@ -109,19 +67,7 @@ addComponent<HotPicture>(
     group: GroupEnum['基础组件'],
     sort: 1,
   },
-  {
-    src: '',
-    hotSpot: [
-      {
-        id: uuid(),
-        link: commonLink(),
-        top: 0,
-        left: 0,
-        width: 100,
-        height: 100,
-      },
-    ],
-  },
+  HotPictureConfig,
 )
 
 addComponent<Slideshow>(
@@ -130,19 +76,7 @@ addComponent<Slideshow>(
     title: '轮播图',
     group: GroupEnum['基础组件'],
   },
-  {
-    marginT: 0,
-    marginB: 0,
-    height: 300,
-    delay: 3,
-    marginBRange: [-100, 50],
-    imgList: [
-      {
-        ...commonLink(),
-        src: '',
-      },
-    ],
-  },
+  SlideshowConfig,
 )
 
 addComponent<Navigation>(
@@ -151,28 +85,7 @@ addComponent<Navigation>(
     title: '导航',
     group: GroupEnum['基础组件'],
   },
-  {
-    type: 1,
-    iconRadius: 5,
-    rowNum: 1,
-    colNum: 4,
-    isShowTitle: true,
-    title: '图文导航',
-    titleSize: 14,
-    titleColor: '#333333',
-    fontSize: 12,
-    isFontBold: false,
-    fontColor: '#333333',
-    bgColor: '#ffffff',
-    iconSize: 30,
-    isShowIcon: true,
-    isShowBorderBottom: true,
-    imgList: Array(4)
-      .fill('')
-      .map((item, index) => {
-        return { ...commonLink(), src: '', name: `导航${index + 1}` }
-      }),
-  },
+  NavigationConfig,
 )
 
 addComponent<Notice>(
@@ -181,19 +94,7 @@ addComponent<Notice>(
     title: '公告',
     group: GroupEnum['基础组件'],
   },
-  {
-    bgColor: '#ffffff',
-    textColor: '#333333',
-    delay: 3,
-    type: 1,
-    leftType: 1,
-    leftIcon: '',
-    leftText: '公告',
-    leftTextColor: '#333333',
-    leftBgColor: '#ffffff',
-    radiusBRange: [0, 20],
-    radiusTRange: [0, 20],
-  },
+  NoticeConfig,
 )
 
 addComponent<Vip>(
@@ -202,25 +103,7 @@ addComponent<Vip>(
     title: '会员信息',
     group: GroupEnum['基础组件'],
   },
-  {
-    bgColor: '#fff',
-    fontSize: 14,
-    propertyArr: [
-      { name: '余额', checked: true, type: AssetEnum['余额'] },
-      { name: '积分', checked: false, type: AssetEnum['积分'] },
-      { name: '优惠券', checked: false, type: AssetEnum['优惠券'] },
-    ],
-    vipStyle: 1,
-    propertyTextColor: '#000',
-    propertyNumberColor: '#000',
-    welcomeText: '欢迎光临，请登录',
-    welcomeColor: '#000',
-    subTitleText: '成为会员，享受更多会员权益',
-    subTitleColor: '#000',
-    loginBtnText: '立即登录',
-    btnTextColor: '#fff',
-    btnBgColor: '#000',
-  },
+  VipConfig,
 )
 
 addComponent<Divider>(
@@ -229,17 +112,7 @@ addComponent<Divider>(
     title: '辅助分割',
     group: GroupEnum['辅助组件'],
   },
-  {
-    type: 1,
-    bgColor: '#ffffff',
-    lineColor: '#999999',
-    lineSize: 1,
-    height: 20,
-    marginL: 0,
-    marginR: 0,
-    marginT: 0,
-    marginB: 0,
-  },
+  DividerConfig,
 )
 
 addComponent<User>(
@@ -248,13 +121,5 @@ addComponent<User>(
     title: '用户信息',
     group: GroupEnum['基础组件'],
   },
-  {
-    bgColor: '#2f88ff',
-    bgImg: '',
-    spacing: 10,
-    textColor: '#999999',
-    textSize: 14,
-    numColor: '#f1cd60',
-    numSize: 18,
-  },
+  UserConfig,
 )

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { computed, toRefs } from 'vue'
 import { generateStyleObject } from '../style'
 import { CubePictureEnum } from '../../enum'
 import { Row, Col, Image } from 'vant'
+import { computed, toRefs } from 'vue'
+
 const props = defineProps<{
   editable: boolean
   data: CubePicture
